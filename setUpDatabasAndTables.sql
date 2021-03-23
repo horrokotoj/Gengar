@@ -15,7 +15,7 @@ create table products (
 DROP TABLE IF EXISTS suppliers;
 create table suppliers (
     supplier_id INT(11) AUTO_INCREMENT,
-    name_t VARCHAR(25) NOT NULL,
+    supplier_name VARCHAR(25) NOT NULL,
     phone INT(10) NOT NULL,
     PRIMARY KEY (supplier_id)
 );
