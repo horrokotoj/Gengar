@@ -1,6 +1,6 @@
 USE storeDB;
 
-INSERT INTO products (product_id, product_code, quantity, price)
+INSERT INTO products(product_id, product_code, quantity, price)
 VALUES 
     ( 1, 'ABC1', 10, 100.00),
     ( 2, 'ABC2', 10, 99.99),
