@@ -1,36 +1,44 @@
 import argparse
 from connect import cursor, db
 
+
 ##############################################
 #                   CREATE                   #
 ##############################################
+
+#sql_statement = "INSERT INTO codespeedy (category,duration,level) values(%s,%s,%s)"
+#values = ("Python","100 Hours","Advanced")
+#my_database.execute(sql_statement,values)
+
 def create_product(product_id, product_code, quantity, price):
-    sql = ("INSERT INTO products(product_id, product_code, quantity, price) VALUES (%d, %s, %d, %12.2f)")
-    cursor.execute(sql, (product_id, product_code, quantity, price))
+    sql = f"INSERT INTO products (product_id, product_code, quantity, price) VALUES \
+        ({product_id}, '{product_code}', {quantity}, {price});"
+    cursor.execute(sql)
     db.commit()
-    product_id = cursor.lastrowid
-    print("Created new product with product_id: {}".format(product_id))
+    print("Created new product")
 
 def create_supplier(supplier_id, supplier_name, phone):
-    sql = ("INSERT INTO suppliers(supplier_id, supplier_name, phone) VALUES (%d, %s, %d)")
-    cursor.execute(sql, (supplier_id, supplier_name, phone))
+    sql = f"INSERT INTO suppliers (supplier_id, supplier_name, phone) VALUES \
+        ({supplier_id}, '{supplier_name}', {phone});"
+    cursor.execute(sql)
     db.commit()
-    supplier_id = cursor.lastrowid
-    print("Created new supplier with supplier_id: {}".format(supplier_id))
+    print("Created new supplier")
 
 def create_productSupplier(product_id, supplier_id):
-    sql = ("INSERT INTO productSuppliers(product_id, supplier_id) VALUES (%d, %d)")
-    cursor.execute(sql, (product_id, supplier_id))
+    sql = f"INSERT INTO productSuppliers (product_id, supplier_id) VALUES \
+        ({product_id}, {supplier_id});"
+    cursor.execute(sql)
     db.commit()
     product_id = cursor.lastrowid
-    print("Created new product-supplier connection for product_id: {}".format(product_id))
+    print("Created new product-supplier connection")
 
 def create_order(order_id, product_id, quantity):
-    sql = ("INSERT INTO orders(order_id, product_id, quantity) VALUES (%d, %d, %d)")
-    cursor.execute(sql, (order_id, product_id, quantity))
+    sql = f"INSERT INTO orders(order_id, product_id, quantity) VALUES \
+        ({order_id}, {product_id}, {quantity});"
+    cursor.execute(sql)
     db.commit()
     order_id = cursor.lastrowid
-    print("Created new order with product_id: {}".format(order_id))
+    print("Created new order")
 
 
 ##############################################
@@ -38,35 +46,35 @@ def create_order(order_id, product_id, quantity):
 ##############################################
 
 def read_table(table):
-    sql = ("SELECT * FROM %s;" % table)
+    sql = f"SELECT * FROM {table};"
     cursor.execute(sql)
     output = cursor.fetchall()
     for x in output:
         print(x)
 
 def read_product(product_id):
-    sql = ("SELECT * FROM products WHERE product_id = %d;" % product_id)
+    sql = f"SELECT * FROM products WHERE product_id = {product_id};"
     cursor.execute(sql)
     output = cursor.fetchall()
     for x in output:
         print(x)
 
 def read_supplier(supplier_id):
-    sql = ("SELECT * FROM suppliers WHERE supplier_id = %d;" % supplier_id)
+    sql = f"SELECT * FROM suppliers WHERE supplier_id = {supplier_id};"
     cursor.execute(sql)
     output = cursor.fetchall()
     for x in output:
         print(x)
 
 def read_productSupplier(product_id):
-    sql = ("SELECT * FROM suppliers WHERE product_id = %d;" % product_id)
+    sql = f"SELECT * FROM suppliers WHERE product_id = {product_id};"
     cursor.execute(sql)
     output = cursor.fetchall()
     for x in output:
         print(x)
 
 def read_order(order_id):
-    sql = ("SELECT * FROM suppliers WHERE order_id = %d;" % order_id)
+    sql = f"SELECT * FROM suppliers WHERE order_id = {order_id};"
     cursor.execute(sql)
     output = cursor.fetchall()
     for x in output:
@@ -77,81 +85,88 @@ def read_order(order_id):
 #                 UPDATE                     #
 ##############################################
 
-
-
-def update_product_product_name(product_id, product_name):
-    sql = ("UPDATE products SET product_name = %s where product_id = %d;" % (product_name, product_id))
+def update_product_product_code(product_id, product_code):
+    sql = f"UPDATE products SET product_code = '{product_code}' where product_id = {product_id}"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
 
 def update_product_quantity(product_id, quantity):
-    sql = ("UPDATE products SET quantity = %d where product_id = %d;" % (quantity, product_id))
+    sql = f"UPDATE products SET quantity = {quantity} where product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
 
 def update_product_price(product_id, price):
-    sql = ("UPDATE products SET price = %12.2f where product_id = %d;" % (price, product_id))
+    sql = f"UPDATE products SET price = {price} where product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
 
 
 def update_supplier_name(supplier_id, supplier_name):
-    sql = ("UPDATE suppliers SET supplier_name = %s where supplier_id = %d;" %  (supplier_name, supplier_id))
+    sql = f"UPDATE suppliers SET supplier_name = {supplier_name} where supplier_id = {supplier_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def update_supplier_phone(supplier_id, phone):
-    sql = ("UPDATE suppliers SET phone = %d where supplier_id = %d;" % (phone, supplier_id))
+    sql = f"UPDATE suppliers SET phone = {phone} where supplier_id = {supplier_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
 
     
 def update_productSupplier_supplier_id(product_id, supplier_id):
-    sql = ("UPDATE productSuppliers SET supplier_id = %d where product_id = %d;" % (supplier_id, product_id))
+    sql = f"UPDATE productSuppliers SET supplier_id = {supplier_id} where product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def update_productSupplier_supplier_id(product_id, supplier_id):
-    sql = ("UPDATE productSuppliers SET supplier_id = %d where product_id = %d;" % (supplier_id, product_id))
+    sql = f"UPDATE productSuppliers SET supplier_id = {supplier_id} where product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def update_order_order_id(order_id_old, order_id_new):
-    sql = ("UPDATE orders SET order_id = %d where order_id = %d;" % (order_id_new, order_id_old))
+    sql = f"UPDATE orders SET order_id = {order_id_new} where order_id = {order_id_old};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def update_order_product_id(order_id, product_id_old, product_id_new):
-    sql = ("UPDATE orders SET product_id = %d where order_id = %d AND product_id = %d;" % (product_id_new, order_id, product_id_old))
+    sql = f"UPDATE orders SET product_id = {product_id_new} where order_id = {order_id} AND product_id = {product_id_old};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def update_order_quantity(order_id, product_id, quantity):
-    sql = ("UPDATE orders SET quantity = %d where order_id = %d AND product_id = %d;" % (quantity, order_id, product_id))
+    sql = f"UPDATE orders SET quantity = {quantity} where order_id = {order_id} AND product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
+
 
 ##############################################
 #                 DELETE                     #
 ##############################################
 
-
 def delete_product(product_id):
-    sql = ("DELETE FROM products WHERE product_id = %d;" % product_id) 
+    sql = f"DELETE FROM products WHERE product_id = {product_id};" 
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def delete_supplier(supplier_id):
-    sql = ("DELETE FROM suppliers WHERE %d = %d;" % supplier_id)
+    sql = f"DELETE FROM suppliers WHERE supplier_id = {supplier_id};"
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
+
 
 def delete_productSupplier(product_id):
-    sql = ("DELETE FROM productSuppliers WHERE %d = %d;" % product_id)
+    sql = f"DELETE FROM productSuppliers WHERE product_id = {product_id};"
     cursor.execute(sql)
-    cursor.commit()  
+    db.commit()
+
 
 def delete_order(order_id):
-    sql = ("DELETE FROM orders WHERE %d = %d;" % order_id)
+    sql = f"DELETE FROM orders WHERE order_id = {order_id};" 
     cursor.execute(sql)
-    cursor.commit()
+    db.commit()
