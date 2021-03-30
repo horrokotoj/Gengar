@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     logo: {
         alignSelf: 'center',
         position: "absolute",
-        top: "12%",
+        bottom: "80%",
         alignItems: "center",
     },
     name: {
