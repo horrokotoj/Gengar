@@ -1,0 +1,13 @@
+VaccMe/node_modules/**/*
+VaccMe/.expo/*
+VaccMe/npm-debug.*
+VaccMe/*.jks
+VaccMe/*.p8
+VaccMe/*.p12
+VaccMe/*.key
+VaccMe/*.mobileprovision
+VaccMe/*.orig.*
+VaccMe/web-build/
+
+# macOS
+VaccMe/.DS_Store
