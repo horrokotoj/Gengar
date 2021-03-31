@@ -4,12 +4,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import PersonScreen from './app/screens/PersonScreen';
 import HomeScreen from './app/screens/HomeScreen';
+import MycertifacateScreen from './app/screens/MycertifacteScreen';
 
 export default function App() {
     return (
         //<WelcomeScreen />
-        //<PersonScreen />
-        <HomeScreen />
+        <PersonScreen />
+        //<HomeScreen />
+        //<MycertifacateScreen />
         
     );
 }
