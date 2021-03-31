@@ -13,8 +13,12 @@ function WelcomeScreen(props) {
                 <Text style={styles.slogan}>Ditt elektroniska vaccinationsintyg</Text>
             </View>
             
-            <View style={styles.person}></View>
-            <View style={styles.business}></View>
+            <View style={[styles.button, styles.personButton]}>
+                <Text>Privat</Text>
+            </View>
+            <View style={[styles.button, styles.businessButton]}>
+                <Text>Företag</Text>
+            </View>
         </ImageBackground>
     );
 }
@@ -38,18 +42,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "black",
     },
-    person: {
-        width: "70%",
-        height: 70,
-        backgroundColor: "yellow",
-        alignSelf: "center",
-        borderColor: "black",
-        borderWidth: 3,
-        borderRadius: 50,
-        position: "absolute",
+    personButton: {
         bottom: "25%",
     },
-    business: {
+    businessButton: {
+        bottom: "15%",
+    },
+    button: {
         width: "70%",
         height: 70,
         backgroundColor: "yellow",
@@ -58,8 +57,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 50,
         position: "absolute",
-        bottom: "15%",
-    }
+    },
 });
 
 export default WelcomeScreen;
