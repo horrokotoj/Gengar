@@ -1,20 +1,18 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, Text, View } from 'react-native';
+import { styleSheets } from '../styleSheets/StyleSheets';
 
 function PersonHomeScreen(props) {
     return (
         <ImageBackground
-            style={styles.background}
+            style={styleSheets.background}
             source={require('../assets/background.jpg')}
-        ></ImageBackground>
+        >
+            <View style={styleSheets.tabSheet}>
+                <Text style={styleSheets.tabSheetHeader}> Kalender </Text>
+            </View>
+        </ImageBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-});
 
 export default PersonHomeScreen;

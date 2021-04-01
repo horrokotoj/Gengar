@@ -1,20 +1,14 @@
 import React from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
+import { styleSheets } from '../styleSheets/StyleSheets';
 
 function PersonQrScreens(props) {
     return (
         <ImageBackground
-            style={styles.background}
+            style={styleSheets.background}
             source={require('../assets/background.jpg')}
         ></ImageBackground>
     );
 }
-
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-});
 
 export default PersonQrScreens;

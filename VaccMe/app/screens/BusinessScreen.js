@@ -2,15 +2,14 @@ import React from 'react';
 import { Button, ImageBackground } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styleSheets } from '../styleSheets/StyleSheets';
-
-import PersonHomeScreen from './PersonHomeScreen';
+import PersonHomeScreen from './BusinessHomeScreen';
 import PersonCertScreen from './PersonCertScreen';
 import PersonQrScreen from './PersonQrScreen';
 import PersonBookScreen from './PersonBookScreen';
 
 const Tab = createBottomTabNavigator();
 
-function PersonScreen({ navigation }) {
+function BusinessScreen({ navigation }) {
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -45,4 +44,4 @@ function PersonScreen({ navigation }) {
     );
 }
 
-export default PersonScreen;
+export default BusinessScreen;
