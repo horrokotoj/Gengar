@@ -11,7 +11,7 @@ import PersonSettingsScreen from '../screens/PersonSettingsScreen';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const Tab = createBottomTabNavigator();
+const PersonTab = createBottomTabNavigator();
 
 function PersonScreen() {
     return (
@@ -19,7 +19,7 @@ function PersonScreen() {
             style={styleSheets.background}
             source={require('../assets/background.jpg')}
         >
-            <Tab.Navigator
+            <PersonTab.Navigator
                 tabBarOptions={{
                     activeTintColor: '#e91e63',
                     labelStyle: {
@@ -27,7 +27,7 @@ function PersonScreen() {
                     },
                 }}
             >
-                <Tab.Screen
+                <PersonTab.Screen
                     name="Kalender"
                     component={PersonCalendarScreen}
                     options={{
@@ -40,7 +40,7 @@ function PersonScreen() {
                         ),
                     }}
                 />
-                <Tab.Screen
+                <PersonTab.Screen
                     name="Mina intyg"
                     component={PersonCertScreen}
                     options={{
@@ -53,7 +53,7 @@ function PersonScreen() {
                         ),
                     }}
                 />
-                <Tab.Screen
+                <PersonTab.Screen
                     name="QR"
                     component={PersonQrScreen}
                     style={styleSheets.qr}
@@ -67,7 +67,7 @@ function PersonScreen() {
                         ),
                     }}
                 />
-                <Tab.Screen
+                <PersonTab.Screen
                     name="Boka vaccination"
                     component={PersonBookScreen}
                     options={{
@@ -80,7 +80,7 @@ function PersonScreen() {
                         ),
                     }}
                 />
-                <Tab.Screen
+                <PersonTab.Screen
                     name="Inställningar"
                     component={PersonSettingsScreen}
                     options={{
@@ -93,7 +93,7 @@ function PersonScreen() {
                         ),
                     }}
                 />
-            </Tab.Navigator>
+            </PersonTab.Navigator>
         </ImageBackground>
     );
 }

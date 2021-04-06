@@ -27,8 +27,8 @@ function PersonSettingsScreen({ navigation }) {
                     <TouchableHighlight
                         style={styleSheets.touchableHighlight}
                         onPress={() => {
-                            navigation.navigate('WelcomScreen', {
-                                screen: 'PersonScreen',
+                            navigation.navigate('PersonScreen', {
+                                screen: 'WelcomScreen',
                             });
                         }}
                     >
