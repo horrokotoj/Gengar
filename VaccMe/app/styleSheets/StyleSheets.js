@@ -62,6 +62,7 @@ export const styleSheets = StyleSheet.create({
         fontSize: 20,
     },
     tabSheet: {
+        flex: 5,
         backgroundColor: tabSheetColor,
         height: '70%',
         width: '70%',
@@ -69,9 +70,13 @@ export const styleSheets = StyleSheet.create({
         alignItems: 'center',
     },
     tabSheetHeader: {
-        fontSize: 50,
+        fontSize: 40,
         textDecorationLine: 'underline',
         color: secondaryTextColor,
         opacity: 1,
+    },
+    vardguiden: {
+        height: 100,
+        width: 200,
     },
 });

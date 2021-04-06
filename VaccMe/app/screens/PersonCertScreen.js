@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, Text, TouchableHighlight, View } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
 function PersonCertScreen(props) {
@@ -7,7 +7,21 @@ function PersonCertScreen(props) {
         <ImageBackground
             style={styleSheets.background}
             source={require('../assets/background.jpg')}
-        ></ImageBackground>
+        >
+            <View style={styleSheets.logo}>
+                <Text style={styleSheets.name}>VaccMe</Text>
+            </View>
+            <View style={styleSheets.tabSheet}>
+                <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
+            </View>
+            <View style={styleSheets.filler}>
+                <TouchableHighlight style={styleSheets.touchableHighlight}>
+                    <Text style={styleSheets.touchableHighlightText}>
+                        Lägg till intyg
+                    </Text>
+                </TouchableHighlight>
+            </View>
+        </ImageBackground>
     );
 }
 
