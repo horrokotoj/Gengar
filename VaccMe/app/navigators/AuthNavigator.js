@@ -6,7 +6,7 @@ import { StyleSheet } from 'react-native';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import PersonLoginScreen from '../screens/PersonLoginScreen';
 import BusinessLoginScreen from '../screens/BusinessLoginScreen';
-import PersonScreen from '../screens/PersonScreen';
+import PersonScreen from './PersonScreen';
 
 const Stack = createStackNavigator();
 // TODO: Replace with API function

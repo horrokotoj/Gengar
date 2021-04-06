@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-function PersonCertScreen(props) {
+function PersonCalendarScreen(props) {
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -19,12 +19,12 @@ function PersonCertScreen(props) {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                    <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
+                    <Text style={styleSheets.tabSheetHeader}> Kalender </Text>
                 </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight style={styleSheets.touchableHighlight}>
                         <Text style={styleSheets.touchableHighlightText}>
-                            Lägg till intyg
+                            Lägg till i kalendern
                         </Text>
                     </TouchableHighlight>
                 </View>
@@ -33,4 +33,4 @@ function PersonCertScreen(props) {
     );
 }
 
-export default PersonCertScreen;
+export default PersonCalendarScreen;

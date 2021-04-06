@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StyleSheet } from 'react-native';
+import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
 function PersonQrScreens(props) {
@@ -7,7 +7,9 @@ function PersonQrScreens(props) {
         <ImageBackground
             style={styleSheets.background}
             source={require('../assets/background.jpg')}
-        ></ImageBackground>
+        >
+            <SafeAreaView style={styleSheets.safe}></SafeAreaView>
+        </ImageBackground>
     );
 }
 

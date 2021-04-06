@@ -79,4 +79,14 @@ export const styleSheets = StyleSheet.create({
         height: 100,
         width: 200,
     },
+    safe: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    qr: {
+        flex: 1,
+        borderRadius: 20,
+        backgroundColor: 'yellow',
+    },
 });

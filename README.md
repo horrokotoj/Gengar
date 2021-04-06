@@ -19,14 +19,11 @@ The app is written in JavaScript using React Native.
 ## PersonScreen
 
 ![PersonScreen](./media/PersonScreen.png)
+Only exists as a navigator.
 
-### PersonHomeScreen
+### PersonCalendarScreen
 
-![PersonHomeScreen](./media/PersonHomeScreen.png)
-
-### PersonBookScreen
-
-![PersonBookScreen](./media/PersonBookScreen.png)
+![PersonCalendarScreen](./media/PersonCalendarScreen.png)
 
 ### PersonCertScreen
 
@@ -35,6 +32,14 @@ The app is written in JavaScript using React Native.
 ### PersonQrScreen
 
 ![PersonQrScreen](./media/PersonQrScreen.png)
+
+### PersonBookScreen
+
+![PersonBookScreen](./media/PersonBookScreen.png)
+
+### PersonSettingsScreen
+
+![PersonSettingsScreen](./media/PersonSettingsScreen.png)
 
 ### BusinessLoginScreen
 

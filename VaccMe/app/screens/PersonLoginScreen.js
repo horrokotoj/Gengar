@@ -12,12 +12,6 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-//function loginUser({ navigation }) {
-//    isUserLoggedIn = true;
-//    alert('User login successful!');
-//    navigation.navigate('PersonScreen');
-//}
-
 function PersonLoginScreen({ navigation }) {
     const [text, onChangeText] = React.useState();
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;

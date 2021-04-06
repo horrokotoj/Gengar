@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-function PersonCertScreen(props) {
+function PersonSettingsScreen({ navigation }) {
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -19,12 +19,21 @@ function PersonCertScreen(props) {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                    <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
+                    <Text style={styleSheets.tabSheetHeader}>
+                        Inställningar
+                    </Text>
                 </View>
                 <View style={styleSheets.filler}>
-                    <TouchableHighlight style={styleSheets.touchableHighlight}>
+                    <TouchableHighlight
+                        style={styleSheets.touchableHighlight}
+                        onPress={() => {
+                            navigation.navigate('WelcomScreen', {
+                                screen: 'PersonScreen',
+                            });
+                        }}
+                    >
                         <Text style={styleSheets.touchableHighlightText}>
-                            Lägg till intyg
+                            Logga ut
                         </Text>
                     </TouchableHighlight>
                 </View>
@@ -33,4 +42,4 @@ function PersonCertScreen(props) {
     );
 }
 
-export default PersonCertScreen;
+export default PersonSettingsScreen;
