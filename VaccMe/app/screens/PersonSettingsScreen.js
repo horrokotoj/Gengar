@@ -7,8 +7,10 @@ import {
     View,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import { AuthContext } from '../context/AuthContext';
 
-function PersonSettingsScreen({ navigation }) {
+function PersonSettingsScreen() {
+    const { signOut } = React.useContext(AuthContext);
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -26,11 +28,7 @@ function PersonSettingsScreen({ navigation }) {
                 <View style={styleSheets.filler}>
                     <TouchableHighlight
                         style={styleSheets.touchableHighlight}
-                        onPress={() => {
-                            navigation.navigate('PersonScreen', {
-                                screen: 'WelcomScreen',
-                            });
-                        }}
+                        onPress={() => signOut()}
                     >
                         <Text style={styleSheets.touchableHighlightText}>
                             Logga ut

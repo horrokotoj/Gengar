@@ -1,8 +1,8 @@
 import * as React from 'react';
-import AuthNavigator from './app/navigators/AuthNavigator';
+import Navigator from './app/navigators/Navigator';
 
 const App = () => {
-    return <AuthNavigator />;
+    return <Navigator />;
 };
 
 export default App;

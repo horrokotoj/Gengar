@@ -11,10 +11,12 @@ import {
     TouchableHighlight,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import { AuthContext } from '../context/AuthContext';
 
 function PersonLoginScreen({ navigation }) {
     const [text, onChangeText] = React.useState();
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
+    const { signIn } = React.useContext(AuthContext);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -54,9 +56,7 @@ function PersonLoginScreen({ navigation }) {
 
                             <TouchableHighlight
                                 style={styleSheets.touchableHighlight}
-                                onPress={() =>
-                                    navigation.navigate('PersonScreen')
-                                }
+                                onPress={() => signIn()}
                             >
                                 <Text
                                     style={styleSheets.touchableHighlightText}
