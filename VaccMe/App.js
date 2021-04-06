@@ -20,9 +20,9 @@ export default function App() {
 
   if (fontsLoaded) {
     return (
-      //<WelcomeScreen />
+      <WelcomeScreen />
       //<PersonScreen />
-      <HomeScreen />
+      //<HomeScreen />
       //<MycertifacateScreen />
     );
   } else {

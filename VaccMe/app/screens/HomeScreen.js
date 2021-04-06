@@ -28,7 +28,7 @@ function HomeScreen(props) {
         </View>
       </SafeAreaView>
       <View style={[styles.button, styles.logoutButton]}>
-        <Button title="Logga ut" color="black" fontWeight="bold"></Button>
+        <Button title="Logga ut" color="black"></Button>
       </View>
       <View style={[styles.button, styles.settingButton]}>
         <Button title="Inställningar" color="black"></Button>

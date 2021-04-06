@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageBackground, StyleSheet, View, Text, Button } from "react-native";
+import DefaultButton from "../shared/button.js";
 
 function WelcomeScreen(props) {
   return (
@@ -12,12 +13,23 @@ function WelcomeScreen(props) {
         <Text style={styles.slogan}>Ditt elektroniska vaccinationsintyg</Text>
       </View>
 
-      <View style={[styles.button, styles.personButton]}>
-        <Button title="Privat"></Button>
-      </View>
-      <View style={[styles.button, styles.businessButton]}>
-        <Button title="Företag"></Button>
-      </View>
+      {/* <View style={[styles.button, styles.personButton]}>
+        <Button title="Privat" color="black"></Button>
+      </View> */}
+
+      <DefaultButton
+        text="Privat"
+        onPress={() => {
+          alert("You tapped the button!");
+        }}
+      ></DefaultButton>
+
+      <DefaultButton
+        text="Företag"
+        onPress={() => {
+          alert("You tapped the button!");
+        }}
+      ></DefaultButton>
     </ImageBackground>
   );
 }
