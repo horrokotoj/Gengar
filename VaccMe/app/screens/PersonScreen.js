@@ -1,141 +1,101 @@
 import React from 'react';
-import { 
-    ImageBackground, 
-    KeyboardAvoidingView, 
-    StyleSheet, 
-    View, 
-    Text, 
-    TextInput, 
-    Platform,
-    TouchableWithoutFeedback,
-    Keyboard
-} from 'react-native';
+import { ImageBackground } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { styleSheets } from '../styleSheets/StyleSheets';
 
+import PersonCalendarScreen from '../screens/PersonCalendarScreen';
+import PersonCertScreen from '../screens/PersonCertScreen';
+import PersonQrScreen from '../screens/PersonQrScreen';
+import PersonBookScreen from '../screens/PersonBookScreen';
+import PersonSettingsScreen from '../screens/PersonSettingsScreen';
 
-function PersonScreen(props) {
-    const [text, onChangeText] = React.useState();
-    const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const PersonTab = createBottomTabNavigator();
+
+function PersonScreen() {
     return (
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        
-        <ImageBackground 
-            style={styles.background}
+        <ImageBackground
+            style={styleSheets.background}
             source={require('../assets/background.jpg')}
         >
-
-            <View style={styles.logo}>
-                <Text style={styles.name}>VaccMe</Text>
-                <Text style={styles.slogan}>Ditt elektroniska vaccinationsintyg</Text>
-            </View>  
-
-            <View style={styles.filler}/>               
-
-
-            <KeyboardAvoidingView 
-                behavior= 'padding'
-                style={styles.keyboardAvoidingView}
-                keyboardVerticalOffset={keyboardVerticalOffset}
+            <PersonTab.Navigator
+                tabBarOptions={{
+                    activeTintColor: '#e91e63',
+                    labelStyle: {
+                        fontSize: 12,
+                    },
+                }}
             >
-                <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <View style={styles.inner}>
-
-    
-                <TextInput 
-                    style={styles.input}
-                    onChangeText={onChangeText}
-                    value={text}
-                    placeholder="Username"/>
-                
-                <TextInput 
-                    style={styles.input}
-                    onChangeText={onChangeText}
-                    value={text}
-                    placeholder="Password"/>
-
-                <View style={styles.login}> 
-                    <Text> login </Text>
-                </View>
-                
-                <View style={styles.register}> 
-                    <Text> register </Text> 
-                </View>
-                </View>
-            </TouchableWithoutFeedback> 
-            </KeyboardAvoidingView>
-
-            </ImageBackground>
-            </TouchableWithoutFeedback> 
-
-                   
+                <PersonTab.Screen
+                    name="Kalender"
+                    component={PersonCalendarScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="calendar"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
+                />
+                <PersonTab.Screen
+                    name="Mina intyg"
+                    component={PersonCertScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="receipt"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
+                />
+                <PersonTab.Screen
+                    name="QR"
+                    component={PersonQrScreen}
+                    style={styleSheets.qr}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="qr-code"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
+                />
+                <PersonTab.Screen
+                    name="Boka vaccination"
+                    component={PersonBookScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="eyedrop"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
+                />
+                <PersonTab.Screen
+                    name="Inställningar"
+                    component={PersonSettingsScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="settings"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
+                />
+            </PersonTab.Navigator>
+        </ImageBackground>
     );
 }
-
-
-
-
-const styles = StyleSheet.create({
-    background: {
-        flex: 1,
-        alignItems: "center",
-    },
-    logo: {
-        alignItems: "center",
-        justifyContent: 'flex-end',
-        flex: 1,
-    },
-    name: {
-        fontSize: 50,
-        textDecorationLine: 'underline',
-        color: "yellow",
-    },
-    slogan: {
-        fontSize: 15,
-        color: "black",
-    },
-    filler: {
-        flex: 1,
-    },
-    keyboardAvoidingView: {
-        flex: 2,
-        alignItems: "center",
-        justifyContent: 'center',
-        width: "100%",
-    },
-    inner: {
-        padding: 24,
-        flex: 1,
-        justifyContent: 'center',
-      },
-    input: {
-        width: 250,
-        height: 50,
-        margin: 5,
-        opacity: 0.8,
-        backgroundColor: "white",
-        borderWidth: 1,
-        borderRadius: 50,
-        textAlign: "center",
-    },
-    login: {
-        width: 250,
-        height: 50,
-        backgroundColor: "yellow",
-        alignSelf: "center",
-        borderColor: "black",
-        margin: 5,
-        borderWidth: 3,
-        borderRadius: 50,
-    },
-    register: {
-        width: 250,
-        height: 50,
-        backgroundColor: "yellow",
-        alignSelf: "center",
-        borderColor: "black",
-        borderWidth: 3,
-        borderRadius: 50,
-    }
-});
 
 export default PersonScreen;
