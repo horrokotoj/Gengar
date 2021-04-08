@@ -3,11 +3,11 @@ import Splash from "../screens/Splash";
 import { AuthContext } from "../context/AuthContext";
 import AuthNavigator from "./AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import PersonNavigator from "./PersonNavigator";
+import BusinessNavigator from "./BusinessNavigator";
 
-function Navigator() {
+function Navigator2() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
+  const [businessToken, setBusinessToken] = React.useState(null);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -17,11 +17,11 @@ function Navigator() {
 
   const authContext = React.useMemo(() => {
     return {
-      signIn: () => {
+      signInBusiness: () => {
         setIsLoading(false);
-        setUserToken("something");
+        setBusinessToken("something");
       },
-      signOut: () => {
+      signOutBusiness: () => {
         setIsLoading(false);
         setUserToken(null);
       },
@@ -35,10 +35,10 @@ function Navigator() {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {userToken ? <PersonNavigator /> : <AuthNavigator />}
+        {businessToken ? <BusinessNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     </AuthContext.Provider>
   );
 }
 
-export default Navigator;
+export default Navigator2;
