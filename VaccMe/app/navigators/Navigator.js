@@ -4,10 +4,12 @@ import { AuthContext } from "../context/AuthContext";
 import AuthNavigator from "./AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import PersonNavigator from "./PersonNavigator";
+import BusinessNavigator from "./BusinessNavigator";
 
 function Navigator() {
   const [isLoading, setIsLoading] = React.useState(true);
   const [userToken, setUserToken] = React.useState(null);
+  const [businessToken, setBusinessToken] = React.useState(null);
 
   React.useEffect(() => {
     setTimeout(() => {
@@ -21,6 +23,10 @@ function Navigator() {
         setIsLoading(false);
         setUserToken("something");
       },
+      signInBusiness: () => {
+        setIsLoading(false);
+        setBusinessToken("something");
+      },
       signOut: () => {
         setIsLoading(false);
         setUserToken(null);
@@ -32,11 +38,20 @@ function Navigator() {
     return <Splash />;
   }
 
+  function chooseNav() {
+    if (userToken) {
+      return <PersonNavigator />;
+    }
+    if (businessToken) {
+      return <BusinessNavigator />;
+    } else {
+      return <AuthNavigator />;
+    }
+  }
+
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        {userToken ? <PersonNavigator /> : <AuthNavigator />}
-      </NavigationContainer>
+      <NavigationContainer>{chooseNav()}</NavigationContainer>
     </AuthContext.Provider>
   );
 }

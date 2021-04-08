@@ -3,9 +3,6 @@ import { Button, ImageBackground } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { styleSheets } from "../styleSheets/StyleSheets";
 import BusinessHomeScreen from "./BusinessHomeScreen";
-import PersonCertScreen from "./PersonCertScreen";
-import PersonQrScreen from "./PersonQrScreen";
-import PersonBookScreen from "./PersonBookScreen";
 
 const BusinessTab = createBottomTabNavigator();
 
@@ -30,9 +27,6 @@ function BusinessScreen({ navigation }) {
         }}
       >
         <BusinessTab.Screen name="Home" component={BusinessHomeScreen} />
-        {/* <Tab.Screen name="MyCertificates" component={PersonCertScreen} />
-        <Tab.Screen name="QR" component={PersonQrScreen} />
-        <Tab.Screen name="Book vaccination" component={PersonBookScreen} /> */}
       </BusinessTab.Navigator>
     </ImageBackground>
   );
