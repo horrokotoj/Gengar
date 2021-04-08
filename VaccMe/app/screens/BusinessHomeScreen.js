@@ -7,22 +7,28 @@ import {
   View,
   Linking,
 } from "react-native";
+import { TouchableHighlight } from "react-native-gesture-handler";
 import { styleSheets } from "../styleSheets/StyleSheets";
+import { AuthContext } from "../context/AuthContext";
 
 function BusinessHomeScreen(props) {
+  const { signOut } = React.useContext(AuthContext);
+
   return (
     <ImageBackground
       style={styleSheets.background}
       source={require("../assets/background.jpg")}
     >
       <SafeAreaView style={styleSheets.safe}>
-        <View style={styleSheets.tabSheet}>
-          <Image
-            style={styleSheets.vardguiden}
-            source={require("../assets/Biggest ASSet.jpg")}
-          ></Image>
+        <View style={styleSheets.tabSheet}></View>
+        <View style={styleSheets.filler}>
+          <TouchableHighlight
+            style={styleSheets.touchableHighlight}
+            onPress={() => signOut()}
+          >
+            <Text style={styleSheets.touchableHighlightText}>Logga ut</Text>
+          </TouchableHighlight>
         </View>
-        <View style={styleSheets.filler}></View>
       </SafeAreaView>
     </ImageBackground>
   );

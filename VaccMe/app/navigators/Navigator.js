@@ -30,6 +30,7 @@ function Navigator() {
       signOut: () => {
         setIsLoading(false);
         setUserToken(null);
+        setBusinessToken(null);
       },
     };
   }, []);
