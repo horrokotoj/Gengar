@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { styleSheets } from "../styleSheets/StyleSheets";
 import Camera from "../components/Camera";
+import QRCodeScanner from "../components/QRCodeScanner";
 
 // go to the android/app/src/main/AndroidManifest.xml file and add‍
 //<uses-permission android:name="android.permission.CAMERA"></uses-permission>
@@ -20,7 +21,7 @@ function BusinessCameraScreen(props) {
       source={require("../assets/background.jpg")}
     >
       <SafeAreaView styles={{ flex: 1 }}>
-        <Camera />
+        <QRCodeScanner />
       </SafeAreaView>
     </ImageBackground>
   );

@@ -89,4 +89,9 @@ export const styleSheets = StyleSheet.create({
     borderRadius: 20,
     backgroundColor: "yellow",
   },
+  containerQR: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+  },
 });
