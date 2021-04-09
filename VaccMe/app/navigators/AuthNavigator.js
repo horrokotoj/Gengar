@@ -5,8 +5,13 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import PersonLoginScreen from '../screens/PersonLoginScreen';
 import BusinessLoginScreen from '../screens/BusinessLoginScreen';
 
+// A stack navigator for authentication pages
 const AuthStack = createStackNavigator();
 
+/**
+ * @brief Creates a stack navigator for welcome page and login pages.
+ * @returns A stack navigator for welcome page and login pages.
+ */
 const AuthNavigator = () => {
     return (
         <AuthStack.Navigator screenOptions={{ header: () => null }}>
