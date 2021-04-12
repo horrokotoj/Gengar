@@ -11,6 +11,11 @@ import { TouchableHighlight } from "react-native-gesture-handler";
 import { styleSheets } from "../styleSheets/StyleSheets";
 import { AuthContext } from "../context/AuthContext";
 
+/**
+ * @brief Renders a home screen for a business user
+ * @returns A home screen
+ */
+
 function BusinessHomeScreen(props) {
   const { signOut } = React.useContext(AuthContext);
 

@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View, Button, StyleSheet } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { styleSheets } from "../styleSheets/StyleSheets";
 
-export default function QRCodeScanner() {
+/**
+ * @brief Renders a QR-code scanner for a business user
+ * @returns A QR-code scanner
+ */
+
+function QRCodeScanner(props) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -31,6 +36,8 @@ export default function QRCodeScanner() {
     <View style={styleSheets.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
+        style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
         <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
@@ -38,3 +45,5 @@ export default function QRCodeScanner() {
     </View>
   );
 }
+
+export default QRCodeScanner;

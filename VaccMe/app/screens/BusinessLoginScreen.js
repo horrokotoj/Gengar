@@ -13,6 +13,12 @@ import {
 import { styleSheets } from "../styleSheets/StyleSheets";
 import { AuthContext } from "../context/AuthContext";
 
+/**
+ * @brief Renders a login screen for a business user
+ * @param {*} navigation A navigation object
+ * @returns A login screen for business users
+ */
+
 function BusinessLoginScreen({ navigation }) {
   const [text, onChangeText] = React.useState();
   const keyboardVerticalOffset = Platform.OS === "ios" ? 40 : 0;
