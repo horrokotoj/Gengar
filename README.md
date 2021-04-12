@@ -8,9 +8,9 @@ The app is written in JavaScript using React Native.
 
 # Views for development
 
-##Splash
+## Splash
 
-![Splash] (./media/Splash.png)
+![Splash](./media/Splash.png)
 
 ## WelcomeScreen
 
