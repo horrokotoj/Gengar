@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  TouchableHighlight,
+} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import { styleSheets } from "../styleSheets/StyleSheets";
 
@@ -8,7 +14,7 @@ import { styleSheets } from "../styleSheets/StyleSheets";
  * @returns A QR-code scanner
  */
 
-function QRCodeScanner(props) {
+function QRCodeScanner({ navigation }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -21,7 +27,7 @@ function QRCodeScanner(props) {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert("Bar code with type ${type} and data ${data} has been scanned!");
+    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
   if (hasPermission == null) {
@@ -33,16 +39,58 @@ function QRCodeScanner(props) {
   }
 
   return (
-    <View style={styleSheets.container}>
+    <SafeAreaView style={{ flex: 1 }}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-        style={StyleSheet.absoluteFillObject}
-      />
+        style={[StyleSheet.absoluteFillObject, styleSheets.containerQR]}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "transparent",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableHighlight
+            style={{
+              flex: 1,
+              alignItems: "flex-end",
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                margin: 50,
+                color: "black",
+                backgroundColor: "yellow",
+              }}
+              onPress={() => navigation.goBack()}
+            >
+              {" "}
+              BACK{" "}
+            </Text>
+          </TouchableHighlight>
+        </View>
+      </BarCodeScanner>
       {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+        <TouchableHighlight>
+          <Text
+            style={{
+              fontSize: 24,
+              fontWeight: "bold",
+              alignSelf: "center",
+              marginTop: 70,
+              color: "black",
+            }}
+            onPress={() => setScanned(false)}
+          >
+            {" "}
+            Tap to Scan Again{" "}
+          </Text>
+        </TouchableHighlight>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 

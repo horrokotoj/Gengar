@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Image,
-  ImageBackground,
-  SafeAreaView,
-  Text,
-  View,
-  Linking,
-} from "react-native";
+import { Image, ImageBackground, SafeAreaView, Text, View } from "react-native";
 import { TouchableHighlight } from "react-native-gesture-handler";
 import { styleSheets } from "../styleSheets/StyleSheets";
 import { AuthContext } from "../context/AuthContext";

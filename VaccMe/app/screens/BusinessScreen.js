@@ -3,7 +3,7 @@ import { Button, ImageBackground } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { styleSheets } from "../styleSheets/StyleSheets";
 import BusinessHomeScreen from "./BusinessHomeScreen";
-import BusinessQRScannerScreen from "./BusinessQRScannerScreen";
+import QRCodeScanner from "../components/QRCodeScanner";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -40,7 +40,7 @@ function BusinessScreen({ navigation }) {
         />
         <BusinessTab.Screen
           name="QR scanner"
-          component={BusinessQRScannerScreen}
+          component={QRCodeScanner}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Ionicons name="camera-outline" color={color} size={size} />
