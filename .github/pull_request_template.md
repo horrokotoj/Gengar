@@ -6,6 +6,7 @@
 - [ ] Assigned 2 reviewers
 - [ ] Documentation of the code has been done
 - [ ] Labels are correctly used
+- [ ] Project has been connected to this pull request
 - [ ] Issues solved by this pull request have been linked
 
 ## Optional

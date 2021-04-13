@@ -1,75 +1,52 @@
-import React from "react";
-import { ImageBackground, StyleSheet, View, Text, Button } from "react-native";
-import DefaultButton from "../shared/button.js";
+import React from 'react';
+import { ImageBackground, View, Text, TouchableHighlight } from 'react-native';
+import { styleSheets } from '../styleSheets/StyleSheets';
 
-function WelcomeScreen(props) {
-  return (
-    <ImageBackground
-      style={styles.background}
-      source={require("../assets/background.jpg")}
-    >
-      <View style={styles.logo}>
-        <Text style={styles.name}>VaccMe</Text>
-        <Text style={styles.slogan}>Ditt elektroniska vaccinationsintyg</Text>
-      </View>
+// TODO: Extract hard coded strings from this file ex. vaccMe
 
-      {/* <View style={[styles.button, styles.personButton]}>
-        <Button title="Privat" color="black"></Button>
-      </View> */}
+/**
+ * @brief Renders a Welcome Screen
+ * @param {*} navigation A navigation object
+ */
+function WelcomeScreen({ navigation }) {
+    return (
+        <ImageBackground
+            style={styleSheets.background}
+            source={require('../assets/background.jpg')}
+        >
+            <View style={styleSheets.logo}>
+                <Text style={styleSheets.name}>VaccMe</Text>
+                <Text style={styleSheets.slogan}>
+                    Ditt elektroniska vaccinationsintyg
+                </Text>
+            </View>
 
-      <DefaultButton
-        text="Privat"
-        onPress={() => {
-          alert("You tapped the button!");
-        }}
-      ></DefaultButton>
+            <View style={styleSheets.filler} />
 
-      <DefaultButton
-        text="Företag"
-        onPress={() => {
-          alert("You tapped the button!");
-        }}
-      ></DefaultButton>
-    </ImageBackground>
-  );
+            <View style={styleSheets.keyboardAvoidingView}>
+                <TouchableHighlight
+                    style={styleSheets.touchableHighlight}
+                    onPress={() => {
+                        navigation.navigate('PersonLoginScreen');
+                    }}
+                >
+                    <Text style={styleSheets.touchableHighlightText}>
+                        Privatperson
+                    </Text>
+                </TouchableHighlight>
+                <TouchableHighlight
+                    style={styleSheets.touchableHighlight}
+                    onPress={() => {
+                        navigation.navigate('BusinessLoginScreen');
+                    }}
+                >
+                    <Text style={styleSheets.touchableHighlightText}>
+                        {' '}
+                        Företag{' '}
+                    </Text>
+                </TouchableHighlight>
+            </View>
+        </ImageBackground>
+    );
 }
-
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-  },
-  logo: {
-    alignSelf: "center",
-    position: "absolute",
-    bottom: "80%",
-    alignItems: "center",
-  },
-  name: {
-    fontSize: 70,
-    fontFamily: "oswald-regular",
-    textDecorationLine: "underline",
-    color: "yellow",
-  },
-  slogan: {
-    fontSize: 15,
-    color: "black",
-  },
-  personButton: {
-    bottom: "25%",
-  },
-  businessButton: {
-    bottom: "15%",
-  },
-  button: {
-    width: "70%",
-    height: 70,
-    backgroundColor: "yellow",
-    alignSelf: "center",
-    borderColor: "black",
-    borderWidth: 3,
-    borderRadius: 50,
-    position: "absolute",
-  },
-});
-
 export default WelcomeScreen;
