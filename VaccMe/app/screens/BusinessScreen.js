@@ -1,27 +1,26 @@
 import React from 'react';
-import { Button, ImageBackground } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styleSheets } from '../styleSheets/StyleSheets';
-import PersonHomeScreen from './BusinessHomeScreen';
-import PersonCertScreen from './PersonCertScreen';
-import PersonQrScreen from './PersonQrScreen';
-import PersonBookScreen from './PersonBookScreen';
+import BusinessHomeScreen from './BusinessHomeScreen';
+import BusinessQrScreen from './BusinessQrScreen';
 
-const Tab = createBottomTabNavigator();
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const BusinessTab = createBottomTabNavigator();
+
+/**
+ * @brief Renders a screen for a business user
+ * @param {*} navigation A navigation object
+ * @returns A business screen
+ */
 function BusinessScreen({ navigation }) {
     return (
         <ImageBackground
             style={styleSheets.background}
             source={require('../assets/background.jpg')}
         >
-            <Button
-                title="back"
-                onPress={() => {
-                    navigation.goBack();
-                }}
-            />
-            <Tab.Navigator
+            <BusinessTab.Navigator
                 tabBarOptions={{
                     activeTintColor: '#e91e63',
                     labelStyle: {
@@ -29,17 +28,33 @@ function BusinessScreen({ navigation }) {
                     },
                 }}
             >
-                <Tab.Screen name="Home" component={PersonHomeScreen} />
-                <Tab.Screen
-                    name="MyCertificates"
-                    component={PersonCertScreen}
+                <BusinessTab.Screen
+                    name="Home"
+                    component={BusinessHomeScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="home-outline"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
                 />
-                <Tab.Screen name="QR" component={PersonQrScreen} />
-                <Tab.Screen
-                    name="Book vaccination"
-                    component={PersonBookScreen}
+                <BusinessTab.Screen
+                    name="QR scanner"
+                    component={BusinessQrScreen}
+                    options={{
+                        tabBarIcon: ({ color, size }) => (
+                            <Ionicons
+                                name="camera-outline"
+                                color={color}
+                                size={size}
+                            />
+                        ),
+                    }}
                 />
-            </Tab.Navigator>
+            </BusinessTab.Navigator>
         </ImageBackground>
     );
 }
