@@ -5,36 +5,67 @@ import AuthNavigator from './AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
+import * as Google from 'expo-google-app-auth';
 
+const config = {
+    androidClientId:
+        '821695412865-f6sndakvma08hqnjkqrjpmm7b2da2hmu.apps.googleusercontent.com',
+    iosClientId:
+        '821695412865-jlgaraciuvjk5j86ql00uf2ca0s5mmla.apps.googleusercontent.com',
+    scopes: ['profile', 'email'],
+};
 
 /**
- * @brief Creates an authorization context and an authorization container. 
+ * @brief Creates an authorization context and an authorization container.
  * @returns PersonNavigator or AuthNavigator depending on Authcontext.
  */
 function Navigator() {
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [userToken, setUserToken] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(false);
+    const [personToken, setPersonToken] = React.useState(null);
     const [businessToken, setBusinessToken] = React.useState(null);
-
-    React.useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1000);
-    }, []);
 
     const authContext = React.useMemo(() => {
         return {
-            signIn: () => {
-                setIsLoading(false);
-                setUserToken('something');
+            signInPerson: async () => {
+                setIsLoading(true);
+                //TODO: Should be implemented in a seperate file and called here.
+                //Was not able to manipulate userToken with this in Autherizer.js
+                try {
+                    const result = await Google.logInAsync(config);
+                    console.log(result);
+                    if (result.type === 'success') {
+                        setIsLoading(false);
+                        setPersonToken(result.user.email);
+                    } else {
+                        setIsLoading(false);
+                        setPersonToken(null);
+                    }
+                } catch (e) {
+                    setIsLoading(false);
+                    setPersonToken(null);
+                }
             },
-            signInBusiness: () => {
-                setIsLoading(false);
-                setBusinessToken('something');
+            signInBusiness: async () => {
+                setIsLoading(true);
+                //TODO: Should be implemented in a seperate file and called here.
+                //Was not able to manipulate userToken with this in Autherizer.js
+                try {
+                    const result = await Google.logInAsync(config);
+                    console.log(result);
+                    if (result.type === 'success') {
+                        setIsLoading(false);
+                        setBusinessToken(result.user.email);
+                    } else {
+                        setIsLoading(false);
+                        setBusinessToken(null);
+                    }
+                } catch (e) {
+                    setIsLoading(false);
+                    setBusinessToken(null);
+                }
             },
             signOut: () => {
-                setIsLoading(false);
-                setUserToken(null);
+                setPersonToken(null);
                 setBusinessToken(null);
             },
         };
@@ -45,7 +76,7 @@ function Navigator() {
     }
 
     function chooseNav() {
-        if (userToken) {
+        if (personToken) {
             return <PersonNavigator />;
         }
         if (businessToken) {

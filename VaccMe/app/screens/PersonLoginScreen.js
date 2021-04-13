@@ -13,16 +13,14 @@ import {
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 
-
 /**
  * @brief Renders a user login screen
  * @param {*} navigation The navigation object
  * @returns A user login screen
  */
 function PersonLoginScreen({ navigation }) {
-    const [text, onChangeText] = React.useState();
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
-    const { signIn } = React.useContext(AuthContext);
+    const { signInPerson } = React.useContext(AuthContext);
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -46,23 +44,9 @@ function PersonLoginScreen({ navigation }) {
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={styleSheets.inner}>
-                            <TextInput
-                                style={styleSheets.input}
-                                onChangeText={onChangeText}
-                                value={text}
-                                placeholder="Username"
-                            />
-
-                            <TextInput
-                                style={styleSheets.input}
-                                onChangeText={onChangeText}
-                                value={text}
-                                placeholder="Password"
-                            />
-
                             <TouchableHighlight
                                 style={styleSheets.touchableHighlight}
-                                onPress={() => signIn()}
+                                onPress={() => signInPerson()}
                             >
                                 <Text
                                     style={styleSheets.touchableHighlightText}
@@ -71,16 +55,6 @@ function PersonLoginScreen({ navigation }) {
                                 </Text>
                             </TouchableHighlight>
 
-                            <TouchableHighlight
-                                style={styleSheets.touchableHighlight}
-                                onPress={() => alert('TODO!')}
-                            >
-                                <Text
-                                    style={styleSheets.touchableHighlightText}
-                                >
-                                    register
-                                </Text>
-                            </TouchableHighlight>
                             <TouchableHighlight
                                 style={styleSheets.touchableHighlight}
                                 onPress={() => navigation.goBack()}

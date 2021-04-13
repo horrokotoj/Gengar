@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-
 /**
  * @brief Renders a booking screen
  * @returns A booking screen
@@ -25,9 +24,7 @@ function PersonBookScreen() {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                    <Text style={styleSheets.tabSheetHeader}>
-                        Boka vaccination
-                    </Text>
+                    <Text style={styleSheets.tabSheetHeader}>Boka</Text>
                     <Image
                         style={styleSheets.vardguiden}
                         source={require('../assets/1177.png')}
