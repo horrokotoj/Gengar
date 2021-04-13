@@ -5,6 +5,11 @@ import AuthNavigator from './AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 
+
+/**
+ * @brief Creates an authorization context and an authorization container. 
+ * @returns PersonNavigator or AuthNavigator depending on Authcontext.
+ */
 function Navigator() {
     const [isLoading, setIsLoading] = React.useState(true);
     const [userToken, setUserToken] = React.useState(null);

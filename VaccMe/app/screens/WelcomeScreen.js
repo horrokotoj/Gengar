@@ -4,6 +4,10 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 
 // TODO: Extract hard coded strings from this file ex. vaccMe
 
+/**
+ * @brief Renders a Welcome Screen
+ * @param {*} navigation A navigation object 
+ */
 function WelcomeScreen({ navigation }) {
     return (
         <ImageBackground

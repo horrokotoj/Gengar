@@ -8,7 +8,12 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-function PersonCertScreen(props) {
+
+/**
+ * @brief Renders a user certificate screen
+ * @returns A certificate screen
+ */
+function PersonCertScreen() {
     return (
         <ImageBackground
             style={styleSheets.background}

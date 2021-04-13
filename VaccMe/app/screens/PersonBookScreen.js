@@ -9,7 +9,12 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-function PersonBookScreen(props) {
+
+/**
+ * @brief Renders a booking screen
+ * @returns A booking screen
+ */
+function PersonBookScreen() {
     return (
         <ImageBackground
             style={styleSheets.background}

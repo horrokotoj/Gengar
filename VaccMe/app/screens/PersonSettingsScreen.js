@@ -9,6 +9,11 @@ import {
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 
+
+/**
+ * @brief Renders a setting screen for a user
+ * @returns A settings screen
+ */
 function PersonSettingsScreen() {
     const { signOut } = React.useContext(AuthContext);
     return (

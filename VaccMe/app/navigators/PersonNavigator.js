@@ -4,6 +4,10 @@ import PersonScreen from '../screens/PersonScreen';
 
 const PersonStack = createStackNavigator();
 
+/**
+ * @brief Creates a stack navigator for user screen
+ * @returns A stack navigator for user screen
+ */
 function PersonNavigator() {
     return (
         <PersonStack.Navigator screenOptions={{ header: () => null }}>

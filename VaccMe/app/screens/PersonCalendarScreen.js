@@ -8,7 +8,12 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-function PersonCalendarScreen(props) {
+
+/**
+ * @brief Renders a calendar screen
+ * @returns A calendar screen
+ */
+function PersonCalendarScreen() {
     return (
         <ImageBackground
             style={styleSheets.background}
