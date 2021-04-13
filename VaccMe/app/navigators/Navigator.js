@@ -1,60 +1,60 @@
-import React from "react";
-import Splash from "../screens/Splash";
-import { AuthContext } from "../context/AuthContext";
-import AuthNavigator from "./AuthNavigator";
-import { NavigationContainer } from "@react-navigation/native";
-import PersonNavigator from "./PersonNavigator";
-import BusinessNavigator from "./BusinessNavigator";
+import React from 'react';
+import Splash from '../screens/Splash';
+import { AuthContext } from '../context/AuthContext';
+import AuthNavigator from './AuthNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import PersonNavigator from './PersonNavigator';
+import BusinessNavigator from './BusinessNavigator';
 
 function Navigator() {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [userToken, setUserToken] = React.useState(null);
-  const [businessToken, setBusinessToken] = React.useState(null);
+    const [isLoading, setIsLoading] = React.useState(true);
+    const [userToken, setUserToken] = React.useState(null);
+    const [businessToken, setBusinessToken] = React.useState(null);
 
-  React.useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-  }, []);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setIsLoading(false);
+        }, 1000);
+    }, []);
 
-  const authContext = React.useMemo(() => {
-    return {
-      signIn: () => {
-        setIsLoading(false);
-        setUserToken("something");
-      },
-      signInBusiness: () => {
-        setIsLoading(false);
-        setBusinessToken("something");
-      },
-      signOut: () => {
-        setIsLoading(false);
-        setUserToken(null);
-        setBusinessToken(null);
-      },
-    };
-  }, []);
+    const authContext = React.useMemo(() => {
+        return {
+            signIn: () => {
+                setIsLoading(false);
+                setUserToken('something');
+            },
+            signInBusiness: () => {
+                setIsLoading(false);
+                setBusinessToken('something');
+            },
+            signOut: () => {
+                setIsLoading(false);
+                setUserToken(null);
+                setBusinessToken(null);
+            },
+        };
+    }, []);
 
-  if (isLoading) {
-    return <Splash />;
-  }
-
-  function chooseNav() {
-    if (userToken) {
-      return <PersonNavigator />;
+    if (isLoading) {
+        return <Splash />;
     }
-    if (businessToken) {
-      return <BusinessNavigator />;
-    } else {
-      return <AuthNavigator />;
-    }
-  }
 
-  return (
-    <AuthContext.Provider value={authContext}>
-      <NavigationContainer>{chooseNav()}</NavigationContainer>
-    </AuthContext.Provider>
-  );
+    function chooseNav() {
+        if (userToken) {
+            return <PersonNavigator />;
+        }
+        if (businessToken) {
+            return <BusinessNavigator />;
+        } else {
+            return <AuthNavigator />;
+        }
+    }
+
+    return (
+        <AuthContext.Provider value={authContext}>
+            <NavigationContainer>{chooseNav()}</NavigationContainer>
+        </AuthContext.Provider>
+    );
 }
 
 export default Navigator;
