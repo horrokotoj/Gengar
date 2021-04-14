@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const tabSheetColor = 'rgba(255, 255, 255, 0.5)';
-const mainTextColor = 'yellow';
+const mainTextColor = '#FFDB21';
 const secondaryTextColor = 'black';
 
 export const styleSheets = StyleSheet.create({
@@ -15,9 +15,10 @@ export const styleSheets = StyleSheet.create({
         flex: 1,
     },
     name: {
-        fontSize: 50,
+        fontSize: 60,
         textDecorationLine: 'underline',
         color: mainTextColor,
+        fontFamily: 'oswald-bold',
     },
     slogan: {
         fontSize: 15,
@@ -53,27 +54,38 @@ export const styleSheets = StyleSheet.create({
         alignSelf: 'center',
         borderColor: secondaryTextColor,
         margin: 5,
-        borderWidth: 3,
+        borderWidth: 1.5,
         borderRadius: 50,
         justifyContent: 'center',
     },
     touchableHighlightText: {
         textAlign: 'center',
-        fontSize: 20,
+        fontSize: 22,
+        fontFamily: 'oswald-bold',
+        color: 'white',
+        textShadowColor: 'grey',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
     },
     tabSheet: {
         flex: 5,
         backgroundColor: tabSheetColor,
         height: '70%',
-        width: '70%',
+        width: '80%',
         alignSelf: 'center',
         alignItems: 'center',
     },
     tabSheetHeader: {
-        fontSize: 40,
-        textDecorationLine: 'underline',
+        fontSize: 30,
+        margin: 10,
+        //textDecorationLine: 'underline',
+        textTransform: 'uppercase',
         color: secondaryTextColor,
         opacity: 1,
+        fontFamily: 'oswald-regular',
+        textShadowColor: 'grey',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 4,
     },
     vardguiden: {
         height: 100,
@@ -92,6 +104,12 @@ export const styleSheets = StyleSheet.create({
     containerQR: {
         flex: 1,
         flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
         justifyContent: 'center',
     },
 });
