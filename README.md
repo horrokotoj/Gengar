@@ -85,4 +85,4 @@ Using expo for deployment.
 
 ### Google-api
 
--   `expo installexpo-google-app-auth`
+-   `expo install expo-google-app-auth`
