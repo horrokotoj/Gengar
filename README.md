@@ -82,3 +82,7 @@ Using expo for deployment.
     -   react-native-screens
     -   react-native-safe-area-context
     -   @react-native-community/masked-view
+
+### Google-api
+
+-   `expo installexpo-google-app-auth`
