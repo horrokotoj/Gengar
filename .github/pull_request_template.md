@@ -13,7 +13,6 @@
 
 - [ ] Added tests with new implementations
 - [ ] Proposed code has no tests yet
-- [ ] Tag has been pushed since commit was breaking (Tags are used to backtrack commits)
 
 # Reviewer 1
 
@@ -23,7 +22,6 @@
 - [ ] README is up to date
 - [ ] Code is correctly documented
 - [ ] Code follows style guide
-- [ ] Code passes setup integration test
 - [ ] Pull request is correctly labeled
 - [ ] Issues solved by this pull request have been linked
 
@@ -36,7 +34,6 @@
 - [ ] README is up to date
 - [ ] Code is correctly documented
 - [ ] Code follows style guide
-- [ ] Code passes setup integration test
 - [ ] Pull request is correctly labeled
 - [ ] Issues solved by this pull request have been linked
 
