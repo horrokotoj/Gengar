@@ -15,13 +15,18 @@ export const styleSheets = StyleSheet.create({
         flex: 1,
     },
     name: {
-        fontSize: 60,
+        fontSize: 70,
         textDecorationLine: 'underline',
         color: mainTextColor,
         fontFamily: 'oswald-bold',
+        marginTop: 40,
+    },
+    screenName: {
+        fontSize: 60,
+        marginTop: 10,
     },
     slogan: {
-        fontSize: 15,
+        fontSize: 18,
         color: secondaryTextColor,
     },
     filler: {
@@ -88,7 +93,7 @@ export const styleSheets = StyleSheet.create({
         textShadowRadius: 4,
     },
     vardguiden: {
-        height: 100,
+        height: 150,
         width: 200,
     },
     safe: {

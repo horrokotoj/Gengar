@@ -6,7 +6,7 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 
 /**
  * @brief Renders a Welcome Screen
- * @param {*} navigation A navigation object 
+ * @param {*} navigation A navigation object
  */
 function WelcomeScreen({ navigation }) {
     return (
