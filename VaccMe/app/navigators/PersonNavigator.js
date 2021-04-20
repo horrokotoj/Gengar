@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import PersonScreen from '../screens/PersonScreen';
+import PersonCertInfo from '../screens/PersonCertInfo';
 
 const PersonStack = createStackNavigator();
 
@@ -12,6 +13,10 @@ function PersonNavigator() {
     return (
         <PersonStack.Navigator screenOptions={{ header: () => null }}>
             <PersonStack.Screen name="PersonScreen" component={PersonScreen} />
+            <PersonStack.Screen
+                name="PersonCertInfo"
+                component={PersonCertInfo}
+            />
         </PersonStack.Navigator>
     );
 }
