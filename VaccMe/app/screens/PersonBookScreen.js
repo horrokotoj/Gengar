@@ -21,7 +21,9 @@ function PersonBookScreen() {
         >
             <SafeAreaView style={styleSheets.safe}>
                 <View style={styleSheets.logo}>
-                    <Text style={styleSheets.name}>VaccMe</Text>
+                    <Text style={[styleSheets.name, styleSheets.screenName]}>
+                        VaccMe
+                    </Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}>

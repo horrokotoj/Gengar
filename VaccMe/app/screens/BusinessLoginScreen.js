@@ -30,7 +30,7 @@ function BusinessLoginScreen({ navigation }) {
                 source={require('../assets/background.jpg')}
             >
                 <View style={styleSheets.logo}>
-                    <Text style={styleSheets.name}>VaccMe</Text>
+                    <Text style={styleSheets.screenName}>VaccMe</Text>
                     <Text style={styleSheets.slogan}>
                         Ditt elektroniska vaccinationsintyg
                     </Text>

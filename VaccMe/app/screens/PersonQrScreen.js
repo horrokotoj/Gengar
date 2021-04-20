@@ -1,7 +1,6 @@
 import React from 'react';
-import { ImageBackground, SafeAreaView, StyleSheet } from 'react-native';
+import { ImageBackground, SafeAreaView, Text, View } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
-
 
 /**
  * @brief Renders a QR screen
