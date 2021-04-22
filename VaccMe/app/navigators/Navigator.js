@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
 import * as Google from 'expo-google-app-auth';
+import * as SecureStore from 'expo-secure-store';
 
 const config = {
     androidClientId:
@@ -17,12 +18,101 @@ const config = {
 
 /**
  * @brief Creates an authorization context and an authorization container.
+ * @brief Will check for a user stored in secure store.
+ * @brief Will store a user in secure store on login.
  * @returns PersonNavigator or AuthNavigator depending on Authcontext.
  */
 function Navigator() {
     const [isLoading, setIsLoading] = React.useState(false);
-    const [personToken, setPersonToken] = React.useState(null);
-    const [businessToken, setBusinessToken] = React.useState(null);
+    const [state, dispatch] = React.useReducer(
+        (prevState, action) => {
+            switch (action.type) {
+                case 'RESTORE_TOKEN_PERSON':
+                    return {
+                        ...prevState,
+                        userTokenPerson: action.token,
+                        isLoading: false,
+                    };
+                case 'RESTORE_TOKEN_BUSINESS':
+                    return {
+                        ...prevState,
+                        userTokenBusiness: action.token,
+                        isLoading: false,
+                    };
+                case 'SIGN_IN_PERSON':
+                    return {
+                        ...prevState,
+                        isSignout: false,
+                        userTokenPerson: action.token,
+                    };
+                case 'SIGN_IN_BUSINESS':
+                    return {
+                        ...prevState,
+                        isSignout: false,
+                        userTokenBusiness: action.token,
+                    };
+                case 'SIGN_OUT':
+                    return {
+                        ...prevState,
+                        isSignout: true,
+                        userTokenPerson: null,
+                        userTokenBusiness: null,
+                    };
+            }
+        },
+        {
+            isLoading: true,
+            isSignout: false,
+            userTokenPerson: null,
+            suerTokenBusiness: null,
+        }
+    );
+
+    React.useEffect(() => {
+        // Fetch the token from storage then navigate to our appropriate place
+        const bootstrapAsyncPerson = async () => {
+            let userTokenPerson;
+
+            try {
+                userTokenPerson = await SecureStore.getItemAsync(
+                    'userTokenPerson'
+                );
+            } catch (e) {
+                // Restoring token failed
+            }
+
+            // After restoring token, we may need to validate it in production apps
+
+            // This will switch to the App screen or Auth screen and this loading
+            // screen will be unmounted and thrown away.
+            dispatch({ type: 'RESTORE_TOKEN_PERSON', token: userTokenPerson });
+        };
+
+        bootstrapAsyncPerson();
+
+        const bootstrapAsyncBusiness = async () => {
+            let userTokenBusiness;
+
+            try {
+                userTokenBusiness = await SecureStore.getItemAsync(
+                    'userTokenBusiness'
+                );
+            } catch (e) {
+                // Restoring token failed
+            }
+
+            // After restoring token, we may need to validate it in production apps
+
+            // This will switch to the App screen or Auth screen and this loading
+            // screen will be unmounted and thrown away.
+            dispatch({
+                type: 'RESTORE_TOKEN_BUSINESS',
+                token: userTokenBusiness,
+            });
+        };
+
+        bootstrapAsyncBusiness();
+    }, []);
 
     const authContext = React.useMemo(() => {
         return {
@@ -34,15 +124,22 @@ function Navigator() {
                     const result = await Google.logInAsync(config);
                     console.log(result);
                     if (result.type === 'success') {
+                        await SecureStore.setItemAsync(
+                            'userTokenPerson',
+                            JSON.stringify(result)
+                        );
                         setIsLoading(false);
-                        setPersonToken(result.user.email);
+                        dispatch({
+                            type: 'SIGN_IN_PERSON',
+                            token: JSON.stringify(result),
+                        });
                     } else {
                         setIsLoading(false);
-                        setPersonToken(null);
+                        dispatch({ type: 'SIGN_OUT' });
                     }
                 } catch (e) {
                     setIsLoading(false);
-                    setPersonToken(null);
+                    dispatch({ type: 'SIGN_OUT' });
                 }
             },
             signInBusiness: async () => {
@@ -53,20 +150,28 @@ function Navigator() {
                     const result = await Google.logInAsync(config);
                     console.log(result);
                     if (result.type === 'success') {
+                        await SecureStore.setItemAsync(
+                            'userTokenBusiness',
+                            JSON.stringify(result)
+                        );
                         setIsLoading(false);
-                        setBusinessToken(result.user.email);
+                        dispatch({
+                            type: 'SIGN_IN_BUSINESS',
+                            token: JSON.stringify(result),
+                        });
                     } else {
                         setIsLoading(false);
-                        setBusinessToken(null);
+                        dispatch({ type: 'SIGN_OUT' });
                     }
                 } catch (e) {
                     setIsLoading(false);
-                    setBusinessToken(null);
+                    dispatch({ type: 'SIGN_OUT' });
                 }
             },
             signOut: () => {
-                setPersonToken(null);
-                setBusinessToken(null);
+                SecureStore.deleteItemAsync('userTokenPerson');
+                SecureStore.deleteItemAsync('userTokenBusiness');
+                dispatch({ type: 'SIGN_OUT' });
             },
         };
     }, []);
@@ -76,10 +181,10 @@ function Navigator() {
     }
 
     function chooseNav() {
-        if (personToken) {
+        if (state.userTokenPerson) {
             return <PersonNavigator />;
         }
-        if (businessToken) {
+        if (state.userTokenBusiness) {
             return <BusinessNavigator />;
         } else {
             return <AuthNavigator />;
