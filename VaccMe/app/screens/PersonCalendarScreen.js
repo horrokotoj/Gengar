@@ -7,6 +7,7 @@ import {
     View,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import * as SecureStore from 'expo-secure-store';
 
 /**
  * @brief Renders a calendar screen
