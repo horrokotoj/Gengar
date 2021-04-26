@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import BusinessScreen from '../screens/BusinessScreen';
+import BusinessCertScanned from '../screens/BusinessCertScanned';
 
 const BusinessStack = createStackNavigator();
 
@@ -14,6 +15,10 @@ function BusinessNavigator() {
             <BusinessStack.Screen
                 name="BusinessScreen"
                 component={BusinessScreen}
+            />
+            <BusinessStack.Screen
+                name="BusinessCertScanned"
+                component={BusinessCertScanned}
             />
         </BusinessStack.Navigator>
     );

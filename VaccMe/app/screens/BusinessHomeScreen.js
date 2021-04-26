@@ -8,7 +8,7 @@ import { AuthContext } from '../context/AuthContext';
  * @brief Renders a home screen for a business user
  * @returns A home screen
  */
-function BusinessHomeScreen(props) {
+function BusinessHomeScreen({ navigation }) {
     const { signOut } = React.useContext(AuthContext);
 
     return (
@@ -20,7 +20,19 @@ function BusinessHomeScreen(props) {
                 <View style={styleSheets.logo}>
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
-                <View style={styleSheets.tabSheet}></View>
+                <View style={styleSheets.tabSheet}>
+                    <Text style={styleSheets.tabSheetHeader}>Hem</Text>
+                    <TouchableHighlight
+                        style={styleSheets.touchableHighlight}
+                        onPress={() => {
+                            navigation.navigate('BusinessCertScanned');
+                        }}
+                    >
+                        <Text style={styleSheets.touchableHighlightText}>
+                            Intyg
+                        </Text>
+                    </TouchableHighlight>
+                </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight
                         style={styleSheets.touchableHighlight}
