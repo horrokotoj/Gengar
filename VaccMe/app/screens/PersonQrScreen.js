@@ -8,7 +8,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
  * @brief Renders a QR screen
  * @returns A QR screen
  */
-function PersonQrScreens(props) {
+function PersonQrScreen(props) {
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -43,4 +43,4 @@ function PersonQrScreens(props) {
     );
 }
 
-export default PersonQrScreens;
+export default PersonQrScreen;
