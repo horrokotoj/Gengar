@@ -17,7 +17,14 @@ function BusinessHomeScreen(props) {
             source={require('../assets/background.jpg')}
         >
             <SafeAreaView style={styleSheets.safe}>
-                <View style={styleSheets.tabSheet}></View>
+                <View style={styleSheets.logo}>
+                    <Text style={[styleSheets.name, styleSheets.screenName]}>
+                        VaccMe
+                    </Text>
+                </View>
+                <View style={styleSheets.tabSheet}>
+                    <Text style={styleSheets.tabSheetHeader}> Hem </Text>
+                </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight
                         style={styleSheets.touchableHighlight}

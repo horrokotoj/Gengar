@@ -25,6 +25,15 @@ export const styleSheets = StyleSheet.create({
         fontSize: 60,
         marginTop: 10,
     },
+    business: {
+        fontSize: 50,
+        top: '70%',
+        fontFamily: 'oswald-regular',
+        color: 'white',
+        textShadowColor: 'grey',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 4,
+    },
     slogan: {
         fontSize: 18,
         color: secondaryTextColor,
@@ -123,9 +132,8 @@ export const styleSheets = StyleSheet.create({
         justifyContent: 'center',
     },
     container: {
+        flex: 1,
         width: '100%',
-        paddingTop: 20,
-        paddingBottom: 60,
         shadowOffset: { width: 2, height: 2 },
         shadowColor: 'grey',
         shadowOpacity: 0.5,
@@ -137,7 +145,8 @@ export const styleSheets = StyleSheet.create({
         padding: 20,
         backgroundColor: 'white',
         borderWidth: 1,
-        borderColor: 'grey',
+        borderColor: 'white',
+        borderRadius: 5,
         fontSize: 20,
     },
     text: {
@@ -154,6 +163,7 @@ export const styleSheets = StyleSheet.create({
     },
     vaccinatedText: {
         fontSize: 20,
+        alignSelf: 'center',
     },
     vaccInfo: {
         fontSize: 20,
@@ -161,10 +171,4 @@ export const styleSheets = StyleSheet.create({
         padding: 10,
         margin: 5,
     },
-    /*container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },*/
 });

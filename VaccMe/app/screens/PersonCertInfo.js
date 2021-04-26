@@ -23,17 +23,22 @@ function PersonInfoCert({ navigation }) {
         >
             <SafeAreaView style={styleSheets.safe}>
                 <View style={styleSheets.logo}>
-                    <Text style={styleSheets.name}>VaccMe</Text>
+                    <Text style={[styleSheets.name, styleSheets.screenName]}>
+                        VaccMe
+                    </Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Intyg info </Text>
                     <View style={styleSheets.vaccinated}>
                         <Text style={styleSheets.vaccinatedText}>
                             {' '}
-                            Covid-19 vaccinerad{'       '}
+                            Covid-19 vaccinerad{'   '}
                             <Ionicons
                                 name="checkmark-circle"
-                                style={{ color: 'black', fontSize: 24 }}
+                                style={{
+                                    color: 'black',
+                                    fontSize: 30,
+                                }}
                             />
                         </Text>
                     </View>
