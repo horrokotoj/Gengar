@@ -22,6 +22,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-40.0.1.tar.gz",
     "react-native-barcode-mask": "^1.2.4",
     "react-native-camera": "^3.43.3",
+    "react-native-custom-qr-codes-expo": "^2.2.0",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-permissions": "^3.0.1",
     "react-native-qrcode-scanner": "^1.5.3",
