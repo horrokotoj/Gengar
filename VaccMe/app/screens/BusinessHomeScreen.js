@@ -29,7 +29,7 @@ function BusinessHomeScreen({ navigation }) {
                         }}
                     >
                         <Text style={styleSheets.touchableHighlightText}>
-                            Intyg
+                            Covid-19
                         </Text>
                     </TouchableHighlight>
                 </View>
