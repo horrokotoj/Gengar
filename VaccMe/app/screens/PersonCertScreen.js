@@ -8,21 +8,34 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import * as SecureStore from 'expo-secure-store';
+
 
 /**
  * @brief Renders a user certificate screen
  * @returns A certificate screen
  */
 function PersonCertScreen() {
-    const [isLoadingUrl, setLoadingUrl] = useState(true);
-    const [dataUrl, setData] = useState([]);
+    const [isLoadingUrl, setLoadingUrl] = React.useState(true);
+    const [dataUrl, setData] = React.useState([]);
+    const [userId, setUserId] = React.useState(null);
 
     //Fetching our data from the url
     useEffect(() => {
+        const getUserId = async () => {
+            let dataId;
+            try {
+                dataId = await SecureStore.getItemAsync('userId');
+            }catch (e) {
+
+            }
+            setUserId(dataId);
+        }
+
         const getMoviesFromApiAsync = async () => {
             try {
                 let response = await fetch(
-                    'http://10.0.2.2:8000/userdata/234385785823438578589'
+                    'http://127.0.0.1:8000/userdata/234385785823438578589'
                 );
                 let json = await response.json();
                 setLoadingUrl(false);
@@ -31,7 +44,7 @@ function PersonCertScreen() {
                 console.error(error);
             }
         };
-
+        getUserId();
         getMoviesFromApiAsync();
     }, []);
     return (
@@ -45,6 +58,7 @@ function PersonCertScreen() {
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
+                    <Text>UserId: {userId}</Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, ImageBackground, SafeAreaView, Text } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
@@ -7,8 +7,8 @@ import { styleSheets } from '../styleSheets/StyleSheets';
  * @returns A QR screen
  */
 function PersonQrScreens() {
-    const [isLoadingUrl, setLoadingUrl] = useState(true);
-    const [dataUrl, setData] = useState([]);
+    const [isLoadingUrl, setLoadingUrl] = React.useState(true);
+    const [dataUrl, setData] = React.useState([]);
 
     //Fetching our data from the url
     useEffect(() => {
