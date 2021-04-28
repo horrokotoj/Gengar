@@ -6,6 +6,7 @@ import {
     Text,
     View,
     Linking,
+    TouchableHighlight
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
@@ -25,15 +26,16 @@ function PersonBookScreen() {
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}>Boka</Text>
-                    <Image
-                        style={styleSheets.vardguiden}
-                        source={require('../assets/1177.png')}
-                        onPress={() =>
+                    <TouchableHighlight onPress={() =>
                             Linking.openURL(
                                 'https://www.1177.se/behandling--hjalpmedel/vaccinationer/'
-                            )
-                        }
-                    ></Image>
+                            )}
+                            >
+                            <Image
+                            style={styleSheets.vardguiden}
+                            source={require('../assets/1177.png')}
+                            ></Image>
+                        </TouchableHighlight>
                 </View>
                 <View style={styleSheets.filler}></View>
             </SafeAreaView>
