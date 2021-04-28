@@ -13,7 +13,6 @@ import {
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 
-
 /**
  * @brief Renders a user login screen
  * @param {*} navigation The navigation object
