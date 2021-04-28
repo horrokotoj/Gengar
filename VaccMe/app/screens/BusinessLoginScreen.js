@@ -19,7 +19,6 @@ import { AuthContext } from '../context/AuthContext';
  * @returns A login screen for business users
  */
 function BusinessLoginScreen({ navigation }) {
-    const [text, onChangeText] = React.useState();
     const keyboardVerticalOffset = Platform.OS === 'ios' ? 40 : 0;
     const { signInBusiness } = React.useContext(AuthContext);
 
@@ -46,20 +45,6 @@ function BusinessLoginScreen({ navigation }) {
                 >
                     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                         <View style={styleSheets.inner}>
-                            <TextInput
-                                style={styleSheets.input}
-                                onChangeText={onChangeText}
-                                value={text}
-                                placeholder="Username"
-                            />
-
-                            <TextInput
-                                style={styleSheets.input}
-                                onChangeText={onChangeText}
-                                value={text}
-                                placeholder="Password"
-                            />
-
                             <TouchableHighlight
                                 style={styleSheets.touchableHighlight}
                                 onPress={() => signInBusiness()} // TODO: Business login!
@@ -68,17 +53,6 @@ function BusinessLoginScreen({ navigation }) {
                                     style={styleSheets.touchableHighlightText}
                                 >
                                     login
-                                </Text>
-                            </TouchableHighlight>
-
-                            <TouchableHighlight
-                                style={styleSheets.touchableHighlight}
-                                onPress={() => alert('TODO!')}
-                            >
-                                <Text
-                                    style={styleSheets.touchableHighlightText}
-                                >
-                                    register
                                 </Text>
                             </TouchableHighlight>
                             <TouchableHighlight

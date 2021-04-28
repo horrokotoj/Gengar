@@ -78,6 +78,7 @@ export const styleSheets = StyleSheet.create({
     vardguiden: {
         height: 100,
         width: 200,
+        margin: 50,
     },
     safe: {
         flex: 1,
