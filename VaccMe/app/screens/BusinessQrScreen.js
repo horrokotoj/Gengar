@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import * as SecureStore from 'expo-secure-store';
 
 /**
  * @brief Renders a QR-code scanner for a business user

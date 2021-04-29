@@ -4,6 +4,9 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 
+//TODO: Intyg ska va en flatlist (från front_end_home_page) och
+//covid-knappen ska nagivera till qr scanner som sparar datan
+
 /**
  * @brief Renders a home screen for a business user
  * @returns A home screen
