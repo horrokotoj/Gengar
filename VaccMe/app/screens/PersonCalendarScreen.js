@@ -5,6 +5,7 @@ import {
     Text,
     TouchableHighlight,
     View,
+    ScrollView
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
@@ -15,14 +16,17 @@ import * as SecureStore from 'expo-secure-store';
  */
 function PersonCalendarScreen() {
     const [userTokenPerson, setUserTokenPerson] = React.useState(null);
+    const [userId, setUserId] = React.useState(null);
+    const [userName, setUserName] = React.useState(null);
+
 
     React.useEffect(() => {
         // Fetch the token from storage then navigate to our appropriate place
         const getUserTokenPerson = async () => {
-            let data;
+            let dataToken;
 
             try {
-                data = await SecureStore.getItemAsync('userTokenPerson');
+                dataToken = await SecureStore.getItemAsync('userTokenPerson');
             } catch (e) {
                 // Restoring token failed
             }
@@ -31,10 +35,41 @@ function PersonCalendarScreen() {
 
             // This will switch to the App screen or Auth screen and this loading
             // screen will be unmounted and thrown away.
-            setUserTokenPerson(data);
+            setUserTokenPerson(dataToken);
         };
 
+        const getUserID = async () => {
+            let dataId;
+
+            try {
+                dataId = await SecureStore.getItemAsync('userId');
+            } catch (e) {
+                // Restoring token failed
+            }
+
+            // After restoring token, we may need to validate it in production apps
+
+            // This will switch to the App screen or Auth screen and this loading
+            // screen will be unmounted and thrown away.
+            setUserId(dataId);
+        };
+
+        const getUserName = async () => {
+            let dataName;
+
+            try {
+                dataName = await SecureStore.getItemAsync('userName');
+            } catch (e) {
+
+            }
+            setUserName(dataName);
+        }
+
         getUserTokenPerson();
+
+        getUserID();
+
+        getUserName();
     }, []);
 
     return (
@@ -48,7 +83,11 @@ function PersonCalendarScreen() {
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Kalender </Text>
-                    <Text>{userTokenPerson}</Text>
+                    <ScrollView>
+                    <Text>IdToken: {userTokenPerson}</Text>
+                    <Text>UserId: {userId}</Text>
+                    <Text>UserName: {userName}</Text>
+                    </ScrollView>
                 </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight style={styleSheets.touchableHighlight}>

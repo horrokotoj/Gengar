@@ -76,7 +76,7 @@ export const styleSheets = StyleSheet.create({
         opacity: 1,
     },
     vardguiden: {
-        height: 100,
+        height: 200,
         width: 200,
         margin: 50,
     },

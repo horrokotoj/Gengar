@@ -126,8 +126,16 @@ function Navigator() {
                     if (result.type === 'success') {
                         await SecureStore.setItemAsync(
                             'userTokenPerson',
-                            JSON.stringify(result)
+                            result.idToken
                         );
+                        await SecureStore.setItemAsync(
+                            'userId',
+                            result.user.id
+                        );
+                        await SecureStore.setItemAsync(
+                            'userName',
+                            result.user.name
+                        )
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN_PERSON',
@@ -171,6 +179,7 @@ function Navigator() {
             signOut: () => {
                 SecureStore.deleteItemAsync('userTokenPerson');
                 SecureStore.deleteItemAsync('userTokenBusiness');
+                SecureStore.deleteItemAsync('userCert');
                 dispatch({ type: 'SIGN_OUT' });
             },
         };
@@ -182,6 +191,7 @@ function Navigator() {
 
     function chooseNav() {
         if (state.userTokenPerson) {
+            //TODO: run some kind of function updating stored certificates.
             return <PersonNavigator />;
         }
         if (state.userTokenBusiness) {
