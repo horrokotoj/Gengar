@@ -32,20 +32,39 @@ function PersonCertScreen() {
             setUserId(dataId);
         }
 
-        const getMoviesFromApiAsync = async () => {
+        getUserId();
+
+        const getCerts = async () => {
+            let dataCerts
             try {
                 let response = await fetch(
-                    'http://127.0.0.1:8000/userdata/234385785823438578589'
-                );
+                    'http://127.0.0.1:8000/userdata', {
+                        method: 'POST',
+                        headers: {
+                          Accept: 'application/json',
+                          'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                          googleuserid: '234385785823438578589'
+                        }),
+                      });
                 let json = await response.json();
+                await SecureStore.setItemAsync('userCert', json)
+                console.log("done request");
+                dataCerts = await SecureStore.getItemAsync('userCert');
+                console.log(dataCerts);
+                setData(JSON.parse(dataCerts).certificates);
                 setLoadingUrl(false);
-                setData(json.certificates);
             } catch (error) {
                 console.error(error);
+                dataCerts = await SecureStore.getItemAsync('userCert');
+                console.log(dataCerts);
+                setData(JSON.parse(dataCerts).certificates);
+                setLoadingUrl(false);
             }
         };
-        getUserId();
-        getMoviesFromApiAsync();
+
+        getCerts();
     }, []);
     return (
         <ImageBackground
@@ -64,7 +83,7 @@ function PersonCertScreen() {
                     ) : (
                         <FlatList
                             data={dataUrl}
-                            keyExtractor={({ id }, index) => id}
+                            keyExtractor={item => item.name}
                             renderItem={({ item }) => (
                                 <Text>
                                     {item.name}, {item.expirationdate}

@@ -179,6 +179,7 @@ function Navigator() {
             signOut: () => {
                 SecureStore.deleteItemAsync('userTokenPerson');
                 SecureStore.deleteItemAsync('userTokenBusiness');
+                SecureStore.deleteItemAsync('userCert');
                 dispatch({ type: 'SIGN_OUT' });
             },
         };
