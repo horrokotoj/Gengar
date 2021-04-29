@@ -70,6 +70,10 @@ Using expo for deployment.
 
 -   Barcode scanner: `expo install expo-barcode-scanner`
 
+```bash
+expo install expo-barcode-scanner
+```
+
 ### Navigation and tab bar
 
 -   `npm install`
@@ -82,8 +86,24 @@ Using expo for deployment.
     -   react-native-screens
     -   react-native-safe-area-context
     -   @react-native-community/masked-view
-        expo-secure-store
+    -   expo-secure-store
+    -   react-native-qrcode-svg
+
+```bash
+npm install @react-navigation/native @react-navigation/stack @react-navigation/bottom-tabs
+```
+
+```bash
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view expo-secure-store react-native-qrcode-svg
+```
+
+In some cases the react-native-qrcode-svg need the flag --legacy-peer-deps.
+`TODO:` What cases?
 
 ### Google-api
 
 -   `expo install expo-google-app-auth`
+
+```bash
+expo install expo-google-app-auth
+```
