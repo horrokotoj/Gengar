@@ -13,6 +13,8 @@ import * as SecureStore from 'expo-secure-store';
 
 /**
  * @brief Renders a user certificate screen
+ * @brief Fetches user certificates and store in secure store
+ * @brief Renders flatlist of certificates in secure store
  * @returns A certificate screen
  */
 function PersonCertScreen() {
@@ -45,7 +47,7 @@ function PersonCertScreen() {
                           'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                          googleuserid: '234385785823438578589'
+                          googleuserid: '234385785823438578589' //userid är hårdkodad
                         }),
                       });
                 let json = await response.json();
