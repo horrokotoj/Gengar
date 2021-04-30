@@ -28,7 +28,7 @@ function PersonCertScreen() {
             let dataId;
             try {
                 dataId = await SecureStore.getItemAsync('userId');
-            }catch (e) {
+            } catch (e) {
 
             }
             setUserId(dataId);
@@ -37,7 +37,7 @@ function PersonCertScreen() {
         getUserId();
 
         const getCerts = async () => {
-            let dataCerts
+            let dataCerts;
             try {
                 let response = await fetch(
                     'http://127.0.0.1:8000/userdata', {
@@ -47,14 +47,14 @@ function PersonCertScreen() {
                           'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                          googleuserid: '234385785823438578589' //userid är hårdkodad
+                          googleuserid: '234385785823438578589'     //TODO: userid är hårdkodad
                         }),
                       });
                 let json = await response.json();
                 await SecureStore.setItemAsync('userCert', json)
-                console.log("done request");
+                console.log("done request");                        //TODO: Remove after debugging
                 dataCerts = await SecureStore.getItemAsync('userCert');
-                console.log(dataCerts);
+                console.log(dataCerts);                             //TODO: Remove after debugging
                 setData(JSON.parse(dataCerts).certificates);
                 setLoadingUrl(false);
             } catch (error) {
@@ -68,6 +68,7 @@ function PersonCertScreen() {
 
         getCerts();
     }, []);
+    
     return (
         <ImageBackground
             style={styleSheets.background}
