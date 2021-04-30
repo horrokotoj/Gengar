@@ -1,70 +1,58 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
     ImageBackground,
     SafeAreaView,
     Text,
     TouchableHighlight,
-    View,
+    View
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
-
+import UpdateCertificates from '../network/UpdateCertificates';
 
 /**
  * @brief Renders a user certificate screen
- * @brief Fetches user certificates and store in secure store
- * @brief Renders flatlist of certificates in secure store
+ * @brief Will render a list of certificates sorted by name from securestore.
  * @returns A certificate screen
  */
 function PersonCertScreen() {
     const [isLoadingUrl, setLoadingUrl] = React.useState(true);
     const [dataUrl, setData] = React.useState([]);
-    const [userId, setUserId] = React.useState(null);
 
-    //Fetching our data from the url
-    useEffect(() => {
-        const getUserId = async () => {
-            let dataId;
-            try {
-                dataId = await SecureStore.getItemAsync('userId');
-            } catch (e) {
-
-            }
-            setUserId(dataId);
+    const getCerts = async () => {
+        let dataCerts;
+        try {
+            dataCerts = await SecureStore.getItemAsync('userCert');
+            console.log(dataCerts);
+            setData(JSON.parse(dataCerts).certificates);
+            setLoadingUrl(false);
+        } catch (error) {
+            console.error(error);
         }
+    }
 
-        getUserId();
+    const updateCerts = async () => {
+        let userId
+        try {
+            userId = await SecureStore.getItemAsync('userId');
+            UpdateCertificates(userId)
+            console.log("Updated via UpdateCertificates");
+            getCerts();
+        } catch (error) {
+            console.error(error);
+            getCerts();
+        }
+    };
 
-        const getCerts = async () => {
-            let dataCerts;
-            try {
-                let response = await fetch(
-                    'http://127.0.0.1:8000/userdata', {
-                        method: 'POST',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          googleuserid: '234385785823438578589'     //TODO: userid är hårdkodad
-                        }),
-                      });
-                let json = await response.json();
-                await SecureStore.setItemAsync('userCert', json)
-                console.log("done request");                        //TODO: Remove after debugging
-                dataCerts = await SecureStore.getItemAsync('userCert');
-                console.log(dataCerts);                             //TODO: Remove after debugging
-                setData(JSON.parse(dataCerts).certificates);
-                setLoadingUrl(false);
-            } catch (error) {
-                console.error(error);
-                dataCerts = await SecureStore.getItemAsync('userCert');
-                console.log(dataCerts);
-                setData(JSON.parse(dataCerts).certificates);
-                setLoadingUrl(false);
-            }
-        };
+
+    React.useEffect(() => {
+        
+        getCerts();
+    }, []);
+    //Fetching our data from the url
+    React.useEffect(() => {
+        
 
         getCerts();
     }, []);
@@ -79,26 +67,25 @@ function PersonCertScreen() {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                    <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
-                    <Text>UserId: {userId}</Text>
+                <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
                         <FlatList
-                            data={dataUrl}
+                            data={dataUrl.sort((a,b)=> a.name.localeCompare(b.name))}
                             keyExtractor={item => item.name}
                             renderItem={({ item }) => (
                                 <Text>
-                                    {item.name}, {item.expirationdate}
+                                    {item.name}, {item.registerdate}
                                 </Text>
                             )}
                         />
                     )}
                 </View>
                 <View style={styleSheets.filler}>
-                    <TouchableHighlight style={styleSheets.touchableHighlight}>
+                    <TouchableHighlight style={styleSheets.touchableHighlight} onPress={() => {updateCerts();}}>
                         <Text style={styleSheets.touchableHighlightText}>
-                            Lägg till intyg
+                            Uppdatera
                         </Text>
                     </TouchableHighlight>
                 </View>
