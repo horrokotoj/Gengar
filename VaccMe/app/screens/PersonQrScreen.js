@@ -12,52 +12,21 @@ import { FlatList } from 'react-native-gesture-handler';
  * @returns A QR screen
  */
 function PersonQrScreens(props) {
-    const [isLoadingUrl, setLoadingUrl] = React.useState(true);
+    const [isLoadingQr, setLoadingQr] = React.useState(true);
     const [dataQRstring, setQr] = React.useState(null);
 
     //Fetching our data from the url
-    React.useEffect(() => {
-        // Retrieving the user id to be sent to the server
-        const getUserId = async () => {        
-            let dataId;
-            try {
-                dataId = await SecureStore.getItemAsync('userId');
-            } catch (e) {
+    React.useEffect(() => { 
 
-            }
-            setUserId(dataId);
-        }
-
-        getUserId(); 
-
-        // Fetching the qrString from the server, adding it to secureStore
         const getQrString = async () => {
             let qrString;
             try {
-                let response = await fetch(
-                    'http://127.0.0.1:8000/getqr', {
-                        method: 'POST',
-                        headers: {
-                          Accept: 'application/json',
-                          'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                          googleuserid: '234385785823438578589'         //TODO: userid är hårdkodad
-                        }),
-                      });
-                let json = await response.json();
-                await SecureStore.setItemAsync('userQR', json)
-                console.log("done request and saved to secure store");  //TODO: Remove after debugging
-                qrString = await SecureStore.getItemAsync('userQR');
+                qrString = await SecureStore.getItemAsync('userTokenPerson');
                 console.log(qrString);                                  //TODO: Remove after debugging
-                setQr(JSON.parse(qrString).qrcode);
-                setLoadingUrl(false);
+                setQr(qrString);
+                setLoadingQr(false);
             } catch (error) {
                 console.error(error);
-                qrString = await SecureStore.getItemAsync('userQR');
-                console.log(qrString);
-                setQr(JSON.parse(qrString).qrcode);
-                setLoadingUrl(false);
             }
         };
 
@@ -70,8 +39,9 @@ function PersonQrScreens(props) {
             source={require('../assets/background.jpg')}
         >
             <SafeAreaView style={styleSheets.safe}>
-            <Text>dataQRstring= {dataQRstring}</Text>
-                {/* <QRCode
+                {isLoadingQr ? 
+                <Text>Loading qr-code</Text> : 
+                <QRCode
                     //QR code value
                     value={dataQRstring}
                     //size of QR Code
@@ -81,10 +51,7 @@ function PersonQrScreens(props) {
                     //Background Color of the QR Code (Optional)
                     backgroundColor="white"
                     //Logo of in the center of QR Code (Optional)
-                    //logo={{
-                    //    url:
-                    //        'https://www.iconfinder.com/icons/2924061/science_shot_srynge_vaccination_vaccine_icon',
-                    //}}
+                    /*logo={{ url:'https://www.iconfinder.com/icons/2924061/science_shot_srynge_vaccination_vaccine_icon'}}*/
                     //Center Logo size  (Optional)
                     logoSize={30}
                     //Center Logo margin (Optional)
@@ -93,7 +60,9 @@ function PersonQrScreens(props) {
                     logoBorderRadius={15}
                     //Center Logo background (Optional)
                     logoBackgroundColor="white"
-                    /> */}
+                />
+                }
+            
             </SafeAreaView>
         </ImageBackground>
     );
