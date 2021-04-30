@@ -25,7 +25,7 @@ function PersonCalendarScreen() {
         let dataCerts;
         try {
             dataCerts = await SecureStore.getItemAsync('userCert');
-            //console.log(dataCerts);
+            console.log(dataCerts);
             setData(JSON.parse(dataCerts).certificates);
             setLoadingUrl(false);
         } catch (error) {

@@ -80,6 +80,7 @@ expo install expo-barcode-scanner
     -   @react-navigation/native
     -   @react-navigation/stack
     -   @react-navigation/bottom-tabs
+    -   react-native-qrcode-svg (--legacy-peer-deps)
 -   `expo install`
     -   react-native-reanimated
     -   react-native-gesture-handler
@@ -87,7 +88,6 @@ expo install expo-barcode-scanner
     -   react-native-safe-area-context
     -   @react-native-community/masked-view
     -   expo-secure-store
-    -   react-native-qrcode-svg
 
 ```bash
 npm install @react-navigation/native @react-navigation/stack @react-navigation/bottom-tabs

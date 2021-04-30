@@ -9,6 +9,7 @@ function DeleteItems() {
     SecureStore.deleteItemAsync('userCert');
     SecureStore.deleteItemAsync('userId');
     SecureStore.deleteItemAsync('userName');
+    SecureStore.deleteItemAsync('userQrString');
 }
 
 export default DeleteItems;

@@ -75,6 +75,15 @@ export const styleSheets = StyleSheet.create({
         color: secondaryTextColor,
         opacity: 1,
     },
+    qrSheet: {
+        flex: 5,
+        height: '70%',
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+    qrCode: {
+        marginTop: 500,
+    },
     vardguiden: {
         height: 200,
         width: 200,
