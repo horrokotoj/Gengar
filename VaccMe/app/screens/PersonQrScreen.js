@@ -56,29 +56,25 @@ function PersonQrScreens(props) {
             source={require('../assets/background.jpg')}
         >
             <SafeAreaView style={styleSheets.safe}>
-            <View style={styleSheets.logo}>
+                <View style={styleSheets.logo}>
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.qrSheet}>
-                {isLoadingQr ? 
-                <Text>Loading qr-code</Text> : 
-                <QRCode
-                    //QR code value
+                    {isLoadingQr ? 
+                    <Text>Loading qr-code</Text> : 
+                    <QRCode
                     value={dataQRstring}
-                    //size of QR Code
                     size={360}
                     style={styleSheets.qrCode}
-                />
-                }
-                {isLoadingQr ? 
+                    />
+                    }
+                    {isLoadingQr ? 
                     <Text>Loading qr-code</Text> : 
                     <Text style={{alignSelf: 'center'}}>Qr code = {dataQRstring}</Text>
-
                     }
-
                 </View>
 
-            <View style={styleSheets.filler}>
+                <View style={styleSheets.filler}>
                     <TouchableHighlight style={styleSheets.touchableHighlight} onPress={() => {updateQrString();}}>
                         <Text style={styleSheets.touchableHighlightText}>
                             Uppdatera

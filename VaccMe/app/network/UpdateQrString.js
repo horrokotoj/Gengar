@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 
 /**
- * @breif Updates a users qr string
+ * @brief Updates a users qr string
  * @param userID of the user to fetch qr string for.
  */
 async function UpdateQrString(userId) {
@@ -17,7 +17,7 @@ async function UpdateQrString(userId) {
                 body: JSON.stringify({
                     googleuserid: "" + userId
                 }),
-                });
+            });
         let json = await response.json();
         await SecureStore.setItemAsync('userQrString', "https://svd.se"); //TODO replace url with reply from request
     } catch (e) {

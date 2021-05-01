@@ -1,7 +1,7 @@
 import * as SecureStore from 'expo-secure-store';
 
 /**
- * @breif Updates a users certificates
+ * @brief Updates a users certificates
  * @param userID of the user to fetch certificates for.
  */
 async function UpdateCertificates(userId) {
