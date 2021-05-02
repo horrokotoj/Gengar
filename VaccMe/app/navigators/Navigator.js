@@ -7,6 +7,9 @@ import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
 import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
+import UpdateCertificates from '../network/UpdateCertificates';
+import DeleteItems from '../secureStore/DeleteItems';
+import StoreItem from '../secureStore/StoreItems';
 
 const config = {
     androidClientId:
@@ -19,7 +22,7 @@ const config = {
 /**
  * @brief Creates an authorization context and an authorization container.
  * @brief Will check for a user stored in secure store.
- * @brief Will store a user in secure store on login.
+ * @brief Will store a user in secure store on login and fetch a persons certificates from the server.
  * @returns PersonNavigator or AuthNavigator depending on Authcontext.
  */
 function Navigator() {
@@ -72,11 +75,19 @@ function Navigator() {
         // Fetch the token from storage then navigate to our appropriate place
         const bootstrapAsyncPerson = async () => {
             let userTokenPerson;
+            let userId;
 
             try {
                 userTokenPerson = await SecureStore.getItemAsync(
                     'userTokenPerson'
                 );
+                userId = await SecureStore.getItemAsync('userId');
+                if (userId) {
+                    await UpdateCertificates(userId);
+                    console.log("request done in bootstrap");
+
+                }
+                
             } catch (e) {
                 // Restoring token failed
             }
@@ -124,18 +135,11 @@ function Navigator() {
                     const result = await Google.logInAsync(config);
                     console.log(result);
                     if (result.type === 'success') {
-                        await SecureStore.setItemAsync(
-                            'userTokenPerson',
-                            result.idToken
-                        );
-                        await SecureStore.setItemAsync(
-                            'userId',
-                            result.user.id
-                        );
-                        await SecureStore.setItemAsync(
-                            'userName',
-                            result.user.name
-                        )
+                        //Stores relevant information on SecureStore
+                        await StoreItem(result);
+                        //Fetches the users certificates
+                        await UpdateCertificates(result.user.id);
+                        console.log("request done");
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN_PERSON',
@@ -146,6 +150,8 @@ function Navigator() {
                         dispatch({ type: 'SIGN_OUT' });
                     }
                 } catch (e) {
+                    console.log(e);
+                    alert("Sign in failed, check internet connection.")
                     setIsLoading(false);
                     dispatch({ type: 'SIGN_OUT' });
                 }
@@ -177,9 +183,7 @@ function Navigator() {
                 }
             },
             signOut: () => {
-                SecureStore.deleteItemAsync('userTokenPerson');
-                SecureStore.deleteItemAsync('userTokenBusiness');
-                SecureStore.deleteItemAsync('userCert');
+                DeleteItems();
                 dispatch({ type: 'SIGN_OUT' });
             },
         };

@@ -4,72 +4,52 @@ import {
     SafeAreaView,
     Text,
     TouchableHighlight,
-    View,
-    ScrollView
+    View
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
+import { FlatList } from 'react-native-gesture-handler';
+import UpdateCertificates from '../network/UpdateCertificates';
 
 /**
  * @brief Renders a calendar screen
+ * @brief Will render a list of certificates sorted by expirationdate from securestore.
  * @returns A calendar screen
  */
 function PersonCalendarScreen() {
-    const [userTokenPerson, setUserTokenPerson] = React.useState(null);
-    const [userId, setUserId] = React.useState(null);
-    const [userName, setUserName] = React.useState(null);
+
+    const [isLoadingUrl, setLoadingUrl] = React.useState(true);
+    const [dataUrl, setData] = React.useState([]);
+
+    const getCerts = async () => {
+        let dataCerts;
+        try {
+            dataCerts = await SecureStore.getItemAsync('userCert');
+            //console.log(dataCerts);
+            setData(JSON.parse(dataCerts).certificates);
+            setLoadingUrl(false);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const updateCerts = async () => {
+        let userId
+        try {
+            userId = await SecureStore.getItemAsync('userId');
+            UpdateCertificates(userId)
+            console.log("Updated via UpdateCertificates");
+            getCerts();
+        } catch (error) {
+            console.error(error);
+            getCerts();
+        }
+    };
 
 
     React.useEffect(() => {
-        // Fetch the token from storage then navigate to our appropriate place
-        const getUserTokenPerson = async () => {
-            let dataToken;
-
-            try {
-                dataToken = await SecureStore.getItemAsync('userTokenPerson');
-            } catch (e) {
-                // Restoring token failed
-            }
-
-            // After restoring token, we may need to validate it in production apps
-
-            // This will switch to the App screen or Auth screen and this loading
-            // screen will be unmounted and thrown away.
-            setUserTokenPerson(dataToken);
-        };
-
-        const getUserID = async () => {
-            let dataId;
-
-            try {
-                dataId = await SecureStore.getItemAsync('userId');
-            } catch (e) {
-                // Restoring token failed
-            }
-
-            // After restoring token, we may need to validate it in production apps
-
-            // This will switch to the App screen or Auth screen and this loading
-            // screen will be unmounted and thrown away.
-            setUserId(dataId);
-        };
-
-        const getUserName = async () => {
-            let dataName;
-
-            try {
-                dataName = await SecureStore.getItemAsync('userName');
-            } catch (e) {
-
-            }
-            setUserName(dataName);
-        }
-
-        getUserTokenPerson();
-
-        getUserID();
-
-        getUserName();
+        
+        getCerts();
     }, []);
 
     return (
@@ -83,16 +63,24 @@ function PersonCalendarScreen() {
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Kalender </Text>
-                    <ScrollView>
-                    <Text>IdToken: {userTokenPerson}</Text>
-                    <Text>UserId: {userId}</Text>
-                    <Text>UserName: {userName}</Text>
-                    </ScrollView>
+                    {isLoadingUrl ? (
+                        <Text>Loading url</Text>
+                    ) : (
+                        <FlatList
+                            data={dataUrl.sort((a,b)=> a.expirationdate.localeCompare(b.expirationdate))}
+                            keyExtractor={item => item.name}
+                            renderItem={({ item }) => (
+                                <Text>
+                                    {item.name}, {item.expirationdate}
+                                </Text>
+                            )}
+                        />
+                    )}
                 </View>
                 <View style={styleSheets.filler}>
-                    <TouchableHighlight style={styleSheets.touchableHighlight}>
+                    <TouchableHighlight style={styleSheets.touchableHighlight} onPress={() => {updateCerts();}}>
                         <Text style={styleSheets.touchableHighlightText}>
-                            Lägg till i kalendern
+                            Uppdatera
                         </Text>
                     </TouchableHighlight>
                 </View>
