@@ -102,8 +102,9 @@ export const styleSheets = StyleSheet.create({
         textShadowRadius: 4,
     },
     vardguiden: {
-        height: 150,
+        height: 200,
         width: 200,
+        margin: 50,
     },
     safe: {
         flex: 1,

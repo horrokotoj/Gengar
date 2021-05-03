@@ -6,14 +6,12 @@ import { styleSheets } from '../styleSheets/StyleSheets';
  * @brief Renders a QR screen
  * @returns A QR screen
  */
-function PersonQrScreens(props) {
+function PersonQrScreens() {
     return (
         <ImageBackground
             style={styleSheets.background}
             source={require('../assets/background.jpg')}
-        >
-            <SafeAreaView style={styleSheets.safe}></SafeAreaView>
-        </ImageBackground>
+        ></ImageBackground>
     );
 }
 
