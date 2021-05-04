@@ -1,11 +1,15 @@
 import React from 'react';
-import { ImageBackground, SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
+import {
+    ImageBackground,
+    SafeAreaView,
+    View,
+    Text,
+    TouchableHighlight,
+} from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import QRCode from 'react-native-qrcode-svg';
 import UpdateQrString from '../network/UpdateQrString';
-
-
 
 /**
  * @brief Renders a QR screen
@@ -20,7 +24,7 @@ function PersonQrScreens(props) {
         let qrString;
         try {
             qrString = await SecureStore.getItemAsync('userQrString');
-            console.log(qrString);                                  //TODO: Remove after debugging
+            console.log(qrString); //TODO: Remove after debugging
             setQr(qrString);
             setLoadingQr(false);
         } catch (error) {
@@ -29,24 +33,20 @@ function PersonQrScreens(props) {
     };
 
     const updateQrString = async () => {
-        let userId
+        let userId;
         try {
             userId = await SecureStore.getItemAsync('userId');
-            UpdateQrString(userId)
-            console.log("Updated via UpdateQrString");
+            UpdateQrString(userId);
+            console.log('Updated via UpdateQrString');
             getQrString();
         } catch (error) {
             console.error(error);
-            alert("Updated from local storage. Check internet connection.");
+            alert('Updated from local storage. Check internet connection.');
             getQrString();
         }
     };
 
-    //Fetching our data from the url
-    React.useEffect(() => { 
-
-        
-
+    React.useEffect(() => {
         getQrString();
     }, []);
 
@@ -60,22 +60,24 @@ function PersonQrScreens(props) {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.qrSheet}>
-                    {isLoadingQr ? 
-                    <Text>Loading qr-code</Text> : 
-                    <QRCode
-                    value={dataQRstring}
-                    size={360}
-                    style={styleSheets.qrCode}
-                    />
-                    }
-                    {isLoadingQr ? 
-                    <Text>Loading qr-code</Text> : 
-                    <Text style={{alignSelf: 'center'}}>Qr code = {dataQRstring}</Text>
-                    }
+                    {isLoadingQr ? (
+                        <Text>Loading qr-code</Text>
+                    ) : (
+                        <QRCode
+                            value={dataQRstring}
+                            size={360}
+                            style={styleSheets.qrCode}
+                        />
+                    )}
                 </View>
 
                 <View style={styleSheets.filler}>
-                    <TouchableHighlight style={styleSheets.touchableHighlight} onPress={() => {updateQrString();}}>
+                    <TouchableHighlight
+                        style={styleSheets.touchableHighlight}
+                        onPress={() => {
+                            updateQrString();
+                        }}
+                    >
                         <Text style={styleSheets.touchableHighlightText}>
                             Uppdatera
                         </Text>
@@ -87,8 +89,6 @@ function PersonQrScreens(props) {
 }
 
 export default PersonQrScreens;
-
-
 
 /* 
 {isLoadingUrl ? (
@@ -105,7 +105,6 @@ export default PersonQrScreens;
     />
 )}
  */
- 
 
 /* const getMoviesFromApiAsync = async () => {
     try {
@@ -122,7 +121,6 @@ export default PersonQrScreens;
 
 getMoviesFromApiAsync();
 }, []); */
-
 
 /* 
 var obj = { name: "John", age: 30, city: "New York" };

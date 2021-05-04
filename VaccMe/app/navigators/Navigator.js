@@ -86,10 +86,8 @@ function Navigator() {
                 if (userId) {
                     await UpdateCertificates(userId);
                     await UpdateQrString(userId);
-                    console.log("request done in bootstrap");
-
+                    console.log('request done in bootstrap');
                 }
-                
             } catch (e) {
                 // Restoring token failed
             }
@@ -142,7 +140,7 @@ function Navigator() {
                         //Fetches the users certificates
                         await UpdateCertificates(result.user.id);
                         await UpdateQrString(result.user.id);
-                        console.log("request done");
+                        console.log('request done');
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN_PERSON',
@@ -154,7 +152,7 @@ function Navigator() {
                     }
                 } catch (e) {
                     console.log(e);
-                    alert("Sign in failed, check internet connection.")
+                    alert('Sign in failed, check internet connection.');
                     setIsLoading(false);
                     dispatch({ type: 'SIGN_OUT' });
                 }

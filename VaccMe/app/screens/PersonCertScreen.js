@@ -4,7 +4,7 @@ import {
     SafeAreaView,
     Text,
     TouchableHighlight,
-    View
+    View,
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
@@ -24,20 +24,20 @@ function PersonCertScreen() {
         let dataCerts;
         try {
             dataCerts = await SecureStore.getItemAsync('userCert');
-            console.log(dataCerts);
+            //console.log(dataCerts);
             setData(JSON.parse(dataCerts).certificates);
             setLoadingUrl(false);
         } catch (error) {
             console.error(error);
         }
-    }
+    };
 
     const updateCerts = async () => {
-        let userId
+        let userId;
         try {
             userId = await SecureStore.getItemAsync('userId');
-            UpdateCertificates(userId)
-            console.log("Updated via UpdateCertificates");
+            UpdateCertificates(userId);
+            console.log('Updated via UpdateCertificates');
             getCerts();
         } catch (error) {
             console.error(error);
@@ -45,18 +45,11 @@ function PersonCertScreen() {
         }
     };
 
-
-    React.useEffect(() => {
-        
-        getCerts();
-    }, []);
     //Fetching our data from the url
     React.useEffect(() => {
-        
-
         getCerts();
     }, []);
-    
+
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -67,13 +60,15 @@ function PersonCertScreen() {
                     <Text style={styleSheets.name}>VaccMe</Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
+                    <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
                         <FlatList
-                            data={dataUrl.sort((a,b)=> a.name.localeCompare(b.name))}
-                            keyExtractor={item => item.name}
+                            data={dataUrl.sort((a, b) =>
+                                a.name.localeCompare(b.name)
+                            )}
+                            keyExtractor={(item) => item.name}
                             renderItem={({ item }) => (
                                 <Text>
                                     {item.name}, {item.registerdate}
@@ -83,7 +78,12 @@ function PersonCertScreen() {
                     )}
                 </View>
                 <View style={styleSheets.filler}>
-                    <TouchableHighlight style={styleSheets.touchableHighlight} onPress={() => {updateCerts();}}>
+                    <TouchableHighlight
+                        style={styleSheets.touchableHighlight}
+                        onPress={() => {
+                            updateCerts();
+                        }}
+                    >
                         <Text style={styleSheets.touchableHighlightText}>
                             Uppdatera
                         </Text>
