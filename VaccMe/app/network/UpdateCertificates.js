@@ -18,6 +18,7 @@ async function UpdateCertificates(userId) {
             }),
         });
         let json = await response.json();
+        console.log(json);
         await SecureStore.setItemAsync('userCert', json);
     } catch (e) {
         console.log(e);

@@ -21,7 +21,6 @@ async function ValidateQrString(qrString, certificate) {
         });
         let json = await response.json();
         if (json.successful === true) {
-            console.log('here2');
             await SecureStore.setItemAsync('clientName', 'true');
         }
     } catch (e) {
