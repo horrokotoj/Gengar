@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 async function UpdateCertificates(userId) {
     let response;
     try {
-        response = await fetch('http://192.168.1.46:8000/userdata', {
+        response = await fetch('https://gengar.uxserver.se/:8000/userdata', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
