@@ -19,7 +19,10 @@ async function UpdateQrString(userId) {
         });
         let json = await response.json();
         console.log(json);
-        await SecureStore.setItemAsync('userQrString', userId);
+        await SecureStore.setItemAsync(
+            'userQrString',
+            JSON.parse(json).qr_string
+        );
     } catch (e) {
         console.log(e);
     }

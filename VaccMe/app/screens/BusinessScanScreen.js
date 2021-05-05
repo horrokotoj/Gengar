@@ -50,16 +50,16 @@ function BusinessScanScreen({ navigation }) {
                 alert('Need to choose certificate to validate.');
             } else {
                 await ValidateQrString(data, certificate);
-                reply = await SecureStore.getItemAsync('clientName');
+                reply = await SecureStore.getItemAsync('valid');
                 //console.log(reply);
                 if (reply === 'true') {
                     //setReplyData(JSON.parse(reply).username); TODO: add username reply
                     //alert(replyData);
-                    await SecureStore.deleteItemAsync('clientName');
+                    await SecureStore.deleteItemAsync('valid');
                     setReplyData(null);
                     navigation.navigate('BusinessValidScreen');
                 } else {
-                    await SecureStore.deleteItemAsync('clientName');
+                    await SecureStore.deleteItemAsync('valid');
                     setReplyData(null);
                     navigation.navigate('BusinessInvalidScreen');
                 }

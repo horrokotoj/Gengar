@@ -28,6 +28,7 @@ const config = {
  */
 function Navigator() {
     const [isLoading, setIsLoading] = React.useState(false);
+
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
             switch (action.type) {

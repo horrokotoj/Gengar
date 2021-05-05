@@ -24,7 +24,7 @@ function PersonCertScreen() {
         let dataCerts;
         try {
             dataCerts = await SecureStore.getItemAsync('userCert');
-            //console.log(dataCerts);
+            console.log('updated dataCerts in PersonCertScreen');
             setData(JSON.parse(dataCerts).certificates);
             setLoadingUrl(false);
         } catch (error) {
@@ -36,7 +36,7 @@ function PersonCertScreen() {
         let userId;
         try {
             userId = await SecureStore.getItemAsync('userId');
-            UpdateCertificates(userId);
+            await UpdateCertificates(userId);
             console.log('Updated via UpdateCertificates');
             getCerts();
         } catch (error) {
@@ -47,7 +47,10 @@ function PersonCertScreen() {
 
     //Fetching our data from the url
     React.useEffect(() => {
-        getCerts();
+        const timer = setInterval(() => {
+            getCerts();
+        }, 1000 * 60);
+        return () => clearInterval(timer);
     }, []);
 
     return (

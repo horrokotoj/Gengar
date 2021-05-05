@@ -24,7 +24,7 @@ function PersonCalendarScreen() {
         let dataCerts;
         try {
             dataCerts = await SecureStore.getItemAsync('userCert');
-            //console.log(dataCerts);
+            console.log('updated dataCerts in PersonCalendarScreen');
             setData(JSON.parse(dataCerts).certificates);
             setLoadingUrl(false);
         } catch (error) {
@@ -47,6 +47,10 @@ function PersonCalendarScreen() {
 
     React.useEffect(() => {
         getCerts();
+        const timer = setInterval(() => {
+            updateCerts();
+        }, 1000 * 60);
+        return () => clearInterval(timer);
     }, []);
 
     return (

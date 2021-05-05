@@ -15,13 +15,13 @@ async function ValidateQrString(qrString, certificate) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + qrString,
+                qrstring: '' + qrString,
                 certificatestocheck: '' + certificate,
             }),
         });
         let json = await response.json();
         if (json.successful === true) {
-            await SecureStore.setItemAsync('clientName', 'true');
+            await SecureStore.setItemAsync('valid', 'true');
         }
     } catch (e) {
         console.log(e);
