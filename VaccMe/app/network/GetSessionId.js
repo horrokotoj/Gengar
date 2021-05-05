@@ -1,28 +1,28 @@
 import * as SecureStore from 'expo-secure-store';
 
 /**
- * @brief Updates a users qr string
- * @param userID of the user to fetch qr string for.
+ * @brief Gets a session ID from the server.
+ * @param userID of the user to fetch certificates for.
  */
-async function UpdateQrString(userId) {
+async function GetSessionId(idToken) {
     let response;
     try {
-        response = await fetch('https://gengar.uxserver.se:8000/getqr', {
+        response = await fetch('https://gengar.uxserver.se:8000/getsessionid', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + userId,
+                idtoken: '' + idToken,
             }),
         });
         let json = await response.json();
-        console.log(json);
-        await SecureStore.setItemAsync('userQrString', userId);
+        console.log(json.sessionid);
+        await SecureStore.setItemAsync('sessionId', json.sessionid);
     } catch (e) {
         console.log(e);
     }
 }
 
-export default UpdateQrString;
+export default GetSessionId;
