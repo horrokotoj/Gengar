@@ -8,6 +8,7 @@ import BusinessNavigator from './BusinessNavigator';
 import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
+import UpdateQrString from '../network/UpdateQrString';
 import DeleteItems from '../secureStore/DeleteItems';
 import StoreItem from '../secureStore/StoreItems';
 
@@ -84,10 +85,9 @@ function Navigator() {
                 userId = await SecureStore.getItemAsync('userId');
                 if (userId) {
                     await UpdateCertificates(userId);
-                    console.log("request done in bootstrap");
-
+                    await UpdateQrString(userId);
+                    console.log('request done in bootstrap');
                 }
-                
             } catch (e) {
                 // Restoring token failed
             }
@@ -139,7 +139,8 @@ function Navigator() {
                         await StoreItem(result);
                         //Fetches the users certificates
                         await UpdateCertificates(result.user.id);
-                        console.log("request done");
+                        await UpdateQrString(result.user.id);
+                        console.log('request done');
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN_PERSON',
@@ -151,7 +152,7 @@ function Navigator() {
                     }
                 } catch (e) {
                     console.log(e);
-                    alert("Sign in failed, check internet connection.")
+                    alert('Sign in failed, check internet connection.');
                     setIsLoading(false);
                     dispatch({ type: 'SIGN_OUT' });
                 }

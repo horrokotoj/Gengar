@@ -46,6 +46,10 @@ export const styleSheets = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
     },
+    invalid: {
+        flex: 1,
+        backgroundColor: 'red',
+    },
     touchableHighlight: {
         width: 250,
         height: 50,
@@ -57,8 +61,25 @@ export const styleSheets = StyleSheet.create({
         borderRadius: 50,
         justifyContent: 'center',
     },
+    touchableHighlightDark: {
+        width: 250,
+        height: 50,
+        backgroundColor: secondaryTextColor,
+        alignSelf: 'center',
+        borderColor: mainTextColor,
+        margin: 5,
+        borderWidth: 3,
+        borderRadius: 50,
+        justifyContent: 'center',
+    },
     touchableHighlightText: {
         textAlign: 'center',
+        color: secondaryTextColor,
+        fontSize: 20,
+    },
+    touchableHighlightTextLight: {
+        textAlign: 'center',
+        color: mainTextColor,
         fontSize: 20,
     },
     tabSheet: {
@@ -75,6 +96,24 @@ export const styleSheets = StyleSheet.create({
         color: secondaryTextColor,
         opacity: 1,
     },
+    qrSheet: {
+        flex: 5,
+        height: '70%',
+        alignSelf: 'center',
+        alignItems: 'center',
+    },
+    qrCode: {
+        marginTop: 500,
+    },
+    valid: {
+        flex: 1,
+        backgroundColor: 'green',
+    },
+    validView: {
+        height: '100%',
+        width: '100%',
+        backgroundColor: 0.8,
+    },
     vardguiden: {
         height: 200,
         width: 200,
@@ -90,9 +129,19 @@ export const styleSheets = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: 'yellow',
     },
-    containerQR: {
+    scanner: {
         flex: 1,
-        flexDirection: 'column',
+    },
+    scannerView: {
+        flex: 5,
+    },
+    cancelButtonView: {
+        flex: 1,
         justifyContent: 'center',
+        alignItems: 'flex-end',
+    },
+    touchableValid: {
+        width: '100%',
+        height: '100%',
     },
 });
