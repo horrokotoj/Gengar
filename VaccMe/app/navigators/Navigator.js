@@ -7,6 +7,7 @@ import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
 import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
+import GetSessionId from '../network/GetSessionId';
 import UpdateCertificates from '../network/UpdateCertificates';
 import UpdateQrString from '../network/UpdateQrString';
 import DeleteItems from '../secureStore/DeleteItems';
@@ -31,62 +32,48 @@ function Navigator() {
     const [state, dispatch] = React.useReducer(
         (prevState, action) => {
             switch (action.type) {
-                case 'RESTORE_TOKEN_PERSON':
+                case 'RESTORE_TOKEN':
                     return {
                         ...prevState,
-                        userTokenPerson: action.token,
+                        userType: action.token,
                         isLoading: false,
                     };
-                case 'RESTORE_TOKEN_BUSINESS':
-                    return {
-                        ...prevState,
-                        userTokenBusiness: action.token,
-                        isLoading: false,
-                    };
-                case 'SIGN_IN_PERSON':
+                case 'SIGN_IN':
                     return {
                         ...prevState,
                         isSignout: false,
-                        userTokenPerson: action.token,
-                    };
-                case 'SIGN_IN_BUSINESS':
-                    return {
-                        ...prevState,
-                        isSignout: false,
-                        userTokenBusiness: action.token,
+                        userType: action.token,
                     };
                 case 'SIGN_OUT':
                     return {
                         ...prevState,
                         isSignout: true,
-                        userTokenPerson: null,
-                        userTokenBusiness: null,
+                        userType: null,
                     };
             }
         },
         {
             isLoading: true,
             isSignout: false,
-            userTokenPerson: null,
-            suerTokenBusiness: null,
+            userType: null,
         }
     );
 
     React.useEffect(() => {
         // Fetch the token from storage then navigate to our appropriate place
-        const bootstrapAsyncPerson = async () => {
-            let userTokenPerson;
+        const bootstrapAsync = async () => {
+            let userType;
             let userId;
 
             try {
-                userTokenPerson = await SecureStore.getItemAsync(
-                    'userTokenPerson'
-                );
-                userId = await SecureStore.getItemAsync('userId');
-                if (userId) {
-                    await UpdateCertificates(userId);
-                    await UpdateQrString(userId);
-                    console.log('request done in bootstrap');
+                userType = await SecureStore.getItemAsync('userType');
+                if (userType === 'person') {
+                    userId = await SecureStore.getItemAsync('userId');
+                    if (userId) {
+                        await UpdateCertificates(userId);
+                        await UpdateQrString(userId);
+                        console.log('request done in bootstrap');
+                    }
                 }
             } catch (e) {
                 // Restoring token failed
@@ -96,33 +83,10 @@ function Navigator() {
 
             // This will switch to the App screen or Auth screen and this loading
             // screen will be unmounted and thrown away.
-            dispatch({ type: 'RESTORE_TOKEN_PERSON', token: userTokenPerson });
+            dispatch({ type: 'RESTORE_TOKEN', token: userType });
         };
 
-        bootstrapAsyncPerson();
-
-        const bootstrapAsyncBusiness = async () => {
-            let userTokenBusiness;
-
-            try {
-                userTokenBusiness = await SecureStore.getItemAsync(
-                    'userTokenBusiness'
-                );
-            } catch (e) {
-                // Restoring token failed
-            }
-
-            // After restoring token, we may need to validate it in production apps
-
-            // This will switch to the App screen or Auth screen and this loading
-            // screen will be unmounted and thrown away.
-            dispatch({
-                type: 'RESTORE_TOKEN_BUSINESS',
-                token: userTokenBusiness,
-            });
-        };
-
-        bootstrapAsyncBusiness();
+        bootstrapAsync();
     }, []);
 
     const authContext = React.useMemo(() => {
@@ -135,16 +99,19 @@ function Navigator() {
                     const result = await Google.logInAsync(config);
                     console.log(result);
                     if (result.type === 'success') {
+                        await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
+                        //gets a session id
+                        await GetSessionId(result.idToken);
                         //Fetches the users certificates
                         await UpdateCertificates(result.user.id);
                         await UpdateQrString(result.user.id);
                         console.log('request done');
                         setIsLoading(false);
                         dispatch({
-                            type: 'SIGN_IN_PERSON',
-                            token: JSON.stringify(result),
+                            type: 'SIGN_IN',
+                            token: 'person',
                         });
                     } else {
                         setIsLoading(false);
@@ -165,14 +132,16 @@ function Navigator() {
                     const result = await Google.logInAsync(config);
                     console.log(result);
                     if (result.type === 'success') {
-                        await SecureStore.setItemAsync(
-                            'userTokenBusiness',
-                            JSON.stringify(result)
-                        );
+                        //Stores relevant information on SecureStore
+                        await SecureStore.setItemAsync('userType', 'business');
+                        //Stores relevant information on SecureStore
+                        await StoreItem(result);
+                        //gets a session id
+                        await GetSessionId(result.idToken);
                         setIsLoading(false);
                         dispatch({
-                            type: 'SIGN_IN_BUSINESS',
-                            token: JSON.stringify(result),
+                            type: 'SIGN_IN',
+                            token: 'business',
                         });
                     } else {
                         setIsLoading(false);
@@ -195,11 +164,11 @@ function Navigator() {
     }
 
     function chooseNav() {
-        if (state.userTokenPerson) {
+        if (state.userType === 'person') {
             //TODO: run some kind of function updating stored certificates.
             return <PersonNavigator />;
         }
-        if (state.userTokenBusiness) {
+        if (state.userType === 'business') {
             return <BusinessNavigator />;
         } else {
             return <AuthNavigator />;

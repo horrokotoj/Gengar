@@ -7,7 +7,7 @@ import * as SecureStore from 'expo-secure-store';
 async function GetSessionId(idToken) {
     let response;
     try {
-        response = await fetch('https://gengar.uxserver.se:8000/getsessionid', {
+        response = await fetch('https://gengar.uxserver.se/getsessionid', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
