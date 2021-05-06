@@ -117,6 +117,31 @@ function BusinessHomeScreen({ navigation }) {
                                 </Text>
                             </TouchableHighlight>
                         )}
+                        {pressed === 'cert3' ? (
+                            <TouchableHighlight
+                                style={styleSheets.touchableHighlightDark}
+                                onPress={() => removeCert()}
+                            >
+                                <Text
+                                    style={
+                                        styleSheets.touchableHighlightTextLight
+                                    }
+                                >
+                                    Cert 2
+                                </Text>
+                            </TouchableHighlight>
+                        ) : (
+                            <TouchableHighlight
+                                style={styleSheets.touchableHighlight}
+                                onPress={() => addCert('cert3')}
+                            >
+                                <Text
+                                    style={styleSheets.touchableHighlightText}
+                                >
+                                    Cert 3
+                                </Text>
+                            </TouchableHighlight>
+                        )}
                     </ScrollView>
                     <View>
                         <TouchableHighlight

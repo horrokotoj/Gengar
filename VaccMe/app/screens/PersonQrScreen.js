@@ -10,6 +10,7 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import QRCode from 'react-native-qrcode-svg';
 import UpdateQrString from '../network/UpdateQrString';
+import GoogleSignIn from '../network/GoogleSignIn';
 
 /**
  * @brief Renders a QR screen
@@ -48,13 +49,46 @@ function PersonQrScreens() {
         }
     };
 
+    const pollForIdentification = async () => {
+        let sessionId;
+        let result;
+        try {
+            sessionId = await SecureStore.getItemAsync('sessionId');
+            if (await PollForIdentification(sessionId)) {
+                result = await GoogleSignIn();
+                if (result.type === 'success') {
+                    await Identify(result.idToken);
+                }
+            }
+            console.log('Polled via PollForIdentification');
+        } catch (error) {
+            console.error(error);
+            alert('Pollfailed');
+            getQrString();
+        }
+    };
+
     React.useEffect(() => {
         updateQrString();
 
-        const timer = setInterval(() => {
+        const qrTimer = setInterval(() => {
             updateQrString();
-        }, 15000);
-        return () => clearInterval(timer);
+        }, 30000);
+
+        return () => {
+            clearInterval(qrTimer);
+        };
+    }, []);
+
+    React.useEffect(() => {
+        const pollingTimer = setInterval(() => {
+            //pollForIdentification();
+            console.log('poll PersonQrScreen');
+        }, 5000);
+
+        return () => {
+            clearInterval(pollingTimer);
+        };
     }, []);
 
     return (

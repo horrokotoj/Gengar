@@ -134,6 +134,7 @@ export const styleSheets = StyleSheet.create({
     },
     scannerView: {
         flex: 5,
+        justifyContent: 'center',
     },
     cancelButtonView: {
         flex: 1,

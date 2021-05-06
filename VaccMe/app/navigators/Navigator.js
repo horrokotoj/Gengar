@@ -5,20 +5,10 @@ import AuthNavigator from './AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
-import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
-import UpdateCertificates from '../network/UpdateCertificates';
-import UpdateQrString from '../network/UpdateQrString';
 import DeleteItems from '../secureStore/DeleteItems';
 import StoreItem from '../secureStore/StoreItems';
-
-const config = {
-    androidClientId:
-        '821695412865-f6sndakvma08hqnjkqrjpmm7b2da2hmu.apps.googleusercontent.com',
-    iosClientId:
-        '821695412865-jlgaraciuvjk5j86ql00uf2ca0s5mmla.apps.googleusercontent.com',
-    scopes: ['profile', 'email'],
-};
+import GoogleSignIn from '../network/GoogleSignIn';
 
 /**
  * @brief Creates an authorization context and an authorization container.
@@ -87,7 +77,7 @@ function Navigator() {
                 //TODO: Should be implemented in a seperate file and called here.
                 //Was not able to manipulate userToken with this in Autherizer.js
                 try {
-                    const result = await Google.logInAsync(config);
+                    const result = await GoogleSignIn();
                     console.log(result);
                     if (result.type === 'success') {
                         //Defines userType

@@ -10,6 +10,7 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import ValidateQrString from '../network/ValidateQrString';
+import PollForVerification from '../network/PollForVerification';
 import * as SecureStore from 'expo-secure-store';
 
 /**
@@ -20,7 +21,8 @@ function BusinessScanScreen({ navigation }) {
     const [hasPermission, setHasPermission] = React.useState(null);
     const [certificate, setCertificate] = React.useState(null);
     const [isScanned, setScanned] = React.useState(false);
-    const [replyData, setReplyData] = React.useState(null);
+    const [isPolling, setIsPolling] = React.useState(false);
+    const [pollTimer, setPollTimer] = React.useState(null);
 
     const getCert = async () => {
         let cert;
@@ -41,26 +43,48 @@ function BusinessScanScreen({ navigation }) {
         })();
     }, []);
 
+    const pollForVerification = async () => {
+        let sessionId;
+        let poll;
+        try {
+            sessionId = await SecureStore.getItem('sessionId');
+            if (sessionId) {
+                poll = await PollForVerification(sessionId);
+                if (poll === 'true') {
+                    clearInterval(pollTimer);
+                    setIsPolling(false);
+                    navigation.navigate('BusinessValidScreen');
+                }
+                if (poll === 'failed') {
+                    clearInterval(pollTimer);
+                    setIsPolling(false);
+                    navigation.navigate('BusinessInvalidScreen');
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    React.useEffect(() => {
+        if (isPolling == true) {
+            const timer = setInterval(() => {
+                setPollTimer(timer);
+                //pollForVerification();
+                console.log('Poll BusinessScanScreen');
+            }, 1000);
+        }
+    }, [isPolling, true]);
+
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
-        //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-        let reply;
         try {
             if (certificate == null) {
                 alert('Need to choose certificate to validate.');
             } else {
-                await ValidateQrString(data, certificate);
-                reply = await SecureStore.getItemAsync('isValid');
-                //console.log(reply);
-                if (reply === 'true') {
-                    //setReplyData(JSON.parse(reply).username); TODO: add username reply
-                    //alert(replyData);
-                    await SecureStore.deleteItemAsync('isValid');
-                    setReplyData(null);
-                    navigation.navigate('BusinessValidScreen');
+                if (await ValidateQrString(data, certificate)) {
+                    setIsPolling(true);
                 } else {
-                    await SecureStore.deleteItemAsync('isValid');
-                    setReplyData(null);
                     navigation.navigate('BusinessInvalidScreen');
                 }
             }
@@ -84,15 +108,27 @@ function BusinessScanScreen({ navigation }) {
         >
             <SafeAreaView style={styleSheets.scanner}>
                 <View style={styleSheets.scannerView}>
-                    <BarCodeScanner
-                        onBarCodeScanned={
-                            isScanned ? undefined : handleBarCodeScanned
-                        }
-                        barCodeTypes={[BarCodeScanner.Constants.BarCodeType.qr]}
-                        style={styleSheets.scanner}
-                    >
-                        <View style={styleSheets.scanner} />
-                    </BarCodeScanner>
+                    {isPolling ? (
+                        <Text
+                            style={{
+                                alignSelf: 'center',
+                            }}
+                        >
+                            Väntar på identifiering
+                        </Text>
+                    ) : (
+                        <BarCodeScanner
+                            onBarCodeScanned={
+                                isScanned ? undefined : handleBarCodeScanned
+                            }
+                            barCodeTypes={[
+                                BarCodeScanner.Constants.BarCodeType.qr,
+                            ]}
+                            style={styleSheets.scanner}
+                        >
+                            <View style={styleSheets.scanner} />
+                        </BarCodeScanner>
+                    )}
                 </View>
                 <View style={styleSheets.cancelButtonView}>
                     {isScanned == false ? undefined : (
@@ -110,7 +146,13 @@ function BusinessScanScreen({ navigation }) {
                     <TouchableHighlight
                         style={styleSheets.touchableHighlight}
                         onPress={() => {
-                            navigation.goBack();
+                            if (isPolling) {
+                                clearInterval(pollTimer);
+                                setScanned(false);
+                                setIsPolling(false);
+                            } else {
+                                navigation.goBack();
+                            }
                         }}
                     >
                         <Text style={styleSheets.touchableHighlightText}>
