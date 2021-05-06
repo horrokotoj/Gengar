@@ -67,16 +67,18 @@ function BusinessHomeScreen({ navigation }) {
                         VaccMe
                     </Text>
                 </View>
-                <View style={styleSheets.tabSheet}>
+                <View style={styleSheets.tabSheet}>            
+                    <View style={styleSheets.container}>
                     <ScrollView>
                         {pressed === 'cert1' ? (
                             <TouchableHighlight
-                                style={styleSheets.touchableHighlightDark}
+                            style={styleSheets.scrollItemPressed}
+                               // style={styleSheets.touchableHighlightDark}
                                 onPress={() => removeCert()}
                             >
                                 <Text
                                     style={
-                                        styleSheets.touchableHighlightTextLight
+                                        styleSheets.textPressed
                                     }
                                 >
                                     Cert 1
@@ -84,11 +86,11 @@ function BusinessHomeScreen({ navigation }) {
                             </TouchableHighlight>
                         ) : (
                             <TouchableHighlight
-                                style={styleSheets.touchableHighlight}
+                                style={styleSheets.scrollItem}
                                 onPress={() => addCert('cert1')}
                             >
                                 <Text
-                                    style={styleSheets.touchableHighlightText}
+                                    style={styleSheets.text}
                                 >
                                     Cert 1
                                 </Text>
@@ -96,12 +98,12 @@ function BusinessHomeScreen({ navigation }) {
                         )}
                         {pressed === 'cert2' ? (
                             <TouchableHighlight
-                                style={styleSheets.touchableHighlightDark}
+                                style={styleSheets.scrollItemPressed}
                                 onPress={() => removeCert()}
                             >
                                 <Text
                                     style={
-                                        styleSheets.touchableHighlightTextLight
+                                        styleSheets.textPressed
                                     }
                                 >
                                     Cert 2
@@ -109,17 +111,18 @@ function BusinessHomeScreen({ navigation }) {
                             </TouchableHighlight>
                         ) : (
                             <TouchableHighlight
-                                style={styleSheets.touchableHighlight}
+                                style={styleSheets.scrollItem}
                                 onPress={() => addCert('cert2')}
                             >
                                 <Text
-                                    style={styleSheets.touchableHighlightText}
+                                    style={styleSheets.text}
                                 >
                                     Cert 2
                                 </Text>
                             </TouchableHighlight>
                         )}
                     </ScrollView>
+                    </View>
                     <View>
                         <TouchableHighlight
                             style={styleSheets.touchableHighlight}

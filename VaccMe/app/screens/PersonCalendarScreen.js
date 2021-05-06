@@ -71,17 +71,22 @@ function PersonCalendarScreen() {
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
+                        <View style={styleSheets.container}>
                         <FlatList
                             data={dataUrl.sort((a, b) =>
                                 a.expirationdate.localeCompare(b.expirationdate)
                             )}
                             keyExtractor={(item) => item.name}
                             renderItem={({ item }) => (
-                                <Text>
+                                <View style={styleSheets.scrollItem}
+                                > <Text style={styleSheets.text}>
                                     {item.name}, {item.expirationdate}
                                 </Text>
+                                </View>
+                                
                             )}
                         />
+                        </View>
                     )}
                 </View>
                 <View style={styleSheets.filler}>
