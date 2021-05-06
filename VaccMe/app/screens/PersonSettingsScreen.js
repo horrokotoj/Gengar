@@ -8,14 +8,6 @@ import {
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
-import NetInfo from "@react-native-community/netinfo";
-
-const checkNetworkConnection = () => {
-    NetInfo.fetch().then(networkState => {
-        console.log("Connection type - ", networkState.type);
-        console.log("Is connected? - ", networkState.isConnected);
-    });
-};
 
 
 /**
@@ -36,15 +28,7 @@ function PersonSettingsScreen() {
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}>
                         Inställningar
-                    </Text>
-                    <TouchableHighlight
-                        style={styleSheets.touchableHighlight}
-                        onPress={() => checkNetworkConnection()}
-                    >
-                        <Text style={styleSheets.touchableHighlightText}>
-                            Check Network Connection
-                        </Text>
-                    </TouchableHighlight>                    
+                    </Text>        
                 </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight
