@@ -25,8 +25,10 @@ function PersonQrScreens() {
         try {
             qrString = await SecureStore.getItemAsync('userQrString');
             console.log(qrString); //TODO: Remove after debugging
-            setQr(qrString);
-            setLoadingQr(false);
+            if (qrString) {
+                setQr(qrString);
+                setLoadingQr(false);
+            }
         } catch (error) {
             console.error(error);
         }
