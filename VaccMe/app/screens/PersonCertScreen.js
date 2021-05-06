@@ -7,11 +7,9 @@ import {
     View,
     Button,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import PersonCertInfo from '../screens/PersonCertInfo';
 import { FlatList } from 'react-native-gesture-handler';
-import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
 
