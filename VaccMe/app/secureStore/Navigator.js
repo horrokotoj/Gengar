@@ -85,7 +85,7 @@ function Navigator() {
                 await UpdateCertificates(userId);
                 console.log("request done in bootstrap");
                 
-            } catch (e) {
+            } catch (error) {
                 // Restoring token failed
             }
 
@@ -105,7 +105,7 @@ function Navigator() {
                 userTokenBusiness = await SecureStore.getItemAsync(
                     'userTokenBusiness'
                 );
-            } catch (e) {
+            } catch (error) {
                 // Restoring token failed
             }
 
@@ -155,8 +155,8 @@ function Navigator() {
                         setIsLoading(false);
                         dispatch({ type: 'SIGN_OUT' });
                     }
-                } catch (e) {
-                    console.log(e);
+                } catch (error) {
+                    console.log(error);
                     alert("Sign in failed, check internet connection.")
                     setIsLoading(false);
                     dispatch({ type: 'SIGN_OUT' });
@@ -183,7 +183,7 @@ function Navigator() {
                         setIsLoading(false);
                         dispatch({ type: 'SIGN_OUT' });
                     }
-                } catch (e) {
+                } catch (error) {
                     setIsLoading(false);
                     dispatch({ type: 'SIGN_OUT' });
                 }
