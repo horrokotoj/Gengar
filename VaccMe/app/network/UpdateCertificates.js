@@ -7,7 +7,9 @@ import hasNetworkConnection from './NetworkConnection'
  */
 async function UpdateCertificates(userId) {
     let response;
+    console.log('requesting update certificates');        
     if (hasNetworkConnection()) { 
+
         try {
             response = await fetch('https://gengar.uxserver.se/userdata', {
                 method: 'POST',

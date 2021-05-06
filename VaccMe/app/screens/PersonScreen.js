@@ -20,6 +20,7 @@ function PersonScreen() {
             source={require('../assets/background.jpg')}
         >
             <PersonTab.Navigator
+                initialRouteName="QR"
                 tabBarOptions={{
                     activeTintColor: '#e91e63',
                     labelStyle: {
@@ -31,6 +32,7 @@ function PersonScreen() {
                     name="Kalender"
                     component={PersonCalendarScreen}
                     options={{
+                        unmountOnBlur: true,
                         tabBarIcon: ({ color, size }) => (
                             <Ionicons
                                 name="calendar"
@@ -44,6 +46,7 @@ function PersonScreen() {
                     name="Mina intyg"
                     component={PersonCertScreen}
                     options={{
+                        unmountOnBlur: true,
                         tabBarIcon: ({ color, size }) => (
                             <Ionicons
                                 name="receipt"
@@ -58,6 +61,7 @@ function PersonScreen() {
                     component={PersonQrScreen}
                     style={styleSheets.qr}
                     options={{
+                        unmountOnBlur: true,
                         tabBarIcon: ({ color, size }) => (
                             <Ionicons
                                 name="qr-code"

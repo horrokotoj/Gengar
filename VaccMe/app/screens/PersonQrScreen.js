@@ -16,7 +16,7 @@ import UpdateQrString from '../network/UpdateQrString';
  * @brief Fetches a string to render a qr-code from secure store.
  * @returns A QR screen
  */
-function PersonQrScreens(props) {
+function PersonQrScreens() {
     const [isLoadingQr, setLoadingQr] = React.useState(true);
     const [dataQRstring, setQr] = React.useState(null);
 
@@ -25,8 +25,10 @@ function PersonQrScreens(props) {
         try {
             qrString = await SecureStore.getItemAsync('userQrString');
             console.log(qrString); //TODO: Remove after debugging
-            setQr(qrString);
-            setLoadingQr(false);
+            if (qrString) {
+                setQr(qrString);
+                setLoadingQr(false);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -36,7 +38,7 @@ function PersonQrScreens(props) {
         let userId;
         try {
             userId = await SecureStore.getItemAsync('userId');
-            UpdateQrString(userId);
+            await UpdateQrString(userId);
             console.log('Updated via UpdateQrString');
             getQrString();
         } catch (error) {
@@ -47,7 +49,12 @@ function PersonQrScreens(props) {
     };
 
     React.useEffect(() => {
-        getQrString();
+        updateQrString();
+
+        const timer = setInterval(() => {
+            updateQrString();
+        }, 15000);
+        return () => clearInterval(timer);
     }, []);
 
     return (
