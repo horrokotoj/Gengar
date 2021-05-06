@@ -49,7 +49,7 @@ function PersonQrScreens() {
     };
 
     React.useEffect(() => {
-        getQrString();
+        updateQrString();
 
         const timer = setInterval(() => {
             updateQrString();

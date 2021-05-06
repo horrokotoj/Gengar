@@ -7,6 +7,7 @@ import * as SecureStore from 'expo-secure-store';
  */
 async function ValidateQrString(qrString, certificate) {
     let response;
+    console.log('requesting validate qrString');
     try {
         response = await fetch('https://gengar.uxserver.se/verify', {
             method: 'POST',

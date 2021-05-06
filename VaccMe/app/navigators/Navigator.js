@@ -94,11 +94,6 @@ function Navigator() {
                         await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
-                        //Fetches the users certificates
-                        await UpdateCertificates(result.user.id);
-                        console.log('update cert request done');
-                        await UpdateQrString(result.user.id);
-                        console.log('update qr request done');
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN',
@@ -154,7 +149,6 @@ function Navigator() {
 
     function chooseNav() {
         if (state.userType === 'person') {
-            //TODO: run some kind of function updating stored certificates.
             return <PersonNavigator />;
         }
         if (state.userType === 'business') {

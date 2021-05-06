@@ -48,7 +48,7 @@ function PersonCalendarScreen() {
     };
 
     React.useEffect(() => {
-        getCerts();
+        updateCerts();
         const timer = setInterval(() => {
             updateCerts();
         }, 1000 * 60);

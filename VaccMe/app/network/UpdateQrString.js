@@ -6,6 +6,7 @@ import * as SecureStore from 'expo-secure-store';
  */
 async function UpdateQrString(userId) {
     let response;
+    console.log('requesting update qrString');
     try {
         response = await fetch('https://gengar.uxserver.se/getqr', {
             method: 'POST',

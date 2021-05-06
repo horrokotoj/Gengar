@@ -49,7 +49,7 @@ function PersonCertScreen() {
 
     //Fetching our data from the url
     React.useEffect(() => {
-        getCerts();
+        updateCerts();
         const timer = setInterval(() => {
             updateCerts();
         }, 1000 * 60);
