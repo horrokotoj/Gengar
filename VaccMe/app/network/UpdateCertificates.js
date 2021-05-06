@@ -1,13 +1,14 @@
 import * as SecureStore from 'expo-secure-store';
 
 /**
- * @breif Updates a users certificates
+ * @brief Updates a users certificates
  * @param userID of the user to fetch certificates for.
  */
 async function UpdateCertificates(userId) {
     let response;
+    console.log('requesting update certificates');
     try {
-        response = await fetch('http://127.0.0.1:8000/userdata', {
+        response = await fetch('https://gengar.uxserver.se/userdata', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -18,9 +19,10 @@ async function UpdateCertificates(userId) {
             }),
         });
         let json = await response.json();
+        console.log(json);
         await SecureStore.setItemAsync('userCert', json);
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 

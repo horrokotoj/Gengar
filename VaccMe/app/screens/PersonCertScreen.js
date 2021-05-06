@@ -5,7 +5,6 @@ import {
     Text,
     TouchableHighlight,
     View,
-    Button,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import PersonCertInfo from '../screens/PersonCertInfo';
@@ -42,9 +41,11 @@ function PersonCertScreen() {
         let dataCerts;
         try {
             dataCerts = await SecureStore.getItemAsync('userCert');
-            console.log(dataCerts);
-            setData(JSON.parse(dataCerts).certificates);
-            setLoadingUrl(false);
+            console.log('updated dataCerts in PersonCertScreen');
+            if (dataCerts) {
+                setData(JSON.parse(dataCerts).certificates);
+                setLoadingUrl(false);
+            }
         } catch (error) {
             console.error(error);
         }
@@ -54,7 +55,7 @@ function PersonCertScreen() {
         let userId;
         try {
             userId = await SecureStore.getItemAsync('userId');
-            UpdateCertificates(userId);
+            await UpdateCertificates(userId);
             console.log('Updated via UpdateCertificates');
             getCerts();
         } catch (error) {
@@ -63,13 +64,15 @@ function PersonCertScreen() {
         }
     };
 
-    React.useEffect(() => {
-        getCerts();
-    }, []);
     //Fetching our data from the url
     React.useEffect(() => {
-        getCerts();
+        updateCerts();
+        const timer = setInterval(() => {
+            updateCerts();
+        }, 1000 * 60);
+        return () => clearInterval(timer);
     }, []);
+
     return (
         <ImageBackground
             style={styleSheets.background}
@@ -82,23 +85,6 @@ function PersonCertScreen() {
                     </Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
-                    {/* <View style={styleSheets.container}>
-                        <FlatList
-                            data={DATA}
-                            renderItem={({ item }) => (
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        navigation.navigate('PersonCertInfo');
-                                    }}
-                                    style={styleSheets.scrollItem}
-                                >
-                                    <Text style={styleSheets.text}>
-                                        {item.key}
-                                    </Text>
-                                </TouchableHighlight>
-                            )}
-                        ></FlatList>
-                    </View> */}
                     <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
