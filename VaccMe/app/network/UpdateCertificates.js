@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
  * @brief Updates a users certificates
  * @param userID of the user to fetch certificates for.
  */
-async function UpdateCertificates(userId) {
+async function UpdateCertificates(sessionId) {
     let response;
     try {
         response = await fetch('https://gengar.uxserver.se/userdata', {
@@ -14,7 +14,7 @@ async function UpdateCertificates(userId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + userId,
+                sessionid: '' + sessionId,
             }),
         });
         let json = await response.json();

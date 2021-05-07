@@ -6,6 +6,7 @@ import * as SecureStore from 'expo-secure-store';
  * @param certificate to check for.
  */
 async function ValidateQrString(qrString, certificate) {
+    //TODO what variables should there be?
     let response;
     try {
         response = await fetch('https://gengar.uxserver.se/verify', {
@@ -15,6 +16,7 @@ async function ValidateQrString(qrString, certificate) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
+                //TODO change to correct variables.
                 googleuserid: '' + qrString,
                 certificatestocheck: '' + certificate,
             }),

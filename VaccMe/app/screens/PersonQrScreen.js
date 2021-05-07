@@ -33,10 +33,10 @@ function PersonQrScreens(props) {
     };
 
     const updateQrString = async () => {
-        let userId;
+        let sessionId;
         try {
-            userId = await SecureStore.getItemAsync('userId');
-            UpdateQrString(userId);
+            sessionId = await SecureStore.getItemAsync('sessionId');
+            UpdateQrString(sessionId);
             console.log('Updated via UpdateQrString');
             getQrString();
         } catch (error) {

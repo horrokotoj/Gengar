@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
  * @brief Updates a users qr string
  * @param userID of the user to fetch qr string for.
  */
-async function UpdateQrString(userId) {
+async function UpdateQrString(sessionId) {
     let response;
     try {
         response = await fetch('https://gengar.uxserver.se/getqr', {
@@ -14,7 +14,7 @@ async function UpdateQrString(userId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + userId,
+                sessionid: '' + sessionId,
             }),
         });
         let json = await response.json();
