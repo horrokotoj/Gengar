@@ -101,6 +101,11 @@ export const styleSheets = StyleSheet.create({
         textAlign: 'center',
         color: mainTextColor,
         fontSize: 20,
+        fontFamily: 'oswald-bold',
+        textShadowColor: 'grey',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
+
     },
     tabSheet: {
         flex: 5,
@@ -111,7 +116,7 @@ export const styleSheets = StyleSheet.create({
         alignItems: 'center',
     },
     tabSheetHeader: {
-        fontSize: 30,
+        fontSize: 32,
         margin: 10,
         //textDecorationLine: 'underline',
         textTransform: 'uppercase',
@@ -123,10 +128,11 @@ export const styleSheets = StyleSheet.create({
         textShadowRadius: 4,
     },
     qrSheet: {
-        flex: 5,
-        height: '70%',
+        flex: 3,
+        height: '50%',
         alignSelf: 'center',
         alignItems: 'center',
+        justifyContent: 'center',
     },
     qrCode: {
         marginTop: 500,
@@ -142,7 +148,7 @@ export const styleSheets = StyleSheet.create({
     },
     vardguiden: {
         height: 200,
-        width: 200,
+        width: 300,
         margin: 50,
     },
     safe: {
@@ -199,9 +205,24 @@ export const styleSheets = StyleSheet.create({
         borderRadius: 5,
         fontSize: 20,
     },
+    scrollItemPressed: {
+        flex: 1,
+        marginHorizontal: 10,
+        marginTop: 10,
+        padding: 20,
+        backgroundColor: 'black',
+        borderWidth: 1,
+        borderColor: 'white',
+        borderRadius: 5,
+        fontSize: 20,
+    },
     text: {
         fontSize: 20,
         color: 'black',
+    },
+    textPressed: {
+        fontSize: 20,
+        color: 'white',
     },
     vaccinated: {
         backgroundColor: '#FFE871',

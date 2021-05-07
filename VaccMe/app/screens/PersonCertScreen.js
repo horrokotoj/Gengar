@@ -89,17 +89,23 @@ function PersonCertScreen() {
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
+                        <View style={styleSheets.container}>
                         <FlatList
-                            data={dataUrl.sort((a, b) =>
-                                a.name.localeCompare(b.name)
-                            )}
-                            keyExtractor={(item) => item.name}
+                            data={DATA}
                             renderItem={({ item }) => (
-                                <Text>
-                                    {item.name}, {item.registerdate}
-                                </Text>
+                                <TouchableHighlight
+                                    onPress={() => {}}
+                                    style={styleSheets.scrollItem}
+                                >
+                                    <Text style={styleSheets.text}>
+                                        {item.key}
+                                    </Text>
+                                </TouchableHighlight>
                             )}
-                        />
+                        ></FlatList>
+                    </View>
+
+                        
                     )}
                 </View>
                 <View style={styleSheets.filler}>
@@ -120,3 +126,19 @@ function PersonCertScreen() {
 }
 
 export default PersonCertScreen;
+
+{/* <View style={styleSheets.container}>
+                        <FlatList
+                            data={dataUrl.sort((a, b) =>
+                                a.name.localeCompare(b.name)
+                            )}
+                            keyExtractor={(item) => item.name}
+                            renderItem={({ item }) => (
+                                <Text style={styleSheets.text}>
+                                    {item.name}, {item.registerdate}
+                                </Text>
+                            )}
+                        />
+                    </View>
+
+ */}
