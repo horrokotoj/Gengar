@@ -6,8 +6,10 @@ import * as SecureStore from 'expo-secure-store';
  */
 async function UpdateCertificates(sessionId) {
     let response;
+    console.log(sessionId);
+    console.log('Reustesing certs');
     try {
-        response = await fetch('https://gengar.uxserver.se/userdata', {
+        response = await fetch('http://192.168.1.46:8000/userdata', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -17,10 +19,13 @@ async function UpdateCertificates(sessionId) {
                 sessionid: '' + sessionId,
             }),
         });
-        let json = await response.json();
-        console.log(json);
-        await SecureStore.setItemAsync('userCert', json);
+        if (response.status === 200) {
+            let json = await response.json();
+            console.log(json);
+            await SecureStore.setItemAsync('userCert', JSON.stringify(json));
+        }
     } catch (e) {
+        console.log('Requesting certs failed');
         console.log(e);
     }
 }

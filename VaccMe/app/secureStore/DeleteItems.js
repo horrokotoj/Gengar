@@ -11,6 +11,7 @@ async function DeleteItems() {
     await SecureStore.deleteItemAsync('userQrString');
     await SecureStore.deleteItemAsync('clientName');
     await SecureStore.deleteItemAsync('certToValidate');
+    await SecureStore.deleteItemAsync('sessionId');
 }
 
 export default DeleteItems;

@@ -33,10 +33,10 @@ function PersonQrScreens(props) {
     };
 
     const updateQrString = async () => {
-        let sessionId;
+        let userId;
         try {
-            sessionId = await SecureStore.getItemAsync('sessionId');
-            UpdateQrString(sessionId);
+            userId = await SecureStore.getItemAsync('userId');
+            await UpdateQrString(userId);
             console.log('Updated via UpdateQrString');
             getQrString();
         } catch (error) {
@@ -47,7 +47,7 @@ function PersonQrScreens(props) {
     };
 
     React.useEffect(() => {
-        getQrString();
+        updateQrString();
     }, []);
 
     return (

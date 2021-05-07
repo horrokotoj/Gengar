@@ -9,7 +9,7 @@ async function ValidateQrString(qrString, certificate) {
     //TODO what variables should there be?
     let response;
     try {
-        response = await fetch('https://gengar.uxserver.se/verify', {
+        response = await fetch('http://192.168.1.46:8000/verify', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -17,8 +17,8 @@ async function ValidateQrString(qrString, certificate) {
             },
             body: JSON.stringify({
                 //TODO change to correct variables.
-                googleuserid: '' + qrString,
-                certificatestocheck: '' + certificate,
+                qr_string: '' + qrString,
+                certificates_to_check: '' + certificate,
             }),
         });
         let json = await response.json();

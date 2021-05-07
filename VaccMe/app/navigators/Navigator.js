@@ -69,11 +69,11 @@ function Navigator() {
                 userType = await SecureStore.getItemAsync('userType');
                 if (userType === 'person') {
                     userId = await SecureStore.getItemAsync('userId');
-                    if (userId) {
-                        await UpdateCertificates(userId);
-                        await UpdateQrString(userId);
-                        console.log('request done in bootstrap');
-                    }
+                    //if (userId) {
+                    //    await UpdateCertificates(userId);
+                    //    await UpdateQrString(userId);
+                    //    console.log('request done in bootstrap');
+                    //}
                 }
             } catch (e) {
                 // Restoring token failed
@@ -98,15 +98,18 @@ function Navigator() {
                 try {
                     const result = await Google.logInAsync(config);
                     console.log(result);
-                    if (result.type === 'success') {
+                    if (
+                        result.type === 'success' &&
+                        (await GetSessionId(result.idToken))
+                    ) {
+                        //gets a session id
+
                         await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
-                        //gets a session id
-                        await GetSessionId(result.idToken);
                         //Fetches the users certificates
-                        await UpdateCertificates(result.user.id);
-                        await UpdateQrString(result.user.id);
+                        //await UpdateCertificates(result.user.id);
+                        //await UpdateQrString(result.user.id);
                         console.log('request done');
                         setIsLoading(false);
                         dispatch({
