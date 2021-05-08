@@ -28,8 +28,8 @@ function BusinessScanScreen({ navigation }) {
             cert = await SecureStore.getItemAsync('certToValidate');
             console.log(cert);
             setCertificate(cert);
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -64,8 +64,8 @@ function BusinessScanScreen({ navigation }) {
                     navigation.navigate('BusinessInvalidScreen');
                 }
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 

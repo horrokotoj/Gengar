@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import hasNetworkConnection from './NetworkConnection'
 
 /**
  * @brief Validates a qrString and its certificate.
@@ -24,8 +25,8 @@ async function ValidateQrString(qrString, certificate) {
         if (json.successful === true) {
             await SecureStore.setItemAsync('isValid', 'true');
         }
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
