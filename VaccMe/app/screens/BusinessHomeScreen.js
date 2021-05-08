@@ -67,70 +67,52 @@ function BusinessHomeScreen({ navigation }) {
                         VaccMe
                     </Text>
                 </View>
-                <View style={styleSheets.tabSheet}>            
+                <View style={styleSheets.tabSheet}>
                     <View style={styleSheets.container}>
-                    <ScrollView>
-                        {pressed === 'cert1' ? (
-                            <TouchableHighlight
-                            style={styleSheets.scrollItemPressed}
-                               // style={styleSheets.touchableHighlightDark}
-                                onPress={() => removeCert()}
-                            >
-                                <Text
-                                    style={
-                                        styleSheets.textPressed
-                                    }
+                        <ScrollView>
+                            {pressed === 'cert1' ? (
+                                <TouchableHighlight
+                                    style={styleSheets.scrollItemPressed}
+                                    // style={styleSheets.touchableHighlightDark}
+                                    onPress={() => removeCert()}
                                 >
-                                    Cert 1
-                                </Text>
-                            </TouchableHighlight>
-                        ) : (
-                            <TouchableHighlight
-                                style={styleSheets.scrollItem}
-                                onPress={() => addCert('cert1')}
-                            >
-                                <Text
-                                    style={styleSheets.text}
+                                    <Text style={styleSheets.textPressed}>
+                                        Cert 1
+                                    </Text>
+                                </TouchableHighlight>
+                            ) : (
+                                <TouchableHighlight
+                                    style={styleSheets.scrollItem}
+                                    onPress={() => addCert('cert1')}
                                 >
-                                    Cert 1
-                                </Text>
-                            </TouchableHighlight>
-                        )}
-                        {pressed === 'cert2' ? (
-                            <TouchableHighlight
-                                style={styleSheets.scrollItemPressed}
-                                onPress={() => removeCert()}
-                            >
-                                <Text
-                                    style={
-                                        styleSheets.textPressed
-                                    }
+                                    <Text style={styleSheets.text}>Cert 1</Text>
+                                </TouchableHighlight>
+                            )}
+                            {pressed === 'cert2' ? (
+                                <TouchableHighlight
+                                    style={styleSheets.scrollItemPressed}
+                                    onPress={() => removeCert()}
                                 >
-                                    Cert 2
-                                </Text>
-                            </TouchableHighlight>
-                        ) : (
-                            <TouchableHighlight
-                                style={styleSheets.scrollItem}
-                                onPress={() => addCert('cert2')}
-                            >
-                                <Text
-                                    style={styleSheets.text}
+                                    <Text style={styleSheets.textPressed}>
+                                        Cert 2
+                                    </Text>
+                                </TouchableHighlight>
+                            ) : (
+                                <TouchableHighlight
+                                    style={styleSheets.scrollItem}
+                                    onPress={() => addCert('cert2')}
                                 >
-                                    Cert 2
-                                </Text>
-                            </TouchableHighlight>
-                        )}
-                    </ScrollView>
+                                    <Text style={styleSheets.text}>Cert 2</Text>
+                                </TouchableHighlight>
+                            )}
+                        </ScrollView>
                     </View>
                     <View>
                         <TouchableHighlight
-                            style={styleSheets.touchableHighlight}
+                            style={styleSheets.scan}
                             onPress={() => scan()}
                         >
-                            <Text style={styleSheets.touchableHighlightText}>
-                                Scan
-                            </Text>
+                            <Text style={styleSheets.scanText}>Skanna</Text>
                         </TouchableHighlight>
                     </View>
                 </View>

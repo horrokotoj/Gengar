@@ -37,8 +37,10 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "^2.15.2",
+    "react-native-sound": "^0.11.0",
     "react-native-svg": "^12.1.0",
-    "react-native-web": "^0.15.5"
+    "react-native-web": "^0.15.5",
+    "expo-av": "~8.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",

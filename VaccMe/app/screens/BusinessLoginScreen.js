@@ -40,7 +40,7 @@ function BusinessLoginScreen({ navigation }) {
                         alignItems: 'center',
                     }}
                 >
-                    <Text style={styleSheets.business}>Business</Text>
+                    <Text style={styleSheets.business}>Företag</Text>
                 </View>
 
                 <View style={styleSheets.filler} />
@@ -59,7 +59,7 @@ function BusinessLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    login
+                                    Logga In
                                 </Text>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -69,7 +69,7 @@ function BusinessLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    back
+                                    Tillbaka
                                 </Text>
                             </TouchableHighlight>
                         </View>

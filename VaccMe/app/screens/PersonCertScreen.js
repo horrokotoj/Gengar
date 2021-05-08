@@ -11,6 +11,7 @@ import PersonCertInfo from '../screens/PersonCertInfo';
 import { FlatList } from 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
+import { NavigationHelpersContext } from '@react-navigation/core';
 
 const DATA = [
     { key: 'Covid-19' },
@@ -33,7 +34,7 @@ const DATA = [
  * @returns A certificate screen
  */
 
-function PersonCertScreen() {
+function PersonCertScreen({ navigation }) {
     const [isLoadingUrl, setLoadingUrl] = React.useState(true);
     const [dataUrl, setData] = React.useState([]);
 
@@ -90,22 +91,24 @@ function PersonCertScreen() {
                         <Text>Loading url</Text>
                     ) : (
                         <View style={styleSheets.container}>
-                        <FlatList
-                            data={DATA}
-                            renderItem={({ item }) => (
-                                <TouchableHighlight
-                                    onPress={() => {}}
-                                    style={styleSheets.scrollItem}
-                                >
-                                    <Text style={styleSheets.text}>
-                                        {item.key}
-                                    </Text>
-                                </TouchableHighlight>
-                            )}
-                        ></FlatList>
-                    </View>
-
-                        
+                            <FlatList
+                                data={DATA}
+                                renderItem={({ item }) => (
+                                    <TouchableHighlight
+                                        onPress={() => {
+                                            navigation.navigate(
+                                                'PersonCertInfo'
+                                            );
+                                        }}
+                                        style={styleSheets.scrollItem}
+                                    >
+                                        <Text style={styleSheets.text}>
+                                            {item.key}
+                                        </Text>
+                                    </TouchableHighlight>
+                                )}
+                            ></FlatList>
+                        </View>
                     )}
                 </View>
                 <View style={styleSheets.filler}>
@@ -127,7 +130,8 @@ function PersonCertScreen() {
 
 export default PersonCertScreen;
 
-{/* <View style={styleSheets.container}>
+{
+    /* <View style={styleSheets.container}>
                         <FlatList
                             data={dataUrl.sort((a, b) =>
                                 a.name.localeCompare(b.name)
@@ -141,4 +145,5 @@ export default PersonCertScreen;
                         />
                     </View>
 
- */}
+ */
+}

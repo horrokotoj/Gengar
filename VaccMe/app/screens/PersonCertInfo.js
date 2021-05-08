@@ -70,7 +70,7 @@ function PersonInfoCert({ navigation }) {
                         onPress={() => navigation.goBack()}
                     >
                         <Text style={styleSheets.touchableHighlightText}>
-                            Back
+                            Tillbaka
                         </Text>
                     </TouchableHighlight>
                 </View>

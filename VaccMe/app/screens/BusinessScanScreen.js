@@ -11,6 +11,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import ValidateQrString from '../network/ValidateQrString';
 import * as SecureStore from 'expo-secure-store';
+import { Audio } from 'expo-av';
 
 /**
  * @brief Renders a QR-code scanner for a business user
@@ -21,6 +22,29 @@ function BusinessScanScreen({ navigation }) {
     const [certificate, setCertificate] = React.useState(null);
     const [isScanned, setScanned] = React.useState(false);
     const [replyData, setReplyData] = React.useState(null);
+    const [sound, setSound] = React.useState();
+
+    async function playSoundValid() {
+        console.log('Loading Sound 1');
+        const { sound } = await Audio.Sound.createAsync(
+            require('../audio/valid.mp3')
+        );
+        setSound(sound);
+
+        console.log('Playing Sound 1');
+        await sound.playAsync();
+    }
+
+    async function playSoundInvalid() {
+        console.log('Loading Sound 2');
+        const { sound } = await Audio.Sound.createAsync(
+            require('../audio/invalid.mp3')
+        );
+        setSound(sound);
+
+        console.log('Playing Sound 2');
+        await sound.playAsync();
+    }
 
     const getCert = async () => {
         let cert;
@@ -41,6 +65,15 @@ function BusinessScanScreen({ navigation }) {
         })();
     }, []);
 
+    React.useEffect(() => {
+        return sound
+            ? () => {
+                  console.log('Unloading Sound');
+                  sound.unloadAsync();
+              }
+            : undefined;
+    }, [sound]);
+
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
         //alert(`Bar code with type ${type} and data ${data} has been scanned!`);
@@ -57,10 +90,12 @@ function BusinessScanScreen({ navigation }) {
                     //alert(replyData);
                     await SecureStore.deleteItemAsync('isValid');
                     setReplyData(null);
+                    playSoundValid();
                     navigation.navigate('BusinessValidScreen');
                 } else {
                     await SecureStore.deleteItemAsync('isValid');
                     setReplyData(null);
+                    playSoundInvalid();
                     navigation.navigate('BusinessInvalidScreen');
                 }
             }
