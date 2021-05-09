@@ -9,24 +9,23 @@ import hasNetworkConnection from './NetworkConnection'
 async function ValidateQrString(qrString, certificate) {
     let response;
     console.log('requesting validate qrString');
-    try {
-        response = await fetch('https://gengar.uxserver.se/verify', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                qrstring: '' + qrString,
-                certificatestocheck: '' + certificate,
-            }),
-        });
-        let json = await response.json();
-        if (json.successful === true) {
-            await SecureStore.setItemAsync('isValid', 'true');
+
+    if (hasNetworkConnection()) { 
+        try {
+            response = await RequestFromServer(
+                            'verify',
+                            {   qrstring: '' + qrString,
+                                certificatestocheck: '' + certificate});
+            let json = await response.json();
+            if (json.successful === true) {
+                await SecureStore.setItemAsync('isValid', 'true');
+            }
+        } catch (error) {
+            alert('No server response');            
+            console.log(error);
         }
-    } catch (error) {
-        console.log(error);
+    } else {
+        console.log('No internet connection');        
     }
 }
 

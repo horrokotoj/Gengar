@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import hasNetworkConnection from './NetworkConnection'
+import RequestFromServer from './RequestFromServer'
 
 /**
  * @brief Updates a users qr string
@@ -8,26 +9,25 @@ import hasNetworkConnection from './NetworkConnection'
 async function UpdateQrString(userId) {
     let response;
     console.log('requesting update qrString');
-    try {
-        response = await fetch('https://gengar.uxserver.se/getqr', {
-            method: 'POST',
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                googleuserid: '' + userId,
-            }),
-        });
-        let json = await response.json();
-        console.log(json);
-        await SecureStore.setItemAsync(
-            'userQrString',
-            JSON.parse(json).qr_string
-        );
-    } catch (error) {
-        console.log(error);
-    }
+
+    if (hasNetworkConnection()) {
+        try {
+            response = await RequestFromServer(
+                            'getqr',
+                            { googleuserid: '' + userId });
+            let json = await response.json();
+            console.log(json);
+            await SecureStore.setItemAsync(
+                'userQrString',
+                JSON.parse(json).qr_string
+            );
+        } catch (error) {
+            alert('No server response');
+            console.log(error);
+        }
+    } else {
+        console.log('No internet connection');
+    }    
 }
 
 export default UpdateQrString;

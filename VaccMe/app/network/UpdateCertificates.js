@@ -1,5 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 import hasNetworkConnection from './NetworkConnection'
+import RequestFromServer from './RequestFromServer'
 
 /**
  * @brief Updates a users certificates
@@ -7,20 +8,13 @@ import hasNetworkConnection from './NetworkConnection'
  */
 async function UpdateCertificates(userId) {
     let response;
-    console.log('requesting update certificates');        
-    if (hasNetworkConnection()) { 
+    console.log('requesting update certificates');
 
+    if (hasNetworkConnection()) { 
         try {
-            response = await fetch('https://gengar.uxserver.se/userdata', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    googleuserid: '' + userId,
-                }),
-            });
+            response = await RequestFromServer(
+                            'userdata',
+                            { googleuserid: '' + userId });
             let json = await response.json();
             console.log(json);
             await SecureStore.setItemAsync('userCert', json);
