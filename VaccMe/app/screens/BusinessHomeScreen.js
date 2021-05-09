@@ -127,7 +127,7 @@ function BusinessHomeScreen({ navigation }) {
                                         styleSheets.touchableHighlightTextLight
                                     }
                                 >
-                                    Cert 2
+                                    Cert 3
                                 </Text>
                             </TouchableHighlight>
                         ) : (
