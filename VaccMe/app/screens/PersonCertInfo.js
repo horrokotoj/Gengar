@@ -5,7 +5,6 @@ import {
     Text,
     TouchableHighlight,
     View,
-    Button,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import Ionicons from 'react-native-vector-icons/Ionicons';

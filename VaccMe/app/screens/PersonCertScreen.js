@@ -13,7 +13,7 @@ import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
 import { NavigationHelpersContext } from '@react-navigation/core';
 
-const DATA = [
+/*const DATA = [
     { key: 'Covid-19' },
     { key: 'HPV' },
     { key: 'TBE' },
@@ -26,7 +26,7 @@ const DATA = [
     { key: 'Vaccin4' },
     { key: 'Vaccin5' },
     { key: 'Vaccin6' },
-];
+];*/
 
 /**
  * @brief Renders a user certificate screen
@@ -92,7 +92,10 @@ function PersonCertScreen({ navigation }) {
                     ) : (
                         <View style={styleSheets.container}>
                             <FlatList
-                                data={DATA}
+                                data={dataUrl.sort((a, b) =>
+                                    a.name.localeCompare(b.name)
+                                )}
+                                keyExtractor={(item) => item.name}
                                 renderItem={({ item }) => (
                                     <TouchableHighlight
                                         onPress={() => {
@@ -103,7 +106,7 @@ function PersonCertScreen({ navigation }) {
                                         style={styleSheets.scrollItem}
                                     >
                                         <Text style={styleSheets.text}>
-                                            {item.key}
+                                        {item.name}, {item.registerdate}
                                         </Text>
                                     </TouchableHighlight>
                                 )}

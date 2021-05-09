@@ -1,11 +1,9 @@
 import React from 'react';
 import {
-    Animated,
     ImageBackground,
     TouchableWithoutFeedback,
     View,
     Text,
-    SafeAreaView,
 } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
