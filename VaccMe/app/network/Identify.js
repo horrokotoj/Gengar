@@ -1,5 +1,3 @@
-import * as SecureStore from 'expo-secure-store';
-
 /**
  * @brief Sends the idToken to identify.
  * @param idToken of the identified user.

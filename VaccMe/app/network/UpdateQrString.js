@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
  * @brief Updates a users qr string
  * @param userID of the user to fetch qr string for.
  */
-async function UpdateQrString(userId) {
+async function UpdateQrString(sessionId) {
     let response;
     console.log('requesting update qrString');
     try {
@@ -15,16 +15,17 @@ async function UpdateQrString(userId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + userId,
+                sessionid: '' + sessionId,
             }),
         });
-        let json = await response.json();
-        console.log(json);
-        await SecureStore.setItemAsync(
-            'userQrString',
-            JSON.parse(json).qr_string
-        );
+        console.log(response.status);
+        if (response.status === 200) {
+            let json = await response.json();
+            console.log(json);
+            await SecureStore.setItemAsync('userQrString', json.qr_string);
+        }
     } catch (e) {
+        console.log('requesting update qrString failed');
         console.log(e);
     }
 }
