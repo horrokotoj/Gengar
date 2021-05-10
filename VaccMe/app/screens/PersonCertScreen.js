@@ -6,8 +6,8 @@ import {
     TouchableHighlight,
     View,
 } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import { FlatList } from 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
 
@@ -16,7 +16,8 @@ import UpdateCertificates from '../network/UpdateCertificates';
  * @brief Will render a list of certificates sorted by name from securestore.
  * @returns A certificate screen
  */
-function PersonCertScreen() {
+
+function PersonCertScreen({ navigation }) {
     const [isLoadingUrl, setLoadingUrl] = React.useState(true);
     const [dataUrl, setData] = React.useState([]);
 
@@ -63,24 +64,37 @@ function PersonCertScreen() {
         >
             <SafeAreaView style={styleSheets.safe}>
                 <View style={styleSheets.logo}>
-                    <Text style={styleSheets.name}>VaccMe</Text>
+                    <Text style={[styleSheets.name, styleSheets.screenName]}>
+                        VaccMe
+                    </Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Mina intyg </Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
-                        <FlatList
-                            data={dataUrl.sort((a, b) =>
-                                a.name.localeCompare(b.name)
-                            )}
-                            keyExtractor={(item) => item.name}
-                            renderItem={({ item }) => (
-                                <Text>
-                                    {item.name}, {item.registerdate}
-                                </Text>
-                            )}
-                        />
+                        <View style={styleSheets.container}>
+                            <FlatList
+                                data={dataUrl.sort((a, b) =>
+                                    a.name.localeCompare(b.name)
+                                )}
+                                keyExtractor={(item) => item.name}
+                                renderItem={({ item }) => (
+                                    <TouchableHighlight
+                                        onPress={() => {
+                                            navigation.navigate(
+                                                'PersonCertInfo'
+                                            );
+                                        }}
+                                        style={styleSheets.scrollItem}
+                                    >
+                                        <Text style={styleSheets.text}>
+                                            {item.name}, {item.registerdate}
+                                        </Text>
+                                    </TouchableHighlight>
+                                )}
+                            ></FlatList>
+                        </View>
                     )}
                 </View>
                 <View style={styleSheets.filler}>

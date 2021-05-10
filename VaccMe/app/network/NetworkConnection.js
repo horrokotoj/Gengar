@@ -1,11 +1,8 @@
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo from '@react-native-community/netinfo';
 
-
-const hasNetworkConnection = () => {
-    NetInfo.fetch().then(networkState => {
-        console.log("Is connected? - ", networkState.isConnected);
+function hasNetworkConnection() {
+    return NetInfo.fetch().then((networkState) => {
         return networkState.isConnected;
     });
-};
+}
 export default hasNetworkConnection;
-

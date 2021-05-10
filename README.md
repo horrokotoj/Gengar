@@ -55,6 +55,10 @@ Only exists as a navigator.
 
 ![BusinessScanScreen](./media/BusinessScanScreen.png)
 
+### BusinessScanScreen scanned
+
+![BusinessScanScreen-scanned](./media/BusinessScanScreen-scanned.png)
+
 ### BusinessValidScreen
 
 ![BusinessValidScreen](./media/BusinessValidScreen.png)
@@ -73,6 +77,14 @@ Using expo for deployment.
 
 ```bash
 expo install expo-barcode-scanner
+```
+### Sound effects
+
+- `expo install`
+    -   expo-av
+
+```bash
+expo install expo-av
 ```
 
 ### Navigation and tab bar
@@ -96,7 +108,7 @@ npm install @react-navigation/native @react-navigation/stack @react-navigation/b
 ```
 
 ```bash
-expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view expo-secure-store react-native-qrcode-svg
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view expo-secure-store react-native-qrcode-svg expo-av 
 ```
 
 In some cases the react-native-qrcode-svg need the flag --legacy-peer-deps.

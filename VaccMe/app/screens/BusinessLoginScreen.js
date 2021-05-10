@@ -4,7 +4,6 @@ import {
     KeyboardAvoidingView,
     View,
     Text,
-    TextInput,
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
@@ -33,7 +32,14 @@ function BusinessLoginScreen({ navigation }) {
                     <Text style={styleSheets.slogan}>
                         Ditt elektroniska vaccinationsintyg
                     </Text>
-                    <Text style={styleSheets.name}>Business</Text>
+                </View>
+                <View
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Text style={styleSheets.business}>Företag</Text>
                 </View>
 
                 <View style={styleSheets.filler} />
@@ -52,7 +58,7 @@ function BusinessLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    login
+                                    Logga In
                                 </Text>
                             </TouchableHighlight>
                             <TouchableHighlight
@@ -62,7 +68,7 @@ function BusinessLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    back
+                                    Tillbaka
                                 </Text>
                             </TouchableHighlight>
                         </View>

@@ -62,24 +62,54 @@ function PersonCalendarScreen() {
         >
             <SafeAreaView style={styleSheets.safe}>
                 <View style={styleSheets.logo}>
-                    <Text style={styleSheets.name}>VaccMe</Text>
+                    <Text style={[styleSheets.name, styleSheets.screenName]}>
+                        VaccMe
+                    </Text>
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}> Kalender </Text>
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
-                        <FlatList
-                            data={dataUrl.sort((a, b) =>
-                                a.expirationdate.localeCompare(b.expirationdate)
-                            )}
-                            keyExtractor={(item) => item.name}
-                            renderItem={({ item }) => (
-                                <Text>
-                                    {item.name}, {item.expirationdate}
-                                </Text>
-                            )}
-                        />
+                        <View style={{ flex: 1, width: '90%' }}>
+                            <FlatList
+                                data={dataUrl.sort((a, b) =>
+                                    a.expirationdate.localeCompare(
+                                        b.expirationdate
+                                    )
+                                )}
+                                keyExtractor={(item) => item.name}
+                                renderItem={({ item }) => (
+                                    <View style={styleSheets.calenderContainer}>
+                                        <View
+                                            style={styleSheets.calenderColumn}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styleSheets.text,
+                                                    { alignSelf: 'flex-start' },
+                                                ]}
+                                            >
+                                                {item.name}
+                                            </Text>
+                                        </View>
+
+                                        <View
+                                            style={styleSheets.calenderColumn}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styleSheets.text,
+                                                    { alignSelf: 'flex-end' },
+                                                ]}
+                                            >
+                                                {item.expirationdate}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                )}
+                            />
+                        </View>
                     )}
                 </View>
                 <View style={styleSheets.filler}>

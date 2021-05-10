@@ -1,11 +1,18 @@
 import React from 'react';
-import { ImageBackground, TouchableWithoutFeedback, View } from 'react-native';
+import {
+    ImageBackground,
+    TouchableWithoutFeedback,
+    View,
+    Text,
+} from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
+import { Entypo } from '@expo/vector-icons';
 
 /**
  * @brief Renders an invalid screen
  * @returns A invalid screen
  */
+
 function BusinessInvalidScreen({ navigation }) {
     return (
         <ImageBackground style={styleSheets.invalid}>
@@ -14,7 +21,25 @@ function BusinessInvalidScreen({ navigation }) {
                     navigation.goBack();
                 }}
             >
-                <View style={styleSheets.validView}></View>
+                <View style={styleSheets.validView}>
+                    <View>
+                        <Entypo
+                            style={{
+                                marginTop: '50%',
+                                alignSelf: 'center',
+                            }}
+                            name="circle-with-cross"
+                            size={200}
+                            color="#FF0201"
+                        />
+                    </View>
+                    <Text style={styleSheets.validText}>
+                        Vaccination ej giltig!
+                    </Text>
+                    <Text style={styleSheets.tapScreen}>
+                        Tryck på skärmen för att gå tillbaka
+                    </Text>
+                </View>
             </TouchableWithoutFeedback>
         </ImageBackground>
     );
