@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import hasNetworkConnection from './NetworkConnection'
 
 /**
  * @brief Updates a users qr string
@@ -24,8 +25,8 @@ async function UpdateQrString(userId) {
             'userQrString',
             JSON.parse(json).qr_string
         );
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
