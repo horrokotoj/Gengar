@@ -15,7 +15,7 @@ async function UpdateQrString(sessionId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                sessionid: '' + sessionId,
+                session_id: '' + sessionId,
             }),
         });
         console.log(response.status);

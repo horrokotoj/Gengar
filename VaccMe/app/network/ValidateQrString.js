@@ -20,11 +20,14 @@ async function ValidateQrString(qrString, certificate) {
                 certificatestocheck: '' + certificate,
             }),
         });
-        let json = await response.json();
-        if (json.successful === true) {
-            await SecureStore.setItemAsync('isValid', 'true');
-            return true;
-        } else return false;
+        console.log(response.stats);
+        if (response.status === 200) {
+            let json = await response.json();
+            console.log(json);
+            if (json.successful === true) return true;
+            else return false;
+        }
+        if (response.status === 202) return PollForIdentification(sessionId);
     } catch (e) {
         console.log(e);
     }

@@ -6,20 +6,23 @@ async function PollForIdentification(sessionId) {
     let response;
     console.log('Polling For Identification');
     try {
-        response = await fetch('https://gengar.uxserver.se/identifypolling', {
+        response = await fetch('https://gengar.uxserver.se/qrscanned', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                sessionid: '' + sessionId,
+                session_id: '' + sessionId,
             }),
         });
-        let json = await response.json();
-        console.log(json);
-        if (json.identify === true) return true;
-        else return false;
+        console.log(response.status);
+        if (response.status === 200) {
+            let json = await response.json();
+            console.log(json);
+            if (json.successful === true) return true;
+            else return false;
+        }
     } catch (error) {
         console.log(error);
     }
