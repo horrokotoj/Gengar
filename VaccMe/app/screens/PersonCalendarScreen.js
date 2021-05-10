@@ -71,7 +71,7 @@ function PersonCalendarScreen() {
                     {isLoadingUrl ? (
                         <Text>Loading url</Text>
                     ) : (
-                        <View style={styleSheets.container}>
+                        <View style={{ flex: 1, width: '90%' }}>
                             <FlatList
                                 data={dataUrl.sort((a, b) =>
                                     a.expirationdate.localeCompare(
@@ -80,11 +80,32 @@ function PersonCalendarScreen() {
                                 )}
                                 keyExtractor={(item) => item.name}
                                 renderItem={({ item }) => (
-                                    <View style={styleSheets.scrollItem}>
-                                        {' '}
-                                        <Text style={styleSheets.text}>
-                                            {item.name}, {item.expirationdate}
-                                        </Text>
+                                    <View style={styleSheets.calenderContainer}>
+                                        <View
+                                            style={styleSheets.calenderColumn}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styleSheets.text,
+                                                    { alignSelf: 'flex-start' },
+                                                ]}
+                                            >
+                                                {item.name}
+                                            </Text>
+                                        </View>
+
+                                        <View
+                                            style={styleSheets.calenderColumn}
+                                        >
+                                            <Text
+                                                style={[
+                                                    styleSheets.text,
+                                                    { alignSelf: 'flex-end' },
+                                                ]}
+                                            >
+                                                {item.expirationdate}
+                                            </Text>
+                                        </View>
                                     </View>
                                 )}
                             />

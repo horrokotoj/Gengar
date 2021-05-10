@@ -89,32 +89,11 @@ export const styleSheets = StyleSheet.create({
         shadowColor: 'grey',
         shadowOpacity: 1,
     },
-    touchableHighlightDark: {
-        width: 250,
-        height: 50,
-        backgroundColor: secondaryTextColor,
-        alignSelf: 'center',
-        borderColor: mainTextColor,
-        margin: 5,
-        borderWidth: 3,
-        borderRadius: 50,
-        justifyContent: 'center',
-    },
     touchableHighlightText: {
         textAlign: 'center',
         fontSize: 22,
         fontFamily: 'oswald-bold',
         color: 'white',
-        textShadowColor: 'grey',
-        textShadowOffset: { width: 1, height: 1 },
-        textShadowRadius: 3,
-        //color: secondaryTextColor,
-    },
-    touchableHighlightTextLight: {
-        textAlign: 'center',
-        color: mainTextColor,
-        fontSize: 20,
-        fontFamily: 'oswald-bold',
         textShadowColor: 'grey',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 3,
@@ -174,8 +153,9 @@ export const styleSheets = StyleSheet.create({
     },
     scannerView: {
         flex: 4,
-        borderWidth: 1,
         borderColor: 'black',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
     },
     cancelButtonView: {
         flex: 1,
@@ -185,17 +165,6 @@ export const styleSheets = StyleSheet.create({
     touchableValid: {
         width: '100%',
         height: '100%',
-    },
-    certButton: {
-        width: 20,
-        height: 20,
-        backgroundColor: 'pink',
-        alignSelf: 'center',
-        borderColor: secondaryTextColor,
-        margin: 5,
-        borderWidth: 1,
-        borderRadius: 50,
-        justifyContent: 'center',
     },
     container: {
         flex: 1,
@@ -213,7 +182,6 @@ export const styleSheets = StyleSheet.create({
         borderWidth: 1,
         borderColor: 'white',
         borderRadius: 5,
-        fontSize: 20,
     },
     scrollItemPressed: {
         backgroundColor: 'darkgrey',
@@ -272,6 +240,15 @@ export const styleSheets = StyleSheet.create({
         textShadowColor: 'grey',
         textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 3,
-        //color: secondaryTextColor,
+    },
+    calenderColumn: {
+        margin: 10,
+        marginTop: 15,
+        flex: 0.5,
+    },
+    calenderContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 });

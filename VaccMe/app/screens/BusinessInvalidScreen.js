@@ -5,7 +5,6 @@ import {
     View,
     Text,
 } from 'react-native';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { Entypo } from '@expo/vector-icons';
 

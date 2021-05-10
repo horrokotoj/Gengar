@@ -7,26 +7,9 @@ import {
     View,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
-import PersonCertInfo from '../screens/PersonCertInfo';
 import { FlatList } from 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
-import { NavigationHelpersContext } from '@react-navigation/core';
-
-/*const DATA = [
-    { key: 'Covid-19' },
-    { key: 'HPV' },
-    { key: 'TBE' },
-    { key: 'Malaria' },
-    { key: 'Hepatit B' },
-    { key: 'Svininfluensa' },
-    { key: 'Vaccin1' },
-    { key: 'Vaccin2' },
-    { key: 'Vaccin3' },
-    { key: 'Vaccin4' },
-    { key: 'Vaccin5' },
-    { key: 'Vaccin6' },
-];*/
 
 /**
  * @brief Renders a user certificate screen
@@ -132,21 +115,3 @@ function PersonCertScreen({ navigation }) {
 }
 
 export default PersonCertScreen;
-
-{
-    /* <View style={styleSheets.container}>
-                        <FlatList
-                            data={dataUrl.sort((a, b) =>
-                                a.name.localeCompare(b.name)
-                            )}
-                            keyExtractor={(item) => item.name}
-                            renderItem={({ item }) => (
-                                <Text style={styleSheets.text}>
-                                    {item.name}, {item.registerdate}
-                                </Text>
-                            )}
-                        />
-                    </View>
-
- */
-}

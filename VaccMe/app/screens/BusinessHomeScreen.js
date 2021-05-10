@@ -5,12 +5,12 @@ import {
     Text,
     View,
     ScrollView,
+    TouchableOpacity,
 } from 'react-native';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
-import { TouchableOpacity } from 'react-native';
 
 /**
  * @brief Renders a home screen for a business user
@@ -77,7 +77,6 @@ function BusinessHomeScreen({ navigation }) {
                                         styleSheets.scrollItem,
                                         styleSheets.scrollItemPressed,
                                     ]}
-                                    // style={styleSheets.touchableHighlightDark}
                                     onPress={() => removeCert()}
                                 >
                                     <Text style={styleSheets.text}>Cert 1</Text>

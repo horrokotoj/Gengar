@@ -6,7 +6,6 @@ import {
     Text,
     View,
     Linking,
-    TouchableHighlight,
 } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';

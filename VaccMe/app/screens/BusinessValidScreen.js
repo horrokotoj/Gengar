@@ -4,11 +4,9 @@ import {
     TouchableWithoutFeedback,
     View,
     Text,
-    Button,
     SafeAreaView,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
-import { Audio } from 'expo-av';
 import { FontAwesome } from '@expo/vector-icons';
 
 /**

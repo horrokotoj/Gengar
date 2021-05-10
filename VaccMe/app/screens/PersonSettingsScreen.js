@@ -29,7 +29,7 @@ function PersonSettingsScreen() {
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}>
                         Inställningar
-                    </Text>        
+                    </Text>
                 </View>
                 <View style={styleSheets.filler}>
                     <TouchableHighlight
