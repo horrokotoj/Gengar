@@ -55,6 +55,10 @@ Only exists as a navigator.
 
 ![BusinessScanScreen](./media/BusinessScanScreen.png)
 
+### BusinessScanScreen scanned
+
+![BusinessScanScreen-scanned](./media/BusinessScanScreen-scanned.png)
+
 ### BusinessValidScreen
 
 ![BusinessValidScreen](./media/BusinessValidScreen.png)
