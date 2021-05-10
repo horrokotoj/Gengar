@@ -106,7 +106,7 @@ function PersonCertScreen({ navigation }) {
                                         style={styleSheets.scrollItem}
                                     >
                                         <Text style={styleSheets.text}>
-                                        {item.name}, {item.registerdate}
+                                            {item.name}, {item.registerdate}
                                         </Text>
                                     </TouchableHighlight>
                                 )}

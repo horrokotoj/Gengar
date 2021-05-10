@@ -8,8 +8,8 @@ import {
     SafeAreaView,
 } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
-import { AntDesign } from '@expo/vector-icons';
 import { Audio } from 'expo-av';
+import { FontAwesome } from '@expo/vector-icons';
 
 /**
  * @brief Renders a valid screen
@@ -26,12 +26,12 @@ function BusinessValidScreen({ navigation }) {
                 >
                     <View style={styleSheets.validView}>
                         <View>
-                            <AntDesign
+                            <FontAwesome
                                 style={{
                                     marginTop: '50%',
                                     alignSelf: 'center',
                                 }}
-                                name="checkcircle"
+                                name="check-circle"
                                 size={200}
                                 color="#7fff00"
                             />

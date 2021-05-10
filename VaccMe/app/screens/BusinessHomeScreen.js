@@ -10,6 +10,7 @@ import { TouchableHighlight } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import { AuthContext } from '../context/AuthContext';
 import * as SecureStore from 'expo-secure-store';
+import { TouchableOpacity } from 'react-native';
 
 /**
  * @brief Renders a home screen for a business user
@@ -71,49 +72,51 @@ function BusinessHomeScreen({ navigation }) {
                     <View style={styleSheets.container}>
                         <ScrollView>
                             {pressed === 'cert1' ? (
-                                <TouchableHighlight
-                                    style={styleSheets.scrollItemPressed}
+                                <TouchableOpacity
+                                    style={[
+                                        styleSheets.scrollItem,
+                                        styleSheets.scrollItemPressed,
+                                    ]}
                                     // style={styleSheets.touchableHighlightDark}
                                     onPress={() => removeCert()}
                                 >
-                                    <Text style={styleSheets.textPressed}>
-                                        Cert 1
-                                    </Text>
-                                </TouchableHighlight>
+                                    <Text style={styleSheets.text}>Cert 1</Text>
+                                </TouchableOpacity>
                             ) : (
-                                <TouchableHighlight
+                                <TouchableOpacity
                                     style={styleSheets.scrollItem}
                                     onPress={() => addCert('cert1')}
                                 >
                                     <Text style={styleSheets.text}>Cert 1</Text>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             )}
                             {pressed === 'cert2' ? (
-                                <TouchableHighlight
-                                    style={styleSheets.scrollItemPressed}
+                                <TouchableOpacity
+                                    style={[
+                                        styleSheets.scrollItem,
+                                        styleSheets.scrollItemPressed,
+                                    ]}
                                     onPress={() => removeCert()}
                                 >
-                                    <Text style={styleSheets.textPressed}>
-                                        Cert 2
-                                    </Text>
-                                </TouchableHighlight>
+                                    <Text style={styleSheets.text}>Cert 2</Text>
+                                </TouchableOpacity>
                             ) : (
-                                <TouchableHighlight
+                                <TouchableOpacity
                                     style={styleSheets.scrollItem}
                                     onPress={() => addCert('cert2')}
                                 >
                                     <Text style={styleSheets.text}>Cert 2</Text>
-                                </TouchableHighlight>
+                                </TouchableOpacity>
                             )}
                         </ScrollView>
                     </View>
                     <View>
-                        <TouchableHighlight
+                        <TouchableOpacity
                             style={styleSheets.scan}
                             onPress={() => scan()}
                         >
                             <Text style={styleSheets.scanText}>Skanna</Text>
-                        </TouchableHighlight>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <View style={styleSheets.filler}>

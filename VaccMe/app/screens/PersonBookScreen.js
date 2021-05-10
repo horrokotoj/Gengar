@@ -6,8 +6,9 @@ import {
     Text,
     View,
     Linking,
-    TouchableHighlight
+    TouchableHighlight,
 } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
 /**
@@ -28,16 +29,18 @@ function PersonBookScreen() {
                 </View>
                 <View style={styleSheets.tabSheet}>
                     <Text style={styleSheets.tabSheetHeader}>Boka</Text>
-                    <TouchableHighlight onPress={() =>
+                    <TouchableOpacity
+                        onPress={() =>
                             Linking.openURL(
                                 'https://www.1177.se/behandling--hjalpmedel/vaccinationer/'
-                            )}
-                            >
-                            <Image
+                            )
+                        }
+                    >
+                        <Image
                             style={styleSheets.vardguiden}
                             source={require('../assets/1177.png')}
-                            ></Image>
-                        </TouchableHighlight>
+                        ></Image>
+                    </TouchableOpacity>
                 </View>
                 <View style={styleSheets.filler}></View>
             </SafeAreaView>

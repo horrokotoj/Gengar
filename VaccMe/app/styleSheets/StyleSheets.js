@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const tabSheetColor = 'rgba(255, 255, 255, 0.5)';
+const tabSheetColor = 'rgba(255, 255, 255, 0.6)';
 const mainTextColor = '#FFDB21';
 const secondaryTextColor = 'black';
 
@@ -15,11 +15,14 @@ export const styleSheets = StyleSheet.create({
         flex: 1,
     },
     name: {
-        fontSize: 70,
+        fontSize: 72,
         textDecorationLine: 'underline',
         color: mainTextColor,
         fontFamily: 'oswald-bold',
         marginTop: 40,
+        textShadowColor: 'grey',
+        textShadowOffset: { width: 1, height: 1 },
+        textShadowRadius: 3,
     },
     screenName: {
         fontSize: 60,
@@ -74,14 +77,17 @@ export const styleSheets = StyleSheet.create({
     },
     touchableHighlight: {
         width: 250,
-        height: 50,
+        height: 55,
         backgroundColor: mainTextColor,
         alignSelf: 'center',
         borderColor: secondaryTextColor,
-        margin: 10,
-        borderWidth: 1.5,
+        margin: 8,
+        borderWidth: 1.2,
         borderRadius: 50,
         justifyContent: 'center',
+        shadowOffset: { width: 2, height: 2 },
+        shadowColor: 'grey',
+        shadowOpacity: 1,
     },
     touchableHighlightDark: {
         width: 250,
@@ -167,7 +173,9 @@ export const styleSheets = StyleSheet.create({
         flex: 1,
     },
     scannerView: {
-        flex: 5,
+        flex: 4,
+        borderWidth: 1,
+        borderColor: 'black',
     },
     cancelButtonView: {
         flex: 1,
@@ -208,23 +216,13 @@ export const styleSheets = StyleSheet.create({
         fontSize: 20,
     },
     scrollItemPressed: {
-        flex: 1,
-        marginHorizontal: 10,
-        marginTop: 10,
-        padding: 20,
-        backgroundColor: 'black',
-        borderWidth: 1,
+        backgroundColor: 'darkgrey',
+        borderWidth: 2,
         borderColor: 'white',
-        borderRadius: 5,
-        fontSize: 20,
     },
     text: {
         fontSize: 20,
         color: 'black',
-    },
-    textPressed: {
-        fontSize: 20,
-        color: 'white',
     },
     vaccinated: {
         backgroundColor: '#FFE871',
