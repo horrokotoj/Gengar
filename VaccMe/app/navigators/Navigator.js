@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
 import * as SecureStore from 'expo-secure-store';
+import GetSessionId from '../network/GetSessionId';
 import DeleteItems from '../secureStore/DeleteItems';
 import StoreItem from '../secureStore/StoreItems';
 import GoogleSignIn from '../network/GoogleSignIn';
@@ -79,11 +80,19 @@ function Navigator() {
                 try {
                     const result = await GoogleSignIn();
                     console.log(result);
-                    if (result.type === 'success') {
-                        //Defines userType
+                    if (
+                        result.type === 'success' &&
+                        (await GetSessionId(result.idToken))
+                    ) {
+                        //gets a session id
+
                         await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
+                        //Fetches the users certificates
+                        //await UpdateCertificates(result.user.id);
+                        //await UpdateQrString(result.user.id);
+                        console.log('request done');
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN',
@@ -107,11 +116,15 @@ function Navigator() {
                 try {
                     const result = await Google.logInAsync(config);
                     console.log(result);
-                    if (result.type === 'success') {
-                        //Define userType
+                    if (
+                        result.type === 'success' &&
+                        (await GetSessionId(result.idToken))
+                    ) {
+                        //Stores relevant information on SecureStore
                         await SecureStore.setItemAsync('userType', 'business');
-                        //Stores relevant information on secureStore
+                        //Stores relevant information on SecureStore
                         await StoreItem(result);
+                        //gets a session id
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN',

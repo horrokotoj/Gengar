@@ -35,10 +35,10 @@ function PersonCalendarScreen() {
     };
 
     const updateCerts = async () => {
-        let userId;
+        let sessionId;
         try {
-            userId = await SecureStore.getItemAsync('userId');
-            UpdateCertificates(userId);
+            sessionId = await SecureStore.getItemAsync('sessionId');
+            await UpdateCertificates(sessionId);
             console.log('Updated via UpdateCertificates');
             getCerts();
         } catch (error) {

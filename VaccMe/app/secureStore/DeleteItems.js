@@ -10,7 +10,7 @@ async function DeleteItems() {
     await SecureStore.deleteItemAsync('userName');
     await SecureStore.deleteItemAsync('userQrString');
     await SecureStore.deleteItemAsync('certToValidate');
-    await SecureStore.deleteItemAsync('isValid'); //defensive delete
+    await SecureStore.deleteItemAsync('sessionId');
     console.log('deleted');
 }
 
