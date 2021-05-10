@@ -10,6 +10,7 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import QRCode from 'react-native-qrcode-svg';
 import UpdateQrString from '../network/UpdateQrString';
+import PollForIdentification from '../network/PollForIdentification';
 import GoogleSignIn from '../network/GoogleSignIn';
 
 /**
@@ -71,18 +72,18 @@ function PersonQrScreens() {
     React.useEffect(() => {
         updateQrString();
 
-        const qrTimer = setInterval(() => {
-            updateQrString();
-        }, 30000);
-
-        return () => {
-            clearInterval(qrTimer);
-        };
+        //const qrTimer = setInterval(() => {
+        //    updateQrString();
+        //}, 30000);
+        //
+        //return () => {
+        //    clearInterval(qrTimer);
+        //};
     }, []);
 
     React.useEffect(() => {
         const pollingTimer = setInterval(() => {
-            //pollForIdentification();
+            pollForIdentification();
             console.log('poll PersonQrScreen');
         }, 5000);
 

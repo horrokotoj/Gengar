@@ -8,7 +8,7 @@ async function UpdateCertificates(sessionId) {
     let response;
     console.log('requesting update certificates');
     try {
-        response = await fetch('https://gengar.uxserver.se/userdata', {
+        response = await fetch('http://192.168.1.46:8000/userdata', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

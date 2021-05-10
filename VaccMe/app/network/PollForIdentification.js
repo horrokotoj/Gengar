@@ -6,7 +6,7 @@ async function PollForIdentification(sessionId) {
     let response;
     console.log('Polling For Identification');
     try {
-        response = await fetch('https://gengar.uxserver.se/qrscanned', {
+        response = await fetch('http://192.168.1.46:8000/qrscanned', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -22,7 +22,7 @@ async function PollForIdentification(sessionId) {
             console.log(json);
             if (json.successful === true) return true;
             else return false;
-        }
+        } else return false;
     } catch (error) {
         console.log(error);
     }

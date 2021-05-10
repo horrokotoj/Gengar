@@ -8,7 +8,7 @@ async function UpdateQrString(sessionId) {
     let response;
     console.log('requesting update qrString');
     try {
-        response = await fetch('https://gengar.uxserver.se/getqr', {
+        response = await fetch('http://192.168.1.46:8000/getqr', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

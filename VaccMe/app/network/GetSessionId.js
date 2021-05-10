@@ -15,14 +15,14 @@ async function GetSessionId(idToken) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id_token: '' + idToken,
+                id_token: 'test',
             }),
         });
         console.log(response.status);
         if (response.status === 200) {
             let json = await response.json();
             console.log(json);
-            await SecureStore.setItemAsync('sessionId', json.sessionid);
+            await SecureStore.setItemAsync('sessionId', json.session_id);
             return true;
         } else return false;
     } catch (e) {

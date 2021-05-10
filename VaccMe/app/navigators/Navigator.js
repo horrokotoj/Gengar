@@ -114,7 +114,7 @@ function Navigator() {
                 //TODO: Should be implemented in a seperate file and called here.
                 //Was not able to manipulate userToken with this in Autherizer.js
                 try {
-                    const result = await Google.logInAsync(config);
+                    const result = await GoogleSignIn();
                     console.log(result);
                     if (
                         result.type === 'success' &&

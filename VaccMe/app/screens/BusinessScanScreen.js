@@ -10,7 +10,6 @@ import {
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import ValidateQrString from '../network/ValidateQrString';
-import PollForVerification from '../network/PollForVerification';
 import * as SecureStore from 'expo-secure-store';
 
 /**
@@ -20,6 +19,7 @@ import * as SecureStore from 'expo-secure-store';
 function BusinessScanScreen({ navigation }) {
     const [hasPermission, setHasPermission] = React.useState(null);
     const [certificate, setCertificate] = React.useState(null);
+    const [qrString, setQrString] = React.useState(null);
     const [isScanned, setScanned] = React.useState(false);
     const [isPolling, setIsPolling] = React.useState(false);
     const [pollTimer, setPollTimer] = React.useState(null);
@@ -47,19 +47,16 @@ function BusinessScanScreen({ navigation }) {
         let sessionId;
         let poll;
         try {
-            sessionId = await SecureStore.getItem('sessionId');
-            if (sessionId) {
-                poll = await PollForVerification(sessionId);
-                if (poll === 'true') {
-                    clearInterval(pollTimer);
-                    setIsPolling(false);
-                    navigation.navigate('BusinessValidScreen');
-                }
-                if (poll === 'failed') {
-                    clearInterval(pollTimer);
-                    setIsPolling(false);
-                    navigation.navigate('BusinessInvalidScreen');
-                }
+            poll = await ValidateQrString(qrString, certificate);
+            if (poll === 'true') {
+                clearInterval(pollTimer);
+                setIsPolling(false);
+                navigation.navigate('BusinessValidScreen');
+            }
+            if (poll === 'failed') {
+                clearInterval(pollTimer);
+                setIsPolling(false);
+                navigation.navigate('BusinessInvalidScreen');
             }
         } catch (error) {
             console.error(error);
@@ -70,9 +67,9 @@ function BusinessScanScreen({ navigation }) {
         if (isPolling == true) {
             const timer = setInterval(() => {
                 setPollTimer(timer);
-                //pollForVerification();
+                pollForVerification();
                 console.log('Poll BusinessScanScreen');
-            }, 1000);
+            }, 3000);
         }
     }, [isPolling, true]);
 
@@ -82,11 +79,8 @@ function BusinessScanScreen({ navigation }) {
             if (certificate == null) {
                 alert('Need to choose certificate to validate.');
             } else {
-                if (await ValidateQrString(data, certificate)) {
-                    setIsPolling(true);
-                } else {
-                    navigation.navigate('BusinessInvalidScreen');
-                }
+                setQrString(data);
+                setIsPolling(true);
             }
         } catch (e) {
             console.error(e);

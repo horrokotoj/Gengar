@@ -1,5 +1,3 @@
-import * as SecureStore from 'expo-secure-store';
-
 /**
  * @brief Validates a qrString and its certificate.
  * @param qrString to validate.
@@ -10,7 +8,7 @@ async function ValidateQrString(qrString, certificate) {
     let response;
     console.log('requesting validate qrString');
     try {
-        response = await fetch('https://gengar.uxserver.se/verify', {
+        response = await fetch('http://192.168.1.46:8000/verify', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -26,10 +24,10 @@ async function ValidateQrString(qrString, certificate) {
         if (response.status === 200) {
             let json = await response.json();
             console.log(json);
-            if (json.successful === true) return true;
-            else return false;
+            if (json.successful === true) return 'true';
+            else return 'false';
         }
-        if (response.status === 202) return PollForIdentification(sessionId);
+        if (response.status === 202) return null;
     } catch (e) {
         console.log(e);
     }

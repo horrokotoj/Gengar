@@ -38,7 +38,7 @@ function PersonCertScreen() {
         let sessionId;
         try {
             sessionId = await SecureStore.getItemAsync('sessionId');
-            UpdateCertificates(sessionId);
+            await UpdateCertificates(sessionId);
             console.log('Updated via UpdateCertificates');
             getCerts();
         } catch (error) {
