@@ -2,7 +2,6 @@ import React from 'react';
 import {
     Text,
     View,
-    StyleSheet,
     SafeAreaView,
     TouchableHighlight,
     ImageBackground,
@@ -11,6 +10,7 @@ import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import ValidateQrString from '../network/ValidateQrString';
 import * as SecureStore from 'expo-secure-store';
+import { Audio } from 'expo-av';
 
 /**
  * @brief Renders a QR-code scanner for a business user
@@ -24,6 +24,29 @@ function BusinessScanScreen({ navigation }) {
     const [isScanned, setScanned] = React.useState(false);
     const [isPolling, setIsPolling] = React.useState(false);
     const [pollTimer, setPollTimer] = React.useState(null);
+    const [sound, setSound] = React.useState();
+
+    async function playSoundValid() {
+        console.log('Loading Sound 1');
+        const { sound } = await Audio.Sound.createAsync(
+            require('../audio/valid.mp3')
+        );
+        setSound(sound);
+
+        console.log('Playing Sound 1');
+        await sound.playAsync();
+    }
+
+    async function playSoundInvalid() {
+        console.log('Loading Sound 2');
+        const { sound } = await Audio.Sound.createAsync(
+            require('../audio/invalid.mp3')
+        );
+        setSound(sound);
+
+        console.log('Playing Sound 2');
+        await sound.playAsync();
+    }
 
     const getCert = async () => {
         let cert;
@@ -31,8 +54,8 @@ function BusinessScanScreen({ navigation }) {
             cert = await SecureStore.getItemAsync('certToValidate');
             console.log(cert);
             setCertificate(cert);
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 
@@ -51,11 +74,13 @@ function BusinessScanScreen({ navigation }) {
             if (poll === 'true') {
                 setIsPolling(false);
                 setScanned(false);
+                playSoundValid();
                 navigation.navigate('BusinessValidScreen');
             }
             if (poll === 'failed') {
                 setIsPolling(false);
                 setScanned(false);
+                playSoundInvalid();
                 navigation.navigate('BusinessInvalidScreen');
             }
         } catch (error) {
@@ -78,6 +103,14 @@ function BusinessScanScreen({ navigation }) {
             clearInterval(pollTimer);
         };
     }, [isPolling, true]);
+    React.useEffect(() => {
+        return sound
+            ? () => {
+                  console.log('Unloading Sound');
+                  sound.unloadAsync();
+              }
+            : undefined;
+    }, [sound]);
 
     const handleBarCodeScanned = async ({ type, data }) => {
         setScanned(true);
@@ -88,8 +121,8 @@ function BusinessScanScreen({ navigation }) {
                 setQrString(data);
                 setIsPolling(true);
             }
-        } catch (e) {
-            console.error(e);
+        } catch (error) {
+            console.error(error);
         }
     };
 

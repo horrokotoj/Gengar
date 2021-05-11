@@ -72,7 +72,7 @@ function PersonScreen() {
                     }}
                 />
                 <PersonTab.Screen
-                    name="Boka vaccination"
+                    name="Boka vaccin"
                     component={PersonBookScreen}
                     options={{
                         tabBarIcon: ({ color, size }) => (

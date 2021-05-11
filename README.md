@@ -55,6 +55,10 @@ Only exists as a navigator.
 
 ![BusinessScanScreen](./media/BusinessScanScreen.png)
 
+### BusinessScanScreen scanned
+
+![BusinessScanScreen-scanned](./media/BusinessScanScreen-scanned.png)
+
 ### BusinessValidScreen
 
 ![BusinessValidScreen](./media/BusinessValidScreen.png)
@@ -74,6 +78,14 @@ Using expo for deployment.
 ```bash
 expo install expo-barcode-scanner
 ```
+### Sound effects
+
+- `expo install`
+    -   expo-av
+
+```bash
+expo install expo-av
+```
 
 ### Navigation and tab bar
 
@@ -82,6 +94,7 @@ expo install expo-barcode-scanner
     -   @react-navigation/stack
     -   @react-navigation/bottom-tabs
     -   react-native-qrcode-svg (--legacy-peer-deps)
+    -   @react-native-community/netinfo
 -   `expo install`
     -   react-native-reanimated
     -   react-native-gesture-handler
@@ -91,11 +104,11 @@ expo install expo-barcode-scanner
     -   expo-secure-store
 
 ```bash
-npm install @react-navigation/native @react-navigation/stack @react-navigation/bottom-tabs
+npm install @react-navigation/native @react-navigation/stack @react-navigation/bottom-tabs @react-native-community/netinfo
 ```
 
 ```bash
-expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view expo-secure-store react-native-qrcode-svg
+expo install react-native-reanimated react-native-gesture-handler react-native-screens react-native-safe-area-context @react-native-community/masked-view expo-secure-store react-native-qrcode-svg expo-av 
 ```
 
 In some cases the react-native-qrcode-svg need the flag --legacy-peer-deps.

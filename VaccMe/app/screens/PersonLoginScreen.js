@@ -4,7 +4,6 @@ import {
     KeyboardAvoidingView,
     View,
     Text,
-    TextInput,
     Platform,
     TouchableWithoutFeedback,
     Keyboard,
@@ -51,7 +50,7 @@ function PersonLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    login
+                                    Logga In
                                 </Text>
                             </TouchableHighlight>
 
@@ -62,7 +61,7 @@ function PersonLoginScreen({ navigation }) {
                                 <Text
                                     style={styleSheets.touchableHighlightText}
                                 >
-                                    back
+                                    Tillbaka
                                 </Text>
                             </TouchableHighlight>
                         </View>

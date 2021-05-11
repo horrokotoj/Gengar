@@ -2,7 +2,6 @@ import React from 'react';
 import { ImageBackground, Text } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 
-
 /**
  * @brief Renders a loading screen
  * @returns A loading screen

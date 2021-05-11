@@ -1,4 +1,5 @@
 import * as SecureStore from 'expo-secure-store';
+import hasNetworkConnection from './NetworkConnection';
 
 /**
  * @brief Updates a users certificates
