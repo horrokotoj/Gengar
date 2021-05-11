@@ -15,7 +15,7 @@ async function GetSessionId(idToken) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id_token: 'test',
+                id_token: '' + idToken,
             }),
         });
         console.log(response.status);

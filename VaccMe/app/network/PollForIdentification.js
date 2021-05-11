@@ -6,7 +6,7 @@ async function PollForIdentification(sessionId) {
     let response;
     console.log('Polling For Identification');
     try {
-        response = await fetch('http://192.168.1.46:8000/qrscanned', {
+        response = await fetch('http://192.168.1.46:8000/poll', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

@@ -12,15 +12,18 @@ import QRCode from 'react-native-qrcode-svg';
 import UpdateQrString from '../network/UpdateQrString';
 import PollForIdentification from '../network/PollForIdentification';
 import GoogleSignIn from '../network/GoogleSignIn';
+import Identify from '../network/Identify';
 
 /**
  * @brief Renders a QR screen
- * @brief Fetches a string to render a qr-code from secure store.
+ * @brief Fetches a string from server to render a qr-code from and store.
+ * @brief Polls the server for when to identify.
  * @returns A QR screen
  */
 function PersonQrScreens() {
     const [isLoadingQr, setLoadingQr] = React.useState(true);
     const [dataQRstring, setQr] = React.useState(null);
+    let isPolling = false;
 
     const getQrString = async () => {
         let qrString;
@@ -53,42 +56,47 @@ function PersonQrScreens() {
     const pollForIdentification = async () => {
         let sessionId;
         let result;
-        try {
-            sessionId = await SecureStore.getItemAsync('sessionId');
-            if (await PollForIdentification(sessionId)) {
-                result = await GoogleSignIn();
-                if (result.type === 'success') {
-                    await Identify(result.idToken);
+        console.log('Entered pollForIdentification');
+        if (isPolling == true) {
+            try {
+                sessionId = await SecureStore.getItemAsync('sessionId');
+                if (await PollForIdentification(sessionId)) {
+                    isPolling = false;
+                    result = await GoogleSignIn();
+                    if (result.type === 'success') {
+                        if ((await Identify(result.idToken)) == false) {
+                            alert('Varification failed');
+                        }
+                    }
+                    isPolling = true;
                 }
+                console.log('Polled via PollForIdentification');
+            } catch (error) {
+                console.error(error);
+                alert('Pollfailed');
+                getQrString();
             }
-            console.log('Polled via PollForIdentification');
-        } catch (error) {
-            console.error(error);
-            alert('Pollfailed');
-            getQrString();
+        } else {
+            console.log('pollForIdentification paused');
         }
     };
 
     React.useEffect(() => {
+        console.log('useeffect here');
+        isPolling = true;
+        console.log(isPolling);
         updateQrString();
-
-        //const qrTimer = setInterval(() => {
-        //    updateQrString();
-        //}, 30000);
-        //
-        //return () => {
-        //    clearInterval(qrTimer);
-        //};
     }, []);
 
     React.useEffect(() => {
-        const pollingTimer = setInterval(() => {
+        const timer = setInterval(() => {
             pollForIdentification();
-            console.log('poll PersonQrScreen');
-        }, 5000);
+            console.log('polling in PersonQrScreen');
+        }, 1000);
 
         return () => {
-            clearInterval(pollingTimer);
+            console.log('polling stopped');
+            clearInterval(timer);
         };
     }, []);
 

@@ -14,6 +14,7 @@ import * as SecureStore from 'expo-secure-store';
 
 /**
  * @brief Renders a QR-code scanner for a business user
+ * @brief Polls the server with the scanned qr-code for a validation
  * @returns A QR-code scanner
  */
 function BusinessScanScreen({ navigation }) {
@@ -44,18 +45,17 @@ function BusinessScanScreen({ navigation }) {
     }, []);
 
     const pollForVerification = async () => {
-        let sessionId;
         let poll;
         try {
             poll = await ValidateQrString(qrString, certificate);
             if (poll === 'true') {
-                clearInterval(pollTimer);
                 setIsPolling(false);
+                setScanned(false);
                 navigation.navigate('BusinessValidScreen');
             }
             if (poll === 'failed') {
-                clearInterval(pollTimer);
                 setIsPolling(false);
+                setScanned(false);
                 navigation.navigate('BusinessInvalidScreen');
             }
         } catch (error) {
@@ -69,8 +69,14 @@ function BusinessScanScreen({ navigation }) {
                 setPollTimer(timer);
                 pollForVerification();
                 console.log('Poll BusinessScanScreen');
-            }, 3000);
+            }, 1000);
         }
+        if (isPolling == false) {
+            clearInterval(pollTimer);
+        }
+        return () => {
+            clearInterval(pollTimer);
+        };
     }, [isPolling, true]);
 
     const handleBarCodeScanned = async ({ type, data }) => {
