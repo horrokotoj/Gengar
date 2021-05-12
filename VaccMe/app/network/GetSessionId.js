@@ -8,7 +8,7 @@ async function GetSessionId(idToken) {
     console.log('Getting Session Id');
     let response;
     try {
-        response = await fetch('http://192.168.1.46:8000/getsessionid', {
+        response = await fetch('https://gengar.uxserver.se/getsessionid', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -19,6 +19,10 @@ async function GetSessionId(idToken) {
             }),
         });
         console.log(response.status);
+        if (response.status === 401) {
+            console.log('token validation failed');
+            return false;
+        }
         if (response.status === 200) {
             let json = await response.json();
             console.log(json);
@@ -28,6 +32,7 @@ async function GetSessionId(idToken) {
     } catch (e) {
         console.log('Getting Session Id failed');
         console.log(e);
+        return false;
     }
 }
 

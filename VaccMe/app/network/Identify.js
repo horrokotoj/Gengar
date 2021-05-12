@@ -6,7 +6,7 @@ async function Identify(idToken) {
     let response;
     console.log('Identifying');
     try {
-        response = await fetch('http://192.168.1.46:8000/reauth', {
+        response = await fetch('https://gengar.uxserver.se/reauth', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',

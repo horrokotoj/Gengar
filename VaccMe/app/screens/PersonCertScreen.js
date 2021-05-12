@@ -10,6 +10,7 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 import { FlatList } from 'react-native-gesture-handler';
 import * as SecureStore from 'expo-secure-store';
 import UpdateCertificates from '../network/UpdateCertificates';
+import { AuthContext } from '../context/AuthContext';
 
 /**
  * @brief Renders a user certificate screen
@@ -18,6 +19,7 @@ import UpdateCertificates from '../network/UpdateCertificates';
  */
 
 function PersonCertScreen({ navigation }) {
+    const { signOut } = React.useContext(AuthContext);
     const [isLoadingUrl, setLoadingUrl] = React.useState(true);
     const [dataUrl, setData] = React.useState([]);
 
@@ -39,16 +41,20 @@ function PersonCertScreen({ navigation }) {
         let sessionId;
         try {
             sessionId = await SecureStore.getItemAsync('sessionId');
-            await UpdateCertificates(sessionId);
-            console.log('Updated via UpdateCertificates');
-            getCerts();
+            if (await UpdateCertificates(sessionId)) {
+                console.log('Updated via UpdateCertificates');
+                getCerts();
+            } else {
+                alert('Session expired');
+                signOut();
+            }
         } catch (error) {
             console.error(error);
             getCerts();
         }
     };
 
-    //Fetching our data from the url
+    //Fetching certificates and initaliazes an update inteval.
     React.useEffect(() => {
         updateCerts();
         const timer = setInterval(() => {

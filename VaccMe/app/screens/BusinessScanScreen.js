@@ -11,6 +11,7 @@ import { styleSheets } from '../styleSheets/StyleSheets';
 import ValidateQrString from '../network/ValidateQrString';
 import * as SecureStore from 'expo-secure-store';
 import { Audio } from 'expo-av';
+import { AuthContext } from '../context/AuthContext';
 
 /**
  * @brief Renders a QR-code scanner for a business user
@@ -18,6 +19,7 @@ import { Audio } from 'expo-av';
  * @returns A QR-code scanner
  */
 function BusinessScanScreen({ navigation }) {
+    const { signOut } = React.useContext(AuthContext);
     const [hasPermission, setHasPermission] = React.useState(null);
     const [certificate, setCertificate] = React.useState(null);
     const [qrString, setQrString] = React.useState(null);
@@ -25,6 +27,7 @@ function BusinessScanScreen({ navigation }) {
     const [isPolling, setIsPolling] = React.useState(false);
     const [pollTimer, setPollTimer] = React.useState(null);
     const [sound, setSound] = React.useState();
+    const [sessionId, setSessionId] = React.useState(null);
 
     async function playSoundValid() {
         console.log('Loading Sound 1');
@@ -69,19 +72,36 @@ function BusinessScanScreen({ navigation }) {
 
     const pollForVerification = async () => {
         let poll;
+        let sessionId;
         try {
-            poll = await ValidateQrString(qrString, certificate);
+            sessionId = await SecureStore.getItemAsync('sessionId');
+            console.log(sessionId);
+            poll = await ValidateQrString(qrString, certificate, sessionId);
+            if (poll === 'exp_session') {
+                setIsPolling(false);
+                alert('Session expired');
+                signOut();
+            }
             if (poll === 'true') {
                 setIsPolling(false);
                 setScanned(false);
+                setQrString(null);
                 playSoundValid();
                 navigation.navigate('BusinessValidScreen');
             }
-            if (poll === 'failed') {
+            if (poll === 'false') {
                 setIsPolling(false);
                 setScanned(false);
+                setQrString(null);
                 playSoundInvalid();
                 navigation.navigate('BusinessInvalidScreen');
+            }
+            if (poll === 'exp_qr') {
+                alert('Qr-code has expired');
+                clearInterval(pollTimer);
+                setScanned(false);
+                setIsPolling(false);
+                setQrString(null);
             }
         } catch (error) {
             console.error(error);
@@ -118,6 +138,7 @@ function BusinessScanScreen({ navigation }) {
             if (certificate == null) {
                 alert('Need to choose certificate to validate.');
             } else {
+                console.log(data);
                 setQrString(data);
                 setIsPolling(true);
             }
@@ -143,9 +164,12 @@ function BusinessScanScreen({ navigation }) {
                 <View style={styleSheets.scannerView}>
                     {isPolling ? (
                         <Text
-                            style={{
-                                alignSelf: 'center',
-                            }}
+                            style={
+                                (styleSheets.logo,
+                                {
+                                    alignSelf: 'center',
+                                })
+                            }
                         >
                             Väntar på identifiering
                         </Text>
@@ -183,6 +207,7 @@ function BusinessScanScreen({ navigation }) {
                                 clearInterval(pollTimer);
                                 setScanned(false);
                                 setIsPolling(false);
+                                setQrString(null);
                             } else {
                                 navigation.goBack();
                             }

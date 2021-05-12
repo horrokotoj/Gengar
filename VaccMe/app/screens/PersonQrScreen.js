@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-    ImageBackground,
-    SafeAreaView,
-    View,
-    Text,
-    TouchableHighlight,
-} from 'react-native';
+import { ImageBackground, SafeAreaView, View, Text } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import QRCode from 'react-native-qrcode-svg';
@@ -13,6 +7,7 @@ import UpdateQrString from '../network/UpdateQrString';
 import PollForIdentification from '../network/PollForIdentification';
 import GoogleSignIn from '../network/GoogleSignIn';
 import Identify from '../network/Identify';
+import { AuthContext } from '../context/AuthContext';
 
 /**
  * @brief Renders a QR screen
@@ -21,6 +16,7 @@ import Identify from '../network/Identify';
  * @returns A QR screen
  */
 function PersonQrScreens() {
+    const { signOut } = React.useContext(AuthContext);
     const [isLoadingQr, setLoadingQr] = React.useState(true);
     const [dataQRstring, setQr] = React.useState(null);
     let isPolling = false;
@@ -33,6 +29,8 @@ function PersonQrScreens() {
             if (qrString) {
                 setQr(qrString);
                 setLoadingQr(false);
+            } else {
+                updateQrString();
             }
         } catch (error) {
             console.error(error);
@@ -41,15 +39,29 @@ function PersonQrScreens() {
 
     const updateQrString = async () => {
         let sessionId;
-        try {
-            sessionId = await SecureStore.getItemAsync('sessionId');
-            await UpdateQrString(sessionId);
-            console.log('Updated via UpdateQrString');
-            getQrString();
-        } catch (error) {
-            console.error(error);
-            alert('Updated from local storage. Check internet connection.');
-            getQrString();
+        if (isPolling) {
+            try {
+                sessionId = await SecureStore.getItemAsync('sessionId');
+                if (await UpdateQrString(sessionId)) {
+                    console.log('Updated via UpdateQrString');
+                    qrString = await SecureStore.getItemAsync('userQrString');
+                    console.log(qrString); //TODO: Remove after debugging
+                    if (qrString) {
+                        setQr(qrString);
+                        setLoadingQr(false);
+                    } else {
+                        setLoadingQr(true);
+                        setQr(null);
+                    }
+                } else {
+                    alert('Session expired');
+                    signOut();
+                }
+            } catch (error) {
+                console.error(error);
+                setLoadingQr(true);
+                setQr(null);
+            }
         }
     };
 
@@ -62,11 +74,15 @@ function PersonQrScreens() {
                 sessionId = await SecureStore.getItemAsync('sessionId');
                 if (await PollForIdentification(sessionId)) {
                     isPolling = false;
+                    setLoadingQr(true);
                     result = await GoogleSignIn();
                     if (result.type === 'success') {
                         if ((await Identify(result.idToken)) == false) {
                             alert('Varification failed');
                         }
+                        setTimeout(() => {
+                            updateQrString();
+                        }, 2000);
                     }
                     isPolling = true;
                 }
@@ -82,21 +98,32 @@ function PersonQrScreens() {
     };
 
     React.useEffect(() => {
-        console.log('useeffect here');
         isPolling = true;
-        console.log(isPolling);
         updateQrString();
     }, []);
 
     React.useEffect(() => {
-        const timer = setInterval(() => {
+        const timerQr = setInterval(() => {
+            updateQrString();
+            console.log('updating QrString in interval');
+        }, 1000 * 15);
+
+        return () => {
+            console.log('qrString interval stopped');
+            clearInterval(timerQr);
+        };
+    }, []);
+
+    //Initializes a polling
+    React.useEffect(() => {
+        const timerPoling = setInterval(() => {
             pollForIdentification();
             console.log('polling in PersonQrScreen');
         }, 1000);
 
         return () => {
             console.log('polling stopped');
-            clearInterval(timer);
+            clearInterval(timerPoling);
         };
     }, []);
 
@@ -113,7 +140,7 @@ function PersonQrScreens() {
                 </View>
                 <View style={styleSheets.qrSheet}>
                     {isLoadingQr ? (
-                        <Text>Loading qr-code</Text>
+                        <Text>Loading</Text>
                     ) : (
                         <QRCode
                             value={dataQRstring}
@@ -123,18 +150,7 @@ function PersonQrScreens() {
                     )}
                 </View>
 
-                <View style={styleSheets.filler}>
-                    <TouchableHighlight
-                        style={styleSheets.touchableHighlight}
-                        onPress={() => {
-                            updateQrString();
-                        }}
-                    >
-                        <Text style={styleSheets.touchableHighlightText}>
-                            Uppdatera
-                        </Text>
-                    </TouchableHighlight>
-                </View>
+                <View style={styleSheets.filler}></View>
             </SafeAreaView>
         </ImageBackground>
     );

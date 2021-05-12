@@ -53,7 +53,7 @@ function BusinessLoginScreen({ navigation }) {
                         <View style={styleSheets.inner}>
                             <TouchableHighlight
                                 style={styleSheets.touchableHighlight}
-                                onPress={() => signInBusiness()} // TODO: Business login!
+                                onPress={() => signInBusiness()}
                             >
                                 <Text
                                     style={styleSheets.touchableHighlightText}

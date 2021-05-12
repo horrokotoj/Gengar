@@ -10,6 +10,7 @@ import GetSessionId from '../network/GetSessionId';
 import DeleteItems from '../secureStore/DeleteItems';
 import StoreItem from '../secureStore/StoreItems';
 import GoogleSignIn from '../network/GoogleSignIn';
+import UpdateCertificates from '../network/UpdateCertificates';
 
 /**
  * @brief Creates an authorization context and an authorization container.
@@ -75,8 +76,6 @@ function Navigator() {
         return {
             signInPerson: async () => {
                 setIsLoading(true);
-                //TODO: Should be implemented in a seperate file and called here.
-                //Was not able to manipulate userToken with this in Autherizer.js
                 try {
                     const result = await GoogleSignIn();
                     console.log(result);
@@ -85,13 +84,14 @@ function Navigator() {
                         (await GetSessionId(result.idToken))
                     ) {
                         //gets a session id
-
                         await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
                         //Fetches the users certificates
-                        //await UpdateCertificates(result.user.id);
-                        //await UpdateQrString(result.user.id);
+                        let sessionId = await SecureStore.getItemAsync(
+                            'sessionId'
+                        );
+                        await UpdateCertificates(sessionId);
                         console.log('request done');
                         setIsLoading(false);
                         dispatch({
@@ -111,8 +111,6 @@ function Navigator() {
             },
             signInBusiness: async () => {
                 setIsLoading(true);
-                //TODO: Should be implemented in a seperate file and called here.
-                //Was not able to manipulate userToken with this in Autherizer.js
                 try {
                     const result = await GoogleSignIn();
                     console.log(result);

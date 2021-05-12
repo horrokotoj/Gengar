@@ -6,7 +6,7 @@ async function PollForIdentification(sessionId) {
     let response;
     console.log('Polling For Identification');
     try {
-        response = await fetch('http://192.168.1.46:8000/poll', {
+        response = await fetch('https://gengar.uxserver.se/poll', {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
@@ -17,6 +17,9 @@ async function PollForIdentification(sessionId) {
             }),
         });
         console.log(response.status);
+        if (response.status === 401) {
+            console.log('Unauthorized poll');
+        }
         if (response.status === 200) {
             let json = await response.json();
             console.log(json);
