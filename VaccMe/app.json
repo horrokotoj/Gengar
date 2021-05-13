@@ -2,9 +2,13 @@
   "expo": {
     "name": "VaccMe",
     "slug": "VaccMe",
+    "owner": "gengar-dsp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./app/assets/icon.png",
+    "icon": "./app/assets/icons/Icon-512.png",
+    "notification": {
+      "icon": "./app/assets/icons/Icon-144.png"
+    },
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
@@ -17,9 +21,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.gengar.vaccme"
     },
     "android": {
+      "package": "com.gengar.vaccme",
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -29,6 +35,6 @@
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
-    "description": ""
+    "description": "A mobile application for storing, scanning and verifying vaccine certificates"
   }
 }

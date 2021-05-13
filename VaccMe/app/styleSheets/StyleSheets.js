@@ -156,6 +156,7 @@ export const styleSheets = StyleSheet.create({
         borderColor: 'black',
         borderBottomWidth: 1,
         borderTopWidth: 1,
+        justifyContent: 'center',
     },
     cancelButtonView: {
         flex: 1,

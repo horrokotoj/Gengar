@@ -107,6 +107,42 @@ function BusinessHomeScreen({ navigation }) {
                                     <Text style={styleSheets.text}>Cert 2</Text>
                                 </TouchableOpacity>
                             )}
+                            {pressed === 'cert3' ? (
+                                <TouchableOpacity
+                                    style={[
+                                        styleSheets.scrollItem,
+                                        styleSheets.scrollItemPressed,
+                                    ]}
+                                    onPress={() => removeCert()}
+                                >
+                                    <Text style={styleSheets.text}>Cert 3</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    style={styleSheets.scrollItem}
+                                    onPress={() => addCert('cert3')}
+                                >
+                                    <Text style={styleSheets.text}>Cert 3</Text>
+                                </TouchableOpacity>
+                            )}
+                            {pressed === 'cert4' ? (
+                                <TouchableOpacity
+                                    style={[
+                                        styleSheets.scrollItem,
+                                        styleSheets.scrollItemPressed,
+                                    ]}
+                                    onPress={() => removeCert()}
+                                >
+                                    <Text style={styleSheets.text}>Cert 4</Text>
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity
+                                    style={styleSheets.scrollItem}
+                                    onPress={() => addCert('cert4')}
+                                >
+                                    <Text style={styleSheets.text}>Cert 4</Text>
+                                </TouchableOpacity>
+                            )}
                         </ScrollView>
                     </View>
                     <View>

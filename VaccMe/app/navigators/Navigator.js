@@ -5,20 +5,12 @@ import AuthNavigator from './AuthNavigator';
 import { NavigationContainer } from '@react-navigation/native';
 import PersonNavigator from './PersonNavigator';
 import BusinessNavigator from './BusinessNavigator';
-import * as Google from 'expo-google-app-auth';
 import * as SecureStore from 'expo-secure-store';
-import UpdateCertificates from '../network/UpdateCertificates';
-import UpdateQrString from '../network/UpdateQrString';
+import GetSessionId from '../network/GetSessionId';
 import DeleteItems from '../secureStore/DeleteItems';
 import StoreItem from '../secureStore/StoreItems';
-
-const config = {
-    androidClientId:
-        '821695412865-f6sndakvma08hqnjkqrjpmm7b2da2hmu.apps.googleusercontent.com',
-    iosClientId:
-        '821695412865-jlgaraciuvjk5j86ql00uf2ca0s5mmla.apps.googleusercontent.com',
-    scopes: ['profile', 'email'],
-};
+import GoogleSignIn from '../network/GoogleSignIn';
+import UpdateCertificates from '../network/UpdateCertificates';
 
 /**
  * @brief Creates an authorization context and an authorization container.
@@ -84,16 +76,23 @@ function Navigator() {
         return {
             signInPerson: async () => {
                 setIsLoading(true);
-                //TODO: Should be implemented in a seperate file and called here.
-                //Was not able to manipulate userToken with this in Autherizer.js
                 try {
-                    const result = await Google.logInAsync(config);
+                    const result = await GoogleSignIn();
                     console.log(result);
-                    if (result.type === 'success') {
-                        //Defines userType
+                    if (
+                        result.type === 'success' &&
+                        (await GetSessionId(result.idToken))
+                    ) {
+                        //gets a session id
                         await SecureStore.setItemAsync('userType', 'person');
                         //Stores relevant information on SecureStore
                         await StoreItem(result);
+                        //Fetches the users certificates
+                        let sessionId = await SecureStore.getItemAsync(
+                            'sessionId'
+                        );
+                        await UpdateCertificates(sessionId);
+                        console.log('request done');
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN',
@@ -112,16 +111,18 @@ function Navigator() {
             },
             signInBusiness: async () => {
                 setIsLoading(true);
-                //TODO: Should be implemented in a seperate file and called here.
-                //Was not able to manipulate userToken with this in Autherizer.js
                 try {
-                    const result = await Google.logInAsync(config);
+                    const result = await GoogleSignIn();
                     console.log(result);
-                    if (result.type === 'success') {
-                        //Define userType
+                    if (
+                        result.type === 'success' &&
+                        (await GetSessionId(result.idToken))
+                    ) {
+                        //Stores relevant information on SecureStore
                         await SecureStore.setItemAsync('userType', 'business');
-                        //Stores relevant information on secureStore
+                        //Stores relevant information on SecureStore
                         await StoreItem(result);
+                        //gets a session id
                         setIsLoading(false);
                         dispatch({
                             type: 'SIGN_IN',

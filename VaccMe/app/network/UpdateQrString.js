@@ -1,11 +1,10 @@
 import * as SecureStore from 'expo-secure-store';
-import hasNetworkConnection from './NetworkConnection'
 
 /**
  * @brief Updates a users qr string
  * @param userID of the user to fetch qr string for.
  */
-async function UpdateQrString(userId) {
+async function UpdateQrString(sessionId) {
     let response;
     console.log('requesting update qrString');
     try {
@@ -16,17 +15,27 @@ async function UpdateQrString(userId) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                googleuserid: '' + userId,
+                session_id: '' + sessionId,
             }),
         });
-        let json = await response.json();
-        console.log(json);
-        await SecureStore.setItemAsync(
-            'userQrString',
-            JSON.parse(json).qr_string
-        );
-    } catch (error) {
-        console.log(error);
+        console.log(response.status);
+        if (response.status === 401) {
+            return false;
+        }
+        if (response.status === 200) {
+            let json = await response.json();
+            console.log(json);
+            await SecureStore.setItemAsync('userQrString', json.qr_string);
+        } else {
+            await SecureStore.deleteItemAsync('userQrString');
+        }
+        return true;
+    } catch (e) {
+        await SecureStore.deleteItemAsync('userQrString');
+        console.log('requesting update qrString failed');
+        alert('Fetch failed, check internet connection');
+        console.log(e);
+        return true;
     }
 }
 

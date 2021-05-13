@@ -1,24 +1,25 @@
 import React from 'react';
-import {
-    ImageBackground,
-    SafeAreaView,
-    View,
-    Text,
-    TouchableHighlight,
-} from 'react-native';
+import { ImageBackground, SafeAreaView, View, Text } from 'react-native';
 import { styleSheets } from '../styleSheets/StyleSheets';
 import * as SecureStore from 'expo-secure-store';
 import QRCode from 'react-native-qrcode-svg';
 import UpdateQrString from '../network/UpdateQrString';
+import PollForIdentification from '../network/PollForIdentification';
+import GoogleSignIn from '../network/GoogleSignIn';
+import Identify from '../network/Identify';
+import { AuthContext } from '../context/AuthContext';
 
 /**
  * @brief Renders a QR screen
- * @brief Fetches a string to render a qr-code from secure store.
+ * @brief Fetches a string from server to render a qr-code from and store.
+ * @brief Polls the server for when to identify.
  * @returns A QR screen
  */
 function PersonQrScreens() {
+    const { signOut } = React.useContext(AuthContext);
     const [isLoadingQr, setLoadingQr] = React.useState(true);
     const [dataQRstring, setQr] = React.useState(null);
+    let isPolling = false;
 
     const getQrString = async () => {
         let qrString;
@@ -28,6 +29,8 @@ function PersonQrScreens() {
             if (qrString) {
                 setQr(qrString);
                 setLoadingQr(false);
+            } else {
+                updateQrString();
             }
         } catch (error) {
             console.error(error);
@@ -35,26 +38,93 @@ function PersonQrScreens() {
     };
 
     const updateQrString = async () => {
-        let userId;
-        try {
-            userId = await SecureStore.getItemAsync('userId');
-            await UpdateQrString(userId);
-            console.log('Updated via UpdateQrString');
-            getQrString();
-        } catch (error) {
-            console.error(error);
-            alert('Updated from local storage. Check internet connection.');
-            getQrString();
+        let sessionId;
+        if (isPolling) {
+            try {
+                sessionId = await SecureStore.getItemAsync('sessionId');
+                if (await UpdateQrString(sessionId)) {
+                    console.log('Updated via UpdateQrString');
+                    qrString = await SecureStore.getItemAsync('userQrString');
+                    console.log(qrString); //TODO: Remove after debugging
+                    if (qrString) {
+                        setQr(qrString);
+                        setLoadingQr(false);
+                    } else {
+                        setLoadingQr(true);
+                        setQr(null);
+                    }
+                } else {
+                    alert('Session expired');
+                    signOut();
+                }
+            } catch (error) {
+                console.error(error);
+                setLoadingQr(true);
+                setQr(null);
+            }
+        }
+    };
+
+    const pollForIdentification = async () => {
+        let sessionId;
+        let result;
+        console.log('Entered pollForIdentification');
+        if (isPolling == true) {
+            try {
+                sessionId = await SecureStore.getItemAsync('sessionId');
+                if (await PollForIdentification(sessionId)) {
+                    isPolling = false;
+                    setLoadingQr(true);
+                    result = await GoogleSignIn();
+                    if (result.type === 'success') {
+                        if ((await Identify(result.idToken)) == false) {
+                            alert('Varification failed');
+                        }
+                        setTimeout(() => {
+                            updateQrString();
+                        }, 2000);
+                    }
+                    isPolling = true;
+                }
+                console.log('Polled via PollForIdentification');
+            } catch (error) {
+                console.error(error);
+                alert('Pollfailed');
+                getQrString();
+            }
+        } else {
+            console.log('pollForIdentification paused');
         }
     };
 
     React.useEffect(() => {
+        isPolling = true;
         updateQrString();
+    }, []);
 
-        const timer = setInterval(() => {
+    React.useEffect(() => {
+        const timerQr = setInterval(() => {
             updateQrString();
-        }, 15000);
-        return () => clearInterval(timer);
+            console.log('updating QrString in interval');
+        }, 1000 * 15);
+
+        return () => {
+            console.log('qrString interval stopped');
+            clearInterval(timerQr);
+        };
+    }, []);
+
+    //Initializes a polling
+    React.useEffect(() => {
+        const timerPoling = setInterval(() => {
+            pollForIdentification();
+            console.log('polling in PersonQrScreen');
+        }, 1000);
+
+        return () => {
+            console.log('polling stopped');
+            clearInterval(timerPoling);
+        };
     }, []);
 
     return (
@@ -70,7 +140,7 @@ function PersonQrScreens() {
                 </View>
                 <View style={styleSheets.qrSheet}>
                     {isLoadingQr ? (
-                        <Text>Loading qr-code</Text>
+                        <Text>Loading</Text>
                     ) : (
                         <QRCode
                             value={dataQRstring}
@@ -80,18 +150,7 @@ function PersonQrScreens() {
                     )}
                 </View>
 
-                <View style={styleSheets.filler}>
-                    <TouchableHighlight
-                        style={styleSheets.touchableHighlight}
-                        onPress={() => {
-                            updateQrString();
-                        }}
-                    >
-                        <Text style={styleSheets.touchableHighlightText}>
-                            Uppdatera
-                        </Text>
-                    </TouchableHighlight>
-                </View>
+                <View style={styleSheets.filler}></View>
             </SafeAreaView>
         </ImageBackground>
     );
