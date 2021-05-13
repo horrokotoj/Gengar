@@ -2,6 +2,7 @@
   "expo": {
     "name": "VaccMe",
     "slug": "VaccMe",
+    "owner": "gengar-dsp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icons/Icon-512.png",
